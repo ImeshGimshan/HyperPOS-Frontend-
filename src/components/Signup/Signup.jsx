@@ -39,7 +39,7 @@ const Signup = () => {
 
   const handleSubmit = () => {
     if (validateForm()) {
-      // Proceed with submission or API call
+      
       navigate('/');
     }
   };
@@ -129,7 +129,7 @@ const Signup = () => {
           </div>
         </div>
 
-        {/* Terms Checkbox */}
+        
         <div className="flex items-center mt-4 text-sm text-white">
           <input
             type="checkbox"
@@ -144,7 +144,7 @@ const Signup = () => {
         </div>
         {errors.term && <p className="text-red-400 text-sm mt-1">{errors.term}</p>}
 
-        {/* Submit Button */}
+        
         <div className="mt-6 flex justify-center">
           <button
             className="bg-purple-500 hover:bg-purple-600 text-white font-medium py-2 px-6 rounded-full cursor-pointer"
