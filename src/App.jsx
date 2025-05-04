@@ -5,6 +5,7 @@ import Signup from './components/Signup/Signup';
 import Home from './components/Home/Home';
 import TermsOfU from './components/TermOfU/TermOfU';
 import ForgotPassword from './components/ForgotPassword/ForgotPassword';
+import AddProduct from './components/AddProduct/AddProduct';
 import Landing from './components/LandingPage/Landing';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
         <Route path="/Home" element={<Landing/>} />
         <Route path="/termOfU" element={<TermsOfU />} />
         <Route path="/forgotPassword" element={<ForgotPassword />} />
+        <Route path="/addProduct" element={<AddProduct/>} />
       </Routes>
     </Router>
     {/* <Landing/> */}
@@ -25,3 +27,4 @@ function App() {
 }
 
 export default App;
+
