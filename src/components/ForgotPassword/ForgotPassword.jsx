@@ -2,20 +2,20 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
-const Login = () => {
+const ForgotPassword = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [errors, setErrors] = useState({});
 
   const validateForm = () => {
     const newErrors = {};
-    if (!username.trim()) {
-      newErrors.username = "Username is required";
+    if (!email.trim()) {
+      newErrors.email = "Email is required";
     }
-    if (!password) {
-      newErrors.password = "Password is required";
+    if (!newPassword) {
+      newErrors.newPassword = "Password is required";
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -24,35 +24,35 @@ const Login = () => {
   const handleSubmit = () => {
     if (validateForm()) {
       
-      navigate("/Home");
+      navigate("/");
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#2a0036] to-[#000828] px-4">
       <div className="bg-white/10 backdrop-blur-md p-8 rounded-2xl shadow-lg w-full max-w-md">
-        <h2 className="text-3xl font-bold text-center text-purple-300 mb-6">Login</h2>
+        <h2 className="text-3xl font-bold text-center text-purple-300 mb-6">Reset Password</h2>
 
         <div className="space-y-4">
           <div>
             <input
-              type="text"
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-3 rounded-full bg-purple-100 placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
-            {errors.username && (
-              <p className="text-red-400 text-sm mt-1">{errors.username}</p>
+            {errors.email && (
+              <p className="text-red-400 text-sm mt-1">{errors.email}</p>
             )}
           </div>
 
           <div className="relative">
             <input
               type={showPassword ? "text" : "password"}
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              placeholder="New Password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
               className="w-full px-4 py-3 rounded-full bg-purple-100 placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
             <span
@@ -61,43 +61,28 @@ const Login = () => {
             >
               {showPassword ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
             </span>
-            {errors.password && (
-              <p className="text-red-400 text-sm mt-1">{errors.password}</p>
+            {errors.newPassword && (
+              <p className="text-red-400 text-sm mt-1">{errors.newPassword}</p>
             )}
           </div>
         </div>
 
-        <div className="text-right mt-2">
-          <button className="text-red-400 text-sm hover:underline" onClick={() => navigate("/ForgotPassword")}>
-            Forgot Password?
-          </button>
-        </div>
+        
 
         <div className="mt-6">
           <button
             onClick={handleSubmit}
             className="w-full bg-purple-500 hover:bg-purple-600 text-white py-2 rounded-full transition cursor-pointer"
           >
-            Login
+            Reset Password
           </button>
         </div>
 
-        <div className="text-center text-white mt-4">
-          <p>or</p>
-          <p className="mt-2">
-            Don’t have an account?{" "}
-            <span
-              className="text-purple-300 hover:underline cursor-pointer"
-              onClick={() => navigate("/signup")}
-            >
-              Sign Up
-            </span>
-          </p>
-        </div>
+        
       </div>
     </div>
   );
 };
 
-export default Login;
+export default ForgotPassword;
 
