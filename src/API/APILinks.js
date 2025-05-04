@@ -1,4 +1,4 @@
-const BaseUrl = "http://localhost:8080/api";
+const BaseUrl = "http://152.67.176.77:8080/api";
 
 const APILinks = {
   login: `${BaseUrl}/login`,
@@ -38,7 +38,7 @@ const APILinks = {
   saveSale: `${BaseUrl}/sale`,
   getSaleById: (id) => `${BaseUrl}/sale/${id}`,
   returnSale: (id) => `${BaseUrl}/sale/${id}`,
-  getPurchase: `${BaseUrl}/purchase`,
+  getPurchases: `${BaseUrl}/purchase`,
   savePurchase: `${BaseUrl}/purchase`,
   returnPurchase: (id) => `${BaseUrl}/purchase/${id}`,
   getProductImage: (id) => `${BaseUrl}/image/${id}`,
