@@ -1,0 +1,73 @@
+.h-wrapper {
+    background-color: #593192;
+    color: white;
+    
+  }
+  
+  .h-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    padding: 0 20px;
+    flex-wrap: wrap;
+  margin: auto;
+  }
+  .h-logo {
+    height: 50px;
+    width: 50px;
+  }
+  .h-menu {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 10px 0;
+    
+  }
+  
+  .h-item {
+    
+    text-align: center;
+  }
+  
+  .h-link {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    
+    transition: color 0.3s ease;
+    
+    
+  }
+  
+  .h-link:hover {
+    color: #9854F8;
+  }
+  .h-button{
+    margin: 10px 0;
+    
+    
+  }
+  .button{
+    background-color: #9854F8;
+    color: whitesmoke;
+    height: 30px;
+    width: 80px;
+    border: none;
+    border-radius: 5px;
+    padding: 6px 16px;
+    font-size: 1rem;
+    cursor: pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+   
+  }
+ .button:hover{
+background-color: whitesmoke;
+color:#9854F8
+ }
+ 
