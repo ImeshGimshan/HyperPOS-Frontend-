@@ -1,0 +1,84 @@
+/* Global Styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1e1b2e;
+    color: #ffffff;
+  }
+  
+  /* Container */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #d8b4fe;
+    margin-bottom: 20px;
+  }
+  
+  /* Inputs and Selects */
+  input[type="text"],
+  input[type="number"],
+  select {
+    background-color: #2a213d;
+    color: #ffffff;
+    border: 1px solid #7c3aed;
+  } 
+
+  .invoice-panel {
+    background: white;
+    color: black;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  
+  .invoice-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .invoice-meta p {
+    margin: 4px 0;
+  }
+  
+  .invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .invoice-table th,
+  .invoice-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .invoice-total p {
+    margin: 6px 0;
+    text-align: right;
+  }
+  
+  .print-btn {
+    background-color: #4B0082;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .print-btn:hover {
+    background-color: #3a0066;
+  }
+  
