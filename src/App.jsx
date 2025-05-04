@@ -5,9 +5,11 @@ import Signup from './components/Signup/Signup';
 import Home from './components/Home/Home';
 import TermsOfU from './components/TermOfU/TermOfU';
 import ForgotPassword from './components/ForgotPassword/ForgotPassword';
+import Landing from './components/LandingPage/Landing';
 
 function App() {
   return (
+    <>
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
@@ -17,6 +19,8 @@ function App() {
         <Route path="/forgotPassword" element={<ForgotPassword />} />
       </Routes>
     </Router>
+    <Landing/>
+   </>
   );
 }
 
