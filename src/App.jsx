@@ -7,6 +7,7 @@ import TermsOfU from './components/TermOfU/TermOfU';
 import ForgotPassword from './components/ForgotPassword/ForgotPassword';
 import AddProduct from './components/AddProduct/AddProduct';
 import Landing from './components/LandingPage/Landing';
+import CashierScreen from './components/Cashier/CashierScreen';
 
 function App() {
   return (
@@ -21,10 +22,14 @@ function App() {
         <Route path="/addProduct" element={<AddProduct/>} />
       </Routes>
     </Router>
-    {/* <Landing/> */}
+     <Landing/> 
+    <CashierScreen/>
    </>
   );
 }
 
 export default App;
+
+
+
 
