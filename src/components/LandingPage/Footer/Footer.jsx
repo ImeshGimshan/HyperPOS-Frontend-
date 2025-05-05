@@ -9,7 +9,7 @@ const Footer = () => {
       <div className="paddings innerWidth flexCenter f-container">
         
         <div className="footer-top">
-          <img src="./logo.png" alt="logo" width={120} />
+          <img src="./logo.png" alt="logo" width={50} />
           
           <div className="footer-socials">
           <span>Follow Us</span>

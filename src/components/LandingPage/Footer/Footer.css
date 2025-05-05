@@ -36,15 +36,10 @@
     min-width: 200px;
   }
   
-  .footer-logo {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
   .footer-section h3 {
     font-size: 16px;
     margin-bottom: 10px;
+    font-weight: bold;
   }
   
   .footer-section ul {
@@ -86,6 +81,8 @@
     display: flex;
     align-items: center;
     gap: 15px;
+    font-weight: bold;
+    font-size: 20px;
   }
   
   .footer-socials span {
