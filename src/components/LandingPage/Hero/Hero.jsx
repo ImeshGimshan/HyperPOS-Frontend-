@@ -9,11 +9,13 @@ const Hero = ( ) => {
 
         <section className = "hero-wrapper">
 
+            <div className = "hero-background"></div>
+
             <div className = "hero-container">
 
                 <div className = "hero-left">
                     <div className = "hero-image">
-                        <img src = "./hero.png" alt = "POS system" />
+                        <img src = "./Hero-Image.png" alt = "POS system" />
                     </div>
                 </div>
 

@@ -19,21 +19,21 @@ const Section = ( ) => {
 
           <div className="business-types">
             <div className="business-card">
-              <img src="./restaurant.png" alt="Restaurant POS" />
+              <img src="./Section-RestrauntPOS.png" alt="Restaurant POS" />
               <h4>Restaurant</h4>
               <p>Manage your restaurant with ease using tools for order taking, table management, kitchen printing, split billing, and real-time sales tracking.</p>
             </div>
 
             <div className="business-card">
-              <img src="./retail1.png" alt="Retail POS" />
+              <img src="./Section-RetailPOS.png" alt="Retail POS" />
               <h4>Retail</h4>
               <p>All the retail tools you need for selling online and in-store, like inventory management, reports, returns and exchanges.</p>
             </div>
 
             <div className="business-card">
-              <img src="./retail2.png" alt="Retail POS 2" />
-              <h4>Retail</h4>
-              <p>All the retail tools you need for selling online and in-store, like inventory management, reports, returns and exchanges.</p>
+              <img src="./Section-CafePOS.png" alt="Cafe POS" />
+              <h4>Cafe & Coffee Shop</h4>
+              <p>Streamline operations with quick order processing, customizable menus, loyalty programs, and inventory tracking designed for busy cafes.</p>
             </div>
 
           </div>
