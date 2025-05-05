@@ -39,7 +39,6 @@ const Signup = () => {
 
   const handleSubmit = () => {
     if (validateForm()) {
-      
       navigate('/');
     }
   };
@@ -52,6 +51,7 @@ const Signup = () => {
           Please fill in this form to create a new account.
         </p>
 
+        {/* Name Fields */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
           <div>
             <input
@@ -77,59 +77,58 @@ const Signup = () => {
           </div>
         </div>
 
-        <div className="space-y-4">
-          <div>
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full px-4 py-2 rounded-full bg-purple-100 text-black placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
-            />
-            {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email}</p>}
-          </div>
-
-          {/* Password Field */}
-          <div className="relative">
-            <input
-              type={showPassword ? 'text' : 'password'}
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full px-4 py-2 rounded-full bg-purple-100 text-black placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
-            />
-            <span
-              className="absolute top-2.5 right-4 text-gray-600 cursor-pointer"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? <AiOutlineEye /> :  <AiOutlineEyeInvisible />}
-            </span>
-            {errors.password && <p className="text-red-400 text-sm mt-1">{errors.password}</p>}
-          </div>
-
-          {/* Confirm Password Field */}
-          <div className="relative">
-            <input
-              type={showConfirmPassword ? 'text' : 'password'}
-              name="confirmPassword"
-              placeholder="Confirm Password"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              className="w-full px-4 py-2 rounded-full bg-purple-100 text-black placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
-            />
-            <span
-              className="absolute top-2.5 right-4 text-gray-600 cursor-pointer"
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-            >
-              {showConfirmPassword ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
-            </span>
-            {errors.confirmPassword && <p className="text-red-400 text-sm mt-1">{errors.confirmPassword}</p>}
-          </div>
+        {/* Email Field */}
+        <div className="mb-4">
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+            className="w-full px-4 py-2 rounded-full bg-purple-100 text-black placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          />
+          {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email}</p>}
         </div>
 
-        
+        {/* Password Field */}
+        <div className="relative mb-4">
+          <input
+            type={showPassword ? 'text' : 'password'}
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            className="w-full px-4 py-2 rounded-full bg-purple-100 text-black placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          />
+          <span
+            className="absolute top-2.5 right-4 text-gray-600 cursor-pointer"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
+          </span>
+          {errors.password && <p className="text-red-400 text-sm mt-1">{errors.password}</p>}
+        </div>
+
+        {/* Confirm Password Field */}
+        <div className="relative mb-4">
+          <input
+            type={showConfirmPassword ? 'text' : 'password'}
+            name="confirmPassword"
+            placeholder="Confirm Password"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            className="w-full px-4 py-2 rounded-full bg-purple-100 text-black placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          />
+          <span
+            className="absolute top-2.5 right-4 text-gray-600 cursor-pointer"
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+          >
+            {showConfirmPassword ? <AiOutlineEye /> : <AiOutlineEyeInvisible />}
+          </span>
+          {errors.confirmPassword && <p className="text-red-400 text-sm mt-1">{errors.confirmPassword}</p>}
+        </div>
+
+        {/* Terms and Policy Checkbox */}
         <div className="flex items-center mt-4 text-sm text-white">
           <input
             type="checkbox"
@@ -139,12 +138,25 @@ const Signup = () => {
             className="mr-2 accent-purple-500"
           />
           <label htmlFor="checkbox">
-            I accept the <span className="text-purple-300 underline">Terms of Use</span> and <span className="text-purple-300 underline">Privacy Policy</span>
+            I accept the{' '}
+            <span
+              className="text-purple-300 underline cursor-pointer"
+              onClick={() => navigate('/termOfU')}
+            >
+              Terms of Use
+            </span>{' '}
+            and{' '}
+            <span
+              className="text-purple-300 underline cursor-pointer"
+              onClick={() => navigate('/termOfU')}
+            >
+              Privacy Policy
+            </span>
           </label>
         </div>
         {errors.term && <p className="text-red-400 text-sm mt-1">{errors.term}</p>}
 
-        
+        {/* Submit Button */}
         <div className="mt-6 flex justify-center">
           <button
             className="bg-purple-500 hover:bg-purple-600 text-white font-medium py-2 px-6 rounded-full cursor-pointer"
@@ -159,3 +171,4 @@ const Signup = () => {
 };
 
 export default Signup;
+
