@@ -13,6 +13,8 @@ import Landing from './components/LandingPage/Landing';
 import CashierScreen from './components/Cashier/CashierScreen';
 import BaseScreen from './components/BaseScreen/BaseScreen';
 
+import { Outlet } from 'react-router-dom';
+
 function App ( ) {
 
   return (
@@ -35,6 +37,9 @@ function App ( ) {
       <Landing/>
       <CashierScreen/>
       <BaseScreen/>
+
+      <Outlet/>
+
 
     </>
 

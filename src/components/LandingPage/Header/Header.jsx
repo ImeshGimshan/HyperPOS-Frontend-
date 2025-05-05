@@ -11,7 +11,7 @@ const Header = ( ) => {
 
       <div className = "h-container">
 
-        <img src = "./logo.png" alt = "logo" className = "h-logo" width = { 100 } />
+        <img src = "./Header-Logo.png" alt = "logo" className = "h-logo" width = { 100 } />
 
         <ul className = "h-menu">
           <li className = "h-item">

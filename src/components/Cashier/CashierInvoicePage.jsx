@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import SummaryFooter from './SummaryFooter';
 import Controls from './Controls';
 
-const InvoicePage = () => {
+const CashierInvoicePage = () => {
   const [cartItems, setCartItems] = useState([
     // Example initial cart (can be empty)
     // { id: 1, name: 'Item A', price: 100, quantity: 2, discount: 10 }
@@ -23,4 +23,4 @@ const InvoicePage = () => {
   );
 };
 
-export default InvoicePage;
+export default CashierInvoicePage;

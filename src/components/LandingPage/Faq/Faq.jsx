@@ -16,19 +16,19 @@ const Faq = ( ) => {
         <div className = "features-cards">
 
           <div className = "feature-card">
-            <img src = "/f1.png" alt = "Accessible Icon" className = "feature-icon" />
-            <h3>Accessible From Anywhere</h3>
+            <img src = "/Features-Accessibility.png" alt = "Accessible Icon" className = "feature-icon" />
+            <h3>Accessibility</h3> <br></br>
             <p>Access your POS system anytime, anywhere, ensuring flexibility and convenience for your business management needs.</p>
           </div>
 
           <div className = "feature-card">
-            <img src = "/f3.png" alt = "Accessible Icon" className = "feature-icon" />
+            <img src = "/Features-RTIM.png" alt = "Accessible Icon" className = "feature-icon" />
             <h3>Real-Time Inventory Management</h3>
             <p>Stay updated with your stock levels instantly. Track product availability, receive low stock alerts, and manage inventory efficiently.</p>
           </div>
 
           <div className = "feature-card">
-            <img src = "/f2.png" alt = "Accessible Icon" className = "feature-icon" />
+            <img src = "/Features-CPLT.png" alt = "Accessible Icon" className = "feature-icon" />
             <h3>Customer Profiles & Loyalty Tracking</h3>
             <p>Easily create and manage customer profiles with contact details, purchase history, and preferences to boost loyalty.</p>
           </div>
@@ -48,8 +48,8 @@ const Faq = ( ) => {
         <div className="faq-item">
           <p className="faq-question">What can I learn?</p>
           <p className="faq-answer">If you're new to Figma, you'll master advanced software techniques, stay up to date with the latest features, and 
-          learn how to create your design system, UI kit or icon set.</p>
-          <p>If you're an advanced user, you will benefit by using a well-maintained and solid foundation with many different components to fit a variety of different projects.</p>
+          learn how to create your design system, UI kit or icon set.<br></br>If you're an advanced user, you will benefit by using a well-maintained and solid foundation with many different components to fit a variety of different projects.</p>
+          <p></p>
         </div>
 
         <div className="faq-item">
@@ -65,11 +65,6 @@ const Faq = ( ) => {
         <div className="faq-item">
           <p className="faq-question">Do you provide refunds?</p>
           <p className="faq-answer">We issue refunds only if you can show that the file is corrupt on your end and cannot be used. Due to the nature of digital downloads, there are no refunds and credits once an order is placed and the product is sen.</p>
-        </div>
-        
-        <div className="faq-item">
-          <p className="faq-question">Accordion title</p>
-          <p className="faq-answer">Placeholder for accordion text.</p>
         </div>
 
       </div>
