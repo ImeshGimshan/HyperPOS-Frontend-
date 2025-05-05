@@ -168,7 +168,7 @@ const Signup = ( ) => {
             className = "mr-2 accent-purple-500"
           />
           <label htmlFor = "checkbox">
-            I accept the <span className = "text-purple-300 underline">Terms of Use</span> and <span className = "text-purple-300 underline">Privacy Policy</span>
+            I accept the <span className = "text-purple-300 underline cursor-pointer"  onClick = { ( ) => navigate ( "/termOfU" ) }>Terms of Use</span> and <span className = "text-purple-300 underline cursor-pointer"  onClick = { ( ) => navigate ( "/termOfU" ) }>Privacy Policy</span>
           </label>
         </div>
         { errors.term && <p className = "text-red-400 text-sm mt-1">{ errors.term }</p> }

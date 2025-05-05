@@ -86,7 +86,7 @@ const Login = ( ) => {
 
         <div className = "text-right mt-2">
 
-          <button className = "text-red-400 text-sm hover:underline">
+          <button className = "text-red-400 text-sm hover:underline cursor-pointer"  onClick = { ( ) => navigate ( "/forgotpassword" ) }>
             Forgot Password?
           </button>
 
