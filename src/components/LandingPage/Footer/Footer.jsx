@@ -8,10 +8,11 @@ import { FaFacebookF , FaWhatsapp , FaInstagram } from "react-icons/fa"
 const Footer = ( ) => {
       
   return (
-
-    <section className = "footer-wrapper">
-
-      <div className = "paddings innerWidth flexCenter f-container">
+    <section className="footer-wrapper">
+      <div className="paddings innerWidth flexCenter f-container">
+        
+        <div className="footer-top">
+          <img src="./logo.png" alt="logo" width={50} />
           
         <div className = "footer-top">
 
