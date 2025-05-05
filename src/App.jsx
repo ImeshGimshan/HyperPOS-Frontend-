@@ -11,6 +11,7 @@ import ForgotPassword from './components/ForgotPassword/ForgotPassword';
 import AddProduct from './components/AddProduct/AddProduct';
 import Landing from './components/LandingPage/Landing';
 import CashierScreen from './components/Cashier/CashierScreen';
+import BaseScreen from './components/BaseScreen/BaseScreen';
 
 function App ( ) {
 
@@ -33,6 +34,7 @@ function App ( ) {
 
       <Landing/>
       <CashierScreen/>
+      <BaseScreen/>
 
     </>
 
