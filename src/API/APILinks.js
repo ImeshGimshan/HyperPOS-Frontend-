@@ -1,8 +1,8 @@
-const BaseUrl = "http://152.67.176.77:8080/api";
+const BaseUrl = "http://localhost:8080/api";
 
 const APILinks = {
-  login: `${BaseUrl}/login`,
-  register: `${BaseUrl}/register`,
+  login: `${BaseUrl}/auth/login`,
+  register: `${BaseUrl}/auth/register`,
   getUser: `${BaseUrl}/user`,
   getUserById: (id) => `${BaseUrl}/user/${id}`,
   getCustomers: `${BaseUrl}/customer`,
