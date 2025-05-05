@@ -96,8 +96,8 @@ const CashierScreen = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-4 w-full">
-      <div className="max-w-screen-xl mx-auto">
+    <div className="min-h-screen bg-gray-900 text-white p-4 w-full cashier-app">
+      <div className="max-w-screen-xl mx-auto cashier-container">
         <Header invoiceNumber={invoiceNumber} />
         <ProductSearch onAdd={handleAddToCart} />
         <CartTable

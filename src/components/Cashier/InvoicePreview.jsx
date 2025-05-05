@@ -30,17 +30,17 @@ const InvoicePreview = ({ invoice }) => {
   };
 
   return (
-    <div className="invoice-panel">
+    <div className="cashier-invoice-panel">
       <div ref={printRef}>
-        <h2 className="invoice-title">INVOICE</h2>
+        <h2 className="cashier-invoice-title">INVOICE</h2>
 
-        <div className="invoice-meta">
+        <div className="cashier-invoice-meta">
           <p><strong>Date:</strong> {invoice.date}</p>
           <p><strong>Invoice No:</strong> {invoice.number}</p>
           <p><strong>Customer:</strong> {invoice.customer}</p>
         </div>
 
-        <table className="invoice-table">
+        <table className="cashier-invoice-table">
           <thead>
             <tr>
               <th>Item</th>
@@ -63,7 +63,7 @@ const InvoicePreview = ({ invoice }) => {
           </tbody>
         </table>
 
-        <div className="invoice-total">
+        <div className="cashier-invoice-total">
           <p><strong>Subtotal:</strong> Rs.{invoice.subtotal.toFixed(2)}</p>
           <p><strong>Discount:</strong> Rs.{invoice.discount.toFixed(2)}</p>
           <p><strong>Grand Total:</strong> Rs.{invoice.grandTotal.toFixed(2)}</p>
@@ -78,7 +78,7 @@ const InvoicePreview = ({ invoice }) => {
       </div>
 
       <div style={{ textAlign: "center", marginTop: "16px" }}>
-        <button className="print-btn" onClick={handlePrint}>Print Invoice</button>
+        <button className="cashier-print-btn" onClick={handlePrint}>Print Invoice</button>
       </div>
     </div>
   );
