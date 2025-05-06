@@ -1,4 +1,3 @@
-
 import defaultTheme from "tailwindcss/defaultTheme";
 
 export default {
@@ -7,7 +6,6 @@ export default {
     darkMode: 'class',
     theme: {
       extend: {
-
         fontFamily: {
             sans: ['Poppins', ...defaultTheme.fontFamily.sans],
         },
@@ -27,9 +25,10 @@ export default {
             },
         },
 
+        animation: {
+          'spin': 'spin 8s linear infinite', // Time signifies the rotation speed.
+        },
       },
     },
     plugins: [],
-
-  };
-    
+};
