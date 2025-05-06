@@ -20,6 +20,16 @@ function App ( ) {
 
   return (
     <>
+    <Router>
+      <Routes>
+        <Route path = "/" element = { <Login /> } />
+        <Route path = "/signup" element = { <Signup /> } />
+        <Route path = "/Home" element = { <Landing/> } />
+        <Route path = "/termOfU" element = { <TermsOfU /> } />
+        <Route path = "/forgotPassword" element = { <ForgotPassword /> } />
+        <Route path = "/addProduct" element = { <AddProduct/> } />
+      </Routes>
+    </Router>
       <Landing/>
       <CashierScreen/>
       <BaseScreen/>
