@@ -1,3 +1,4 @@
+
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
@@ -19,59 +20,50 @@ import UserPage from "./components/Dashboard/pages/UserPage.jsx";
 import CustomerPage from "./components/Dashboard/pages/CustomerPage.jsx";
 import ProductPage from "./components/Dashboard/pages/ProductPage.jsx";
 import InventoryPage from "./components/Dashboard/pages/InventoryPage.jsx";
+import Test from './components/Test/Test';
+import BaseScreen from './components/BaseScreen/BaseScreen';
 
 import './index.css'
 
 // Creating the router object.
-const router = createBrowserRouter ( [
-
+const router = createBrowserRouter([
   {
-
-    path : "/",
-    element : <App />,
-
-    children : [
+    path: "/",
+    element: <App />,
+    children: [
 
       // index : true means that our default route is the login page.
-      // path : "" means the url to use along with localhost:port/"".
-      { index : true , element : <Login /> },
-      { path : "signup" , element : <Signup /> },
-      { path : "home" , element : <Landing /> },
-      { path : "termsofuse" , element : <TermsOfU /> },
-      { path : "forgotpassword" , element : <ForgotPassword /> },
-      { path : "addproduct" , element : <AddProduct /> },
-      { path : "cashier" , element : <CashierScreen /> },
-
+      // path : "" means the url to use along with localhost:port/""
+      { index: true , element : <Landing /> },
+      { path: "login" , element : <Login /> },
+      { path: "signup" , element : <Signup /> },
+      { path: "termsofuse" , element : <TermsOfU /> },
+      { path: "forgotpassword" , element : <ForgotPassword /> },
+      { path: "addproduct" , element : <AddProduct /> },
+      { path: "cashier" , element : <CashierScreen /> },
+      { path: "basescreen" , element : <BaseScreen /> },
+      { path: "test" , element : <Test /> },
       {
-
-        path : "dashboard",
-        element : <DashboardLayout />,
-        children : [
-
-          { index : true , element : <DashboardHome /> },
-          { path : "grn" , element : <GRNPage /> },
-          { path : "invoices" , element : <InvoicePage /> },
-          { path : "users" , element : <UserPage /> },
-          { path : "customers" , element : <CustomerPage /> },
-          { path : "products" , element : <ProductPage /> },
-          { path : "inventory" , element : <InventoryPage /> },
-
+        path: "dashboard",
+        element: <DashboardLayout />,
+        children: [
+          { index: true , element : <DashboardHome /> },
+          { path: "grn" , element : <GRNPage /> },
+          { path: "invoices" , element : <InvoicePage /> },
+          { path: "users" , element : <UserPage /> },
+          { path: "customers" , element : <CustomerPage /> },
+          { path: "products" , element : <ProductPage /> },
+          { path: "inventory" , element : <InventoryPage /> },
         ],
-
       },
-
     ],
-
   },
+]);
 
-] );
-
-createRoot ( document.getElementById ( 'root' ) ).render (
+createRoot ( document.getElementById ( 'root' ) ).render(
 
   <StrictMode>
-
     <RouterProvider router = { router } />
-
   </StrictMode>
 
 )
