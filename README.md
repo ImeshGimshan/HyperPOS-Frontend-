@@ -13,3 +13,7 @@ https://devdojo.com/tailwindcss/buttons
 https://framer.university/resources/image-grid-scroll-animation-in-framer
 
 https://21st.dev/youcefbnm/hero-gallery-scroll-animation
+
+https://prismic.io/blog/css-animation-examples // 19 - Bio for login , sign up etc
+
+https://uiverse.io/cards?orderBy=favorites&theme=light
