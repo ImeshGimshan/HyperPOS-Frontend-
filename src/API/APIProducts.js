@@ -3,12 +3,14 @@ import APILinks from "./APILinks";
 
 const getProducts = async () => {
   try {
-    const token = localStorage.getItem("token"); // Retrieve stored JWT token
+    const token = localStorage.getItem("token");
+    // console.log("Token:***************", token); // Log the token for debugging
     const response = await axios.get(APILinks.getProducts, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      withCredentials: true,
     });
     return response.data;
   } catch (error) {

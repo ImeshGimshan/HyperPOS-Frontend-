@@ -19,6 +19,7 @@ import {
 } from "../../API/APIProducts";
 
 import { cart , updateCart , product , updatedProduct } from "./postData";
+import testLogin from "../../API/testLogin";
 
 function Test ( ) 
 {
@@ -117,6 +118,15 @@ function Test ( )
     }
   };
 
+  const handleLogin = async ( ) => {
+    try {
+      const response = await testLogin ( "Admin" , "admin" );
+      console.log ( "Response:" , response );
+    } catch ( error ) {
+      console.error ( "Error:" , error );
+    }
+  }
+
   return (
 
     <div>
@@ -153,6 +163,9 @@ function Test ( )
       </button>
       <button onClick = { ( ) => handleUpdateProduct ( ) } className = { btnStyle }>
         UpdateProduct
+      </button>
+      <button onClick = { ( ) => handleLogin( ) } className = { btnStyle }>
+        Login here
       </button>
 
     </div>

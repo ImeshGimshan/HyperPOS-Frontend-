@@ -14,6 +14,7 @@ import CashierScreen from './components/Cashier/CashierScreen';
 import BaseScreen from './components/BaseScreen/BaseScreen';
 
 import { Outlet } from 'react-router-dom';
+import Test from './components/Test/Test';
 
 function App ( ) {
 
@@ -25,6 +26,8 @@ function App ( ) {
       {/*<CashierScreen/>*/}
       {/*<BaseScreen/>*/}
       {/*<Outlet/>*/}
+
+      <Test/>
 
 
     </>
