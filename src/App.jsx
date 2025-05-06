@@ -19,19 +19,13 @@ import Test from './components/Test/Test';
 function App ( ) {
 
   return (
-
     <>
-
       <Landing/>
-      {/*<CashierScreen/>*/}
-      {/*<BaseScreen/>*/}
-      {/*<Outlet/>*/}
-
+      <CashierScreen/>
+      <BaseScreen/>
+      <Outlet/>
       <Test/>
-
-
     </>
-
   );
 
 }
