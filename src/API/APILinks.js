@@ -1,4 +1,5 @@
-const BaseUrl = "http://localhost:8080/api";
+const BaseUrl = "http://152.67.176.77:8080/api";
+// const BaseUrl = "http://localhost:8080/api";
 
 const APILinks = {
   login: `${BaseUrl}/auth/login`,
