@@ -47,7 +47,7 @@ const Header = ( ) => {
         
         <div className = "flex items-center">
 
-          <img src = "./Header-Logo.png" alt = "logo" className = "h-[50px] w-[50px]" />
+          <img src = "./HyperPOS - Logo.svg" alt = "logo" className = "logo-glow h-[70px] w-[70px]"/>
           
           {/* Mobile menu button. */}
           <div className = "md:hidden flex items-center ml-3">
