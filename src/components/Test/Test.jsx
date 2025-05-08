@@ -13,6 +13,7 @@ import {
   getProductStock,
   getProductStockById,
 } from "../../API/APIProducts";
+import { getCategoryById } from "../../API/APICategory";
 
 import { cart, updateCart, product, updatedProduct } from "./postData";
 import testLogin from "../../API/testLogin";
@@ -154,6 +155,7 @@ function Test() {
       console.error("Error:", errorMessage);
     }
   };
+
   return (
     <div>
       <h1>Test sales</h1>
