@@ -66,7 +66,9 @@ const Footer = ( ) => {
       <div className = "relative z-10 max-w-7xl mx-auto px-6 flex flex-col items-center gap-6">
 
         <div className="mb-2">
-          <img src = "./HyperPOS - Logo.svg" alt = "logo" width = { 120 } className = "logo-glow" />
+          <a href = "#">
+            <img src = "./HyperPOS - Logo.svg" alt = "logo" width = { 120 } className = "logo-glow" />
+          </a>
         </div>
 
         <div className = "flex flex-wrap justify-between w-full gap-6">

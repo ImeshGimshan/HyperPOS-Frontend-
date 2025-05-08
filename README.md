@@ -19,3 +19,11 @@ https://prismic.io/blog/css-animation-examples // 19 - Bio for login , sign up e
 https://uiverse.io/cards?orderBy=favorites&theme=light
 
 https://tailwindflex.com/@anonymous/neon-container
+
+
+import { useNavigate } from 'react-router-dom'
+const navigate = useNavigate ( )
+const toWhere = ( ) => {
+navigate ( '/' )
+}
+onClick = { toWhere }
