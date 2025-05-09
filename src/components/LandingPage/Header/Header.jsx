@@ -5,7 +5,11 @@ import { useNavProvider } from '../../Navigation/NavProvider';
 
 import GradientButton from '../../UI/GradientButton';
 
+import { useNavigate } from 'react-router-dom'
+
 const Header = ( ) => {
+
+  const navigate = useNavigate ( )
 
   // Use States for Mobile Menu and Active Link.
   const [ mobileMenuOpen, setMobileMenuOpen ] = useState ( false );
@@ -39,6 +43,10 @@ const Header = ( ) => {
     }
   }, [ activeLink ] );
 
+  const toLogin = ( ) => {
+    navigate ( '/login' )
+  }
+
   return (
     
     <section className = "bg-[#593192] text-white fixed top-0 left-0 right-0 z-50 shadow-md">
@@ -47,7 +55,9 @@ const Header = ( ) => {
         
         <div className = "flex items-center">
 
-          <img src = "./Header-Logo.png" alt = "logo" className = "h-[50px] w-[50px]" />
+          <a href = "#">
+            <img src = "./HyperPOS - Logo.svg" alt = "logo" className = "logo-glow h-[70px] w-[70px]"/>
+          </a>
           
           {/* Mobile menu button. */}
           <div className = "md:hidden flex items-center ml-3">
@@ -129,7 +139,10 @@ const Header = ( ) => {
         </div>
 
         <div className = "my-2.5">
-          <GradientButton className = "py-2 px-5 text-sm h-9 min-w-[90px] rounded-xl">
+          <GradientButton 
+            className = "py-2 px-5 text-sm h-9 min-w-[90px] rounded-xl"
+            onClick = { toLogin }
+          >
             Login
           </GradientButton>
         </div>

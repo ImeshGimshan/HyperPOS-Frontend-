@@ -1,6 +1,5 @@
 
-// Imports : ( React ) , ( ResponsiveBar ).
-import React from "react";
+// Imports : ( ResponsiveBar ).
 
 import { ResponsiveBar } from "@nivo/bar";
 
@@ -90,39 +89,62 @@ function TopProductsChart ( { invoiceData , productData } ) {
 // Helper function to process top products data.
 function processTopProducts ( invoiceData , productData ) {
 
-  // Creating a map to store sales by product ID.
-  const productSalesMap = { };
+  // Check if invoiceData is available and has the expected structure
+  if (!invoiceData || invoiceData.length === 0) {
+    return [];
+  }
+
+  // Check if we have the old or new data structure
+  const hasItems = invoiceData[0] && invoiceData[0].items;
+
+  // If we have the old structure with items, process it as before
+  if (hasItems) {
+    // Creating a map to store sales by product ID.
+    const productSalesMap = { };
   
-  // Process each invoice item.
-  invoiceData.forEach ( invoice => {
-
-    invoice.items.forEach ( item => {
-
-      if ( !productSalesMap [ item.productId ] ) {
-        productSalesMap [ item.productId ] = 0;
-      }
+    // Process each invoice item.
+    invoiceData.forEach ( invoice => {
+      invoice.items.forEach ( item => {
+        if ( !productSalesMap [ item.productId ] ) {
+          productSalesMap [ item.productId ] = 0;
+        }
       
-      productSalesMap [ item.productId ] += item.amount;
-
+        productSalesMap [ item.productId ] += item.amount;
+      } );
     } );
-
-  } );
   
-  // Convert to array and sort by sales amount.
-  const productSales = Object.entries ( productSalesMap )
-    .map ( ( [ productId , sales ] ) => {
-
-      // Find product name from productData
-      const product = productData.find ( p => p.id === parseInt ( productId ) );
-      const name = product ? ( product.name || `Product ${ productId }` ) : `Product ${ productId }`;
+    // Convert to array and sort by sales amount.
+    const productSales = Object.entries ( productSalesMap )
+      .map ( ( [ productId , sales ] ) => {
+        // Find product name from productData
+        const product = productData.find ( p => p.id === parseInt ( productId ) );
+        const name = product ? ( product.name || `Product ${ productId }` ) : `Product ${ productId }`;
       
-      return { productId : parseInt ( productId ) , name : name.substring ( 0 , 20 ) , sales };
-
-    } )
-    .sort ( ( a , b ) => b.sales - a.sales ) 
-    .slice ( 0 , 5 );
+        return { productId : parseInt ( productId ) , name : name.substring ( 0 , 20 ) , sales };
+      } )
+      .sort ( ( a , b ) => b.sales - a.sales ) 
+      .slice ( 0 , 5 );
   
-  return productSales;
+    return productSales;
+  }
+
+  // For the new structure without items, we'll create a placeholder
+  // since we don't have item-level data
+  else {
+    // If we have productData, use it to create a placeholder chart
+    if (productData && productData.length > 0) {
+      return productData
+        .slice(0, 5)
+        .map(product => ({
+          productId: product.id,
+          name: product.name ? product.name.substring(0, 20) : `Product ${product.id}`,
+          sales: 0 // We don't have sales data per product in the new structure
+        }));
+    }
+  
+    // If we don't have product data either, return an empty array
+    return [];
+  }
 }
 
 // Exporting the TopProductsChart component.
