@@ -9,11 +9,11 @@ import RecentInvoices from "../components/RecentInvoices";
 import InventoryStatus from "../components/InventoryStatus";
 import DateRangeSelector from "../components/DateRangeSelector";
 
-import invoiceData from "../data/invoiceData";
+// Change this import to use the getInvoiceData function
+import { getInvoiceData } from "../data/invoiceData";
 import productData from "../data/productData";
 import { getCustomerData } from "../data/customerData";
 import inventoryData from "../data/inventoryData";
-import { getGRNData } from "../data/grnData";
 
 // Function : ( DashboardHome ).
 function DashboardHome ( ) {
@@ -22,12 +22,12 @@ function DashboardHome ( ) {
   const [ dateRange , setDateRange ] = useState ( { startDate: "" , endDate: "" } );
   // State for customer data.
   const [ customerData , setCustomerData ] = useState ( [ ] );
-  // State for GRN data
-  const [ , setGRNData ] = useState ( [ ] );
+  // Add state for invoice data
+  const [ invoiceData , setInvoiceData ] = useState ( [ ] );
 
-  // Fetch customer data when component mounts.
+  // Fetch customer data and invoice data when component mounts.
   useEffect ( ( ) => {
-  
+    
     const fetchCustomerData = async ( ) => {
     
       try {
@@ -43,29 +43,26 @@ function DashboardHome ( ) {
       }
     
     };
-  
-    fetchCustomerData ( );
-  
-    // Add this to fetch GRN data
-    const fetchGRNData = async ( ) => {
-
+    
+    const fetchInvoiceData = async ( ) => {
+    
       try {
-
-        const data = await getGRNData ( );
-        setGRNData ( data || [ ] );
-
+      
+        const data = await getInvoiceData ( );
+        setInvoiceData ( data || [ ] );
+      
+      } catch ( error ) {
+      
+        console.error ( "Error fetching invoice data:" , error );
+        setInvoiceData ( [ ] );
+      
       }
-      catch ( error ) {
-
-        console.error ( "Error fetching GRN data:" , error );
-        setGRNData ( [ ] );
-
-      }
-
+    
     };
-  
-    fetchGRNData ( );
-  
+    
+    fetchCustomerData ( );
+    fetchInvoiceData ( );
+    
   } , [ ] );
 
   // Filtering the invoices based on the date range.
@@ -74,22 +71,22 @@ function DashboardHome ( ) {
     if ( !dateRange.startDate || !dateRange.endDate ) {
       return invoiceData; // Return all data if no date range is selected ( Default ).
     }
-  
+    
     const startDate = new Date ( dateRange.startDate ); // Initializing the start date.
     const endDate = new Date ( dateRange.endDate ); // Initializing the end date.
     endDate.setHours ( 23 , 59 , 59 , 999 ); // Setting the end date to the last second of the day.
-  
+    
     return invoiceData.filter ( inv => {
-
-      const invoiceDate = new Date ( inv.invoice.date );
+      // Update this to use the new invoice data structure
+      const invoiceDate = new Date ( inv.updatedAt || inv.createdAt );
       return invoiceDate >= startDate && invoiceDate <= endDate;
-
     } );
 
-  } , [ dateRange ] );
+  } , [ dateRange , invoiceData ] ); // Add invoiceData as a dependency
 
   // Calculating summary metrics based on filtered data.
-  const totalSales = filteredInvoiceData.reduce ( ( sum , inv ) => sum + inv.invoice.total , 0 );
+  // Update this to use the new invoice data structure
+  const totalSales = filteredInvoiceData.reduce ( ( sum , inv ) => sum + inv.total , 0 );
   const totalProducts = productData.length;
   const totalCustomers = customerData.length;
   const totalInventoryValue = inventoryData.reduce ( ( sum , inv ) => sum + inv.total , 0 );

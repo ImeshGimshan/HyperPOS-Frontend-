@@ -1,14 +1,22 @@
 
-// Imports : ( React ).
-import React from "react";
-
 // Function : ( RecentInvoices ).
 function RecentInvoices ( { invoiceData } ) {
 
   // Get the 5 most recent invoices.
   const recentInvoices = [ ...invoiceData ]
-    .sort ( ( a , b ) => new Date ( b.invoice.date ) - new Date ( a.invoice.date ) )
+    .filter ( invoice => invoice && (invoice.updatedAt || invoice.createdAt) )
+    .sort ( ( a , b ) => {
+      const dateA = new Date ( a.updatedAt || a.createdAt );
+      const dateB = new Date ( b.updatedAt || b.createdAt );
+      return dateB - dateA;
+    } )
     .slice ( 0 , 5 );
+
+  // Function to format date
+  const formatDate = ( dateString ) => {
+    if ( !dateString ) return "—";
+    return new Date ( dateString ).toLocaleDateString ( );
+  };
 
   return (
 
@@ -19,20 +27,20 @@ function RecentInvoices ( { invoiceData } ) {
             <th className = "p-3 text-left font-semibold">Invoice ID</th>
             <th className = "p-3 text-left font-semibold">Customer ID</th>
             <th className = "p-3 text-left font-semibold">Date</th>
-            <th className = "p-3 text-left font-semibold">Items</th>
+            <th className = "p-3 text-left font-semibold">Payment Method</th>
             <th className = "p-3 text-right font-semibold">Amount</th>
           </tr>
         </thead>
         <tbody>
           { recentInvoices.map ( ( invoice ) => (
 
-            <tr key = { invoice.invoice.id } className = "border-t hover:bg-gray-50 transition duration-150">
-              <td className = "p-3">{ invoice.invoice.id }</td>
-              <td className = "p-3">{ invoice.invoice.customerId }</td>
-              <td className = "p-3">{ new Date ( invoice.invoice.date ).toLocaleDateString ( ) }</td>
-              <td className = "p-3">{ invoice.items.length }</td>
+            <tr key = { invoice.id } className = "border-t hover:bg-gray-50 transition duration-150">
+              <td className = "p-3">{ invoice.id }</td>
+              <td className = "p-3">{ invoice.customerId }</td>
+              <td className = "p-3">{ formatDate ( invoice.updatedAt || invoice.createdAt ) }</td>
+              <td className = "p-3">{ invoice.paymentMethod }</td>
               <td className = "p-3 text-right font-medium text-green-600">
-                Rs { invoice.invoice.total.toLocaleString ( ) }
+                Rs { invoice.total.toLocaleString ( ) }
               </td>
             </tr>
 
