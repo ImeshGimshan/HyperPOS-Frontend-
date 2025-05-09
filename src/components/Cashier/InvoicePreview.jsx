@@ -1,8 +1,9 @@
 import React, { useRef } from "react";
-import QRCode from "qrcode.react";
+import { QRCodeSVG } from "qrcode.react";
 import "./styles.css";
+import { FaWindowClose } from "react-icons/fa";
 
-const InvoicePreview = ({ invoice }) => {
+const InvoicePreview = ({ invoice, productList,setPrintInvoice }) => {
   const printRef = useRef();
 
   const handlePrint = () => {
@@ -28,57 +29,97 @@ const InvoicePreview = ({ invoice }) => {
     win.document.close();
     win.print();
   };
+  const handleClose = () => {
+    setPrintInvoice(null);
+  };
 
   return (
-    <div className="cashier-invoice-panel">
+    <div className="cashier-invoice-panel absolute">
       <div ref={printRef}>
-        <h2 className="cashier-invoice-title">INVOICE</h2>
+        <button onClick={()=>handleClose()} className=" right-5 top-5 absolute">
+          <FaWindowClose className="text-red-500 scale-200" />
+        </button>
+        <h2 className="cashier-invoice-title w-full">
+          INVOICE
+        </h2>
 
         <div className="cashier-invoice-meta">
-          <p><strong>Date:</strong> {invoice.date}</p>
-          <p><strong>Invoice No:</strong> {invoice.number}</p>
-          <p><strong>Customer:</strong> {invoice.customer}</p>
+          <div className="flex flex-row justify-between">
+            <p>
+              <strong>Date:</strong>{" "}
+              {new Date(
+                invoice.invoice.createdAt || invoice.invoice.updatedAt
+              ).toLocaleDateString()}
+            </p>
+            <p>
+              <strong>Time:</strong>{" "}
+              {new Date(
+                invoice.invoice.createdAt || invoice.invoice.updatedAt
+              ).toLocaleTimeString()}
+            </p>
+          </div>
+          <div className="flex flex-row justify-between">
+            <p>
+              <strong>Invoice No:</strong> {invoice.invoice.id}
+            </p>
+            <p>
+              <strong>Customer:</strong> {invoice.invoice.customerId}
+            </p>
+          </div>
+        </div>
+        <div className="h-[40vh] overflow-scroll">
+          <table className="cashier-invoice-table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Qty</th>
+                <th>Unit</th>
+                <th>Price</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {invoice?.items.map((item, idx) => (
+                <tr key={idx}>
+                  {productList
+                    .filter((product) => product.id === item.productId)
+                    .map((product) => (
+                      <td key={product.id}>{product.name}</td>
+                    ))}
+                  <td>{item.quantity}</td>
+                  {productList
+                    .filter((product) => product.id === item.productId)
+                    .map((product) => (
+                      <td key={product.id}>{product.unit}</td>
+                    ))}
+                  <td>Rs.{item.unitPrice.toFixed(2)}s</td>
+                  <td>Rs.{item.amount.toFixed(2)}g</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
 
-        <table className="cashier-invoice-table">
-          <thead>
-            <tr>
-              <th>Item</th>
-              <th>Qty</th>
-              <th>Unit</th>
-              <th>Price</th>
-              <th>Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            {invoice.items.map((item, idx) => (
-              <tr key={idx}>
-                <td>{item.name}</td>
-                <td>{item.quantity}</td>
-                <td>{item.unit}</td>
-                <td>Rs.{item.price.toFixed(2)}</td>
-                <td>Rs.{item.total.toFixed(2)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-
         <div className="cashier-invoice-total">
-          <p><strong>Subtotal:</strong> Rs.{invoice.subtotal.toFixed(2)}</p>
-          <p><strong>Discount:</strong> Rs.{invoice.discount.toFixed(2)}</p>
-          <p><strong>Grand Total:</strong> Rs.{invoice.grandTotal.toFixed(2)}</p>
+          {/* <p><strong>Subtotal:</strong> Rs.{invoice.invoice.total.toFixed(2)}</p>
+          <p><strong>Discount:</strong> Rs.{invoice.invoice.discount.toFixed(2)}</p>
+          <p><strong>Grand Total:</strong> Rs.{invoice.invoice.total.toFixed(2)}</p>
           <p><strong>Cash:</strong> Rs.{invoice.cash.toFixed(2)}</p>
-          <p><strong>Change:</strong> Rs.{invoice.change.toFixed(2)}</p>
+          <p><strong>Change:</strong> Rs.{invoice.change.toFixed(2)}</p> */}
         </div>
 
         <div style={{ textAlign: "center", marginTop: "20px" }}>
-          <QRCode value={`Invoice: ${invoice.number}, Total: Rs.${invoice.grandTotal}`} />
+          <QRCodeSVG
+            value={`Invoice: ${invoice.invoice.id}, Total: Rs.${invoice.invoice.total}`}
+          />
           <p style={{ marginTop: "6px", fontSize: "12px" }}>Scan for Payment</p>
         </div>
       </div>
 
       <div style={{ textAlign: "center", marginTop: "16px" }}>
-        <button className="cashier-print-btn" onClick={handlePrint}>Print Invoice</button>
+        <button className="cashier-print-btn" onClick={handlePrint}>
+          Print Invoice
+        </button>
       </div>
     </div>
   );
