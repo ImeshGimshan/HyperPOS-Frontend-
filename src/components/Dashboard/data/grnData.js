@@ -1,26 +1,21 @@
 
-const grnData = [
+import { getGRNs } from "../../../API/APIGRN";
 
-  {
-    "id":1,
-    "inventoryId":1,
-    "productId":1,
-    "quantity":200.0,
-    "unitCost":100.0,
-    "discount":0,
-    "amount":20000.0
-  },
-  {
-    "id":2,
-    "inventoryId":1,
-    "productId":1,
-    "quantity":200.0,
-    "unitCost":100.0,
-    "discount":0,
-    "amount":20000.0
+const getGRNData = async ( ) => {
+
+  try {
+
+    const response = await getGRNs();
+    return response;
+
+  } 
+  catch ( error ) {
+    
+    console.error ( "Error fetching GRN data:" , error );
+    return [ ];
+
   }
-  
-];
-  
-// Exporting the grndata.
-export default grnData;
+
+};
+
+export { getGRNData };
