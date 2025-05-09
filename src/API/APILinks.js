@@ -1,19 +1,25 @@
-const BaseUrl = "http://localhost:8080/api";
+
+const BaseUrl = "http://152.67.176.77:8080/api";
 
 const APILinks = {
+
   login: `${BaseUrl}/auth/login`,
   register: `${BaseUrl}/auth/register`,
+
   getUser: `${BaseUrl}/user`,
   getUserById: (id) => `${BaseUrl}/user/${id}`,
+
   getCustomers: `${BaseUrl}/customer`,
   getCustomerById: (id) => `${BaseUrl}/customer/${id}`,
   saveCustomer: `${BaseUrl}/customer`,
   updateCustomer: (id) => `${BaseUrl}/customer/${id}`,
+
   getCategories: `${BaseUrl}/category`,
   getCategoryById: (id) => `${BaseUrl}/category/${id}`,
   saveCategory: `${BaseUrl}/category`,
   updateCategory: (id) => `${BaseUrl}/category/${id}`,
   deleteCategory: (id) => `${BaseUrl}/category/${id}`,
+
   getProducts: `${BaseUrl}/product`,
   getProductById: (id) => `${BaseUrl}/product/${id}`,
   saveProduct: `${BaseUrl}/product`,
@@ -22,27 +28,32 @@ const APILinks = {
   updateProductWithImage: (id) => `${BaseUrl}/product/${id}`,
   getProductStock: `${BaseUrl}/product/stock`,
   getProductStockById: (id) => `${BaseUrl}/product/stock/${id}`,
+  getProductImage: (id) => `${BaseUrl}/image/${id}`,
+
   getInvoices: `${BaseUrl}/invoice`,
   getInvoiceById: (id) => `${BaseUrl}/invoice/${id}`,
   saveInvoice: `${BaseUrl}/invoice`,
   updateInvoice: (id) => `${BaseUrl}/invoice/${id}`,
   getInvoiceItemById: (id) => `${BaseUrl}/invoice/item/${id}`,
   saveInvoiceItem: `${BaseUrl}/invoice/item`,
+
   getGRNs: `${BaseUrl}/grn`,
   getGRNById: (id) => `${BaseUrl}/grn/${id}`,
   saveGRN: `${BaseUrl}/grn`,
   updateGRN: (id) => `${BaseUrl}/grn/${id}`,
   getGRNItemById: (id) => `${BaseUrl}/grn/item/${id}`,
   saveGRNItem: `${BaseUrl}/grn/item`,
+
   getSales: `${BaseUrl}/sale`,
   saveSale: `${BaseUrl}/sale`,
   getSaleById: (id) => `${BaseUrl}/sale/${id}`,
   returnSale: (id) => `${BaseUrl}/sale/${id}`,
+
   getPurchases: `${BaseUrl}/purchase`,
   savePurchase: `${BaseUrl}/purchase`,
   returnPurchase: (id) => `${BaseUrl}/purchase/${id}`,
-  getProductImage: (id) => `${BaseUrl}/image/${id}`,
+
 };
 
 export default APILinks;
-export { BaseUrl, APILinks };
+export { BaseUrl , APILinks };

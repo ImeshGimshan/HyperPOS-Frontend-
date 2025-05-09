@@ -1,15 +1,21 @@
 
-const customerData = [
+import { getCustomers } from "../../../API/APICustomer";
 
-  {
-    "id":1,
-    "name":"Alice Johnson",
-    "address":"123 Main Street, Cityville",
-    "phone":"1234567890",
-    "email":"alice@example.com"
+const getCustomerData = async ( ) => {
+
+  try {
+
+    const response = await getCustomers();
+    return response;
+
+  } 
+  catch ( error ) {
+
+    console.error("Error fetching customer data:", error);
+    return [];
+
   }
 
-  ];
-  
-  // Exporting the customerData.
-  export default customerData;
+};
+
+export { getCustomerData };

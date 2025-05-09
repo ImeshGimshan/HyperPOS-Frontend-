@@ -1,6 +1,6 @@
 
-// Imports : ( React , useState , useMemo ) , ( SummaryCard , SalesTrendChart , TopProductsChart , RecentInvoices , InventoryStatus , DateRangeSelector ) , ( invoiceData , productData , customerData , inventoryData ).
-import React, { useState , useMemo } from "react";
+// Imports : ( useEffect , useState , useMemo ) , ( SummaryCard , SalesTrendChart , TopProductsChart , RecentInvoices , InventoryStatus , DateRangeSelector ) , ( invoiceData , productData , customerData , inventoryData ).
+import { useState , useMemo , useEffect } from "react";
 
 import SummaryCard from "../components/SummaryCard";
 import SalesTrendChart from "../components/SalesTrendChart";
@@ -11,7 +11,7 @@ import DateRangeSelector from "../components/DateRangeSelector";
 
 import invoiceData from "../data/invoiceData";
 import productData from "../data/productData";
-import customerData from "../data/customerData";
+import { getCustomerData } from "../data/customerData";
 import inventoryData from "../data/inventoryData";
 
 // Function : ( DashboardHome ).
@@ -19,6 +19,31 @@ function DashboardHome ( ) {
 
   // State for date range.
   const [ dateRange , setDateRange ] = useState ( { startDate: "" , endDate: "" } );
+  // State for customer data.
+  const [ customerData , setCustomerData ] = useState ( [ ] );
+  
+  // Fetch customer data when component mounts.
+  useEffect ( ( ) => {
+    
+    const fetchCustomerData = async ( ) => {
+      
+      try {
+        
+        const data = await getCustomerData ( );
+        setCustomerData ( data || [ ] );
+        
+      } catch ( error ) {
+        
+        console.error ( "Error fetching customer data:" , error );
+        setCustomerData ( [ ] );
+        
+      }
+      
+    };
+    
+    fetchCustomerData ( );
+    
+  } , [ ] );
   
   // Filtering the invoices based on the date range.
   const filteredInvoiceData = useMemo ( ( ) => {
