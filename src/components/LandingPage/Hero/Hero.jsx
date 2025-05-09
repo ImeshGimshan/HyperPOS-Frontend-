@@ -1,4 +1,3 @@
-
 /* eslint-disable no-unused-vars */
 
 import React from 'react'
@@ -7,8 +6,12 @@ import GradientButton from '../../UI/GradientButton'
 
 import { motion , useScroll , useTransform } from 'framer-motion'
 
+import { useNavigate } from 'react-router-dom'
+
 const Hero = ( ) => {
 
+  const navigate = useNavigate ( )
+  
   // Reference for the scroll container.
   const containerRef = React.useRef ( null )
   
@@ -32,6 +35,10 @@ const Hero = ( ) => {
   const feature2Transform = useTransform ( scrollYProgress , [ 0.15 , 0.25 ] , [ -50 , 0 ] )
   const feature3Transform = useTransform ( scrollYProgress , [ 0.15 , 0.25 ] , [ 50 , 0 ] )
   const feature4Transform = useTransform ( scrollYProgress , [ 0.15 , 0.25 ] , [ -50 , 0 ] )
+  
+  const toSignUP = ( ) => {
+    navigate ( '/signup' )
+  }
   
   return (
 
@@ -163,7 +170,10 @@ const Hero = ( ) => {
             </p>
             
             <div className = "mt-6">
-              <GradientButton className = "py-3 px-8 text-lg min-w-[140px] rounded-2xl">
+              <GradientButton 
+                className = "py-3 px-8 text-lg min-w-[140px] rounded-2xl"
+                onClick = { toSignUP }
+              >
                 Sign Up
               </GradientButton>
             </div>

@@ -1,0 +1,559 @@
+
+/* Animated background particles. */
+.particles-container {
+
+position : absolute;
+width : 100%;
+height : 100%;
+top : 0;
+left : 0;
+overflow : hidden;
+z-index : 0;
+
+}
+
+.particle {
+
+position : absolute;
+background : rgba( 255, 255, 255, 0.3 );
+border-radius : 50%;
+animation : float 15s infinite linear;
+
+}
+
+@keyframes float {
+
+0% {
+
+    transform : translateY( 0 ) rotate( 0deg );
+    opacity : 0;
+
+}
+10% {
+
+    opacity : 1;
+
+}
+90% {
+
+    opacity : 1;
+
+}
+100% {
+
+    transform : translateY( -100vh ) rotate( 720deg );
+    opacity : 0;
+
+}
+
+}
+
+/* Logo glow. */
+.logo-glow {
+
+filter : drop-shadow( 0 0 8px rgba( 152, 84, 248, 0.6 ) );
+animation : logo-pulse 3s infinite ease-in-out;
+
+}
+
+@keyframes logo-pulse {
+
+0%, 100% {
+
+    filter : drop-shadow( 0 0 8px rgba( 152, 84, 248, 0.6 ) );
+
+}
+50% {
+
+    filter : drop-shadow( 0 0 15px rgba( 255, 68, 204, 0.8 ) );
+
+}
+
+}
+
+/* Glass Neon Card Style. */
+.glass-neon-card {
+
+position : relative;
+background : rgba( 7, 24, 46, 0.4 );
+backdrop-filter : blur( 10px );
+border-radius : 12px;
+padding : 1.25rem;
+overflow : hidden;
+transition : all 0.4s ease;
+box-shadow : 0 8px 32px rgba( 0, 0, 0, 0.3 );
+border : 1px solid rgba( 152, 84, 248, 0.2 );
+z-index : 1;
+height : 100%;
+min-height : 180px;
+width : 100%;
+display : flex;
+flex-direction : column;
+justify-content : center;
+
+}
+
+/* Card border glow. */
+.glass-neon-card::before {
+
+content : '';
+position : absolute;
+top : 0;
+left : 0;
+right : 0;
+bottom : 0;
+border-radius : 12px;
+padding : 2px;
+background : linear-gradient(
+    45deg,
+    #9854F8,
+    #FF44CC,
+    #9854F8,
+    #FF44CC
+);
+-webkit-mask : 
+    linear-gradient( #fff 0 0 ) content-box, 
+    linear-gradient( #fff 0 0 );
+-webkit-mask-composite : xor;
+mask-composite : exclude;
+opacity : 0.7;
+transition : opacity 0.4s ease;
+animation : borderRotate 4s linear infinite;
+background-size : 400% 400%;
+
+}
+
+.glass-neon-card:hover::before {
+
+opacity : 1;
+
+}
+
+/* Card inner glow. */
+.card-glow {
+
+position : absolute;
+width : 150px;
+height : 150px;
+background : radial-gradient( circle , rgba( 152, 84, 248, 0.3 ) 0% , rgba( 255, 68, 204, 0.1 ) 50% , transparent 70% );
+border-radius : 50%;
+top : -75px;
+right : -75px;
+opacity : 0.5;
+transition : all 0.6s ease;
+z-index : -1;
+
+}
+
+.glass-neon-card:hover .card-glow {
+
+transform : scale( 1.5 );
+opacity : 0.7;
+
+}
+
+/* Card content. */
+.card-content {
+
+position : relative;
+z-index : 2;
+width : 100%;
+display : flex;
+flex-direction : column;
+align-items : center;
+
+}
+
+/* Neon text effect. */
+.neon-text {
+
+font-size : 1.1rem;
+font-weight : 700;
+margin-bottom : 1.25rem;
+position : relative;
+padding-bottom : 0.5rem;
+color : white;
+text-shadow : 0 0 5px rgba( 152, 84, 248, 0.7 ), 0 0 10px rgba( 152, 84, 248, 0.5 );
+transition : all 0.3s ease;
+text-align : center;
+
+}
+
+.neon-text::after {
+
+content : '';
+position : absolute;
+bottom : 0;
+left : 50%;
+transform : translateX( -50% );
+width : 40px;
+height : 2px;
+background : linear-gradient( 90deg , #9854F8 , #FF44CC );
+box-shadow : 0 0 8px #9854F8 , 0 0 12px #FF44CC;
+transition : width 0.3s ease;
+
+}
+
+.glass-neon-card:hover .neon-text {
+
+text-shadow : 0 0 7px rgba( 152 , 84 , 248 , 0.9 ) , 0 0 15px rgba( 152 , 84 , 248 , 0.7 );
+
+}
+
+.glass-neon-card:hover .neon-text::after {
+
+width : 80px;
+
+}
+
+.info-container {
+
+display : flex;
+flex-direction : column;
+gap : 0.75rem;
+width : 100%;
+padding : 0 0.75rem;
+
+}
+
+.info-item {
+
+display : flex;
+align-items : flex-start;
+gap : 0.75rem;
+transition : all 0.3s ease;
+position : relative;
+width : 100%;
+
+}
+
+.info-item:hover {
+
+transform : translateY( -3px );
+
+}
+
+.info-icon {
+
+color : #9854F8;
+font-size : 0.9rem;
+flex-shrink : 0;
+margin-top : 0.2rem;
+transition : all 0.3s ease;
+filter : drop-shadow( 0 0 3px rgba( 152, 84, 248, 0.5 ) );
+
+}
+
+.info-item:hover .info-icon {
+
+color : #FF44CC;
+filter : drop-shadow( 0 0 5px rgba( 255, 68, 204, 0.7 ) );
+transform : scale ( 1.2 );
+
+}
+
+.info-text {
+
+line-height : 1.4;
+font-size : 0.85rem;
+transition : color 0.3s ease;
+
+}
+
+.info-item:hover .info-text {
+
+color : rgba( 255, 255, 255, 0.9 );
+
+}
+
+.news-container {
+
+display : flex;
+flex-direction : column;
+gap : 0.75rem;
+width : 100%;
+
+}
+
+.news-item {
+
+display : flex;
+align-items : center;
+gap : 0.75rem;
+transition : all 0.3s ease;
+position : relative;
+width : 100%;
+
+}
+
+.news-item:hover {
+
+transform : translateY( -3px );
+
+}
+
+.news-image {
+
+width : 32px;
+height : 32px;
+background : rgba( 152 , 84 , 248 , 0.3 );
+border-radius : 6px;
+transition : all 0.3s ease;
+
+}
+
+.news-item:hover .news-image {
+
+background : rgba( 255 , 68 , 204 , 0.3 );
+box-shadow : 0 0 10px rgba( 255 , 68 , 204 , 0.5 );
+
+}
+
+.news-content {
+
+flex : 1;
+
+}
+
+.news-date {
+
+display : block;
+font-size : 0.7rem;
+color : #FF44CC;
+margin-bottom : 0.15rem;
+
+}
+
+.news-title {
+
+margin : 0;
+line-height : 1.3;
+font-size : 0.85rem;
+transition : color 0.3s ease;
+text-align : left;
+
+}
+
+.news-item:hover .news-title {
+
+color : rgba( 255 , 255 , 255 , 0.9 );
+
+}
+
+/* Card particles. */
+.card-particles {
+
+position : absolute;
+top : 0;
+left : 0;
+width : 100%;
+height : 100%;
+overflow : hidden;
+z-index : 1;
+pointer-events : none;
+
+}
+
+.card-particle {
+
+position : absolute;
+background : rgba( 255 , 255 , 255 , 0.5 );
+border-radius : 50%;
+pointer-events : none;
+opacity : 0;
+animation : particleFloat 10s infinite ease-in-out;
+
+}
+
+@keyframes particleFloat {
+
+0%, 100% {
+
+    transform : translateY( 0 ) translateX( 0 );
+    opacity : 0;
+
+}
+10%, 90% {
+
+    opacity : 0.5;
+
+}
+50% {
+
+    transform : translateY( -20px ) translateX( 10px );
+    opacity : 0.8;
+
+}
+
+}
+
+@keyframes borderRotate {
+
+0% {
+
+    background-position : 0% 50%;
+
+}
+100% {
+
+    background-position : 100% 50%;
+
+}
+
+}
+
+/* Social icon styles. */
+.social-icon {
+
+position : relative;
+animation : pulse 2s infinite;
+box-shadow : 0 0 2px rgba( 255 , 255 , 255 , 0.5 ), inset 0 0 2px rgba( 255 , 255 , 255 , 0.5 ), 0 0 5px rgba( 152 , 84 , 248 , 0.5 );
+
+}
+
+.social-icon:hover {
+
+animation : none;
+
+}
+
+.instagram-icon {
+
+box-shadow : 0 0 2px #fff, inset 0 0 2px #fff, 0 0 5px #d62976, 0 0 15px #d62976, 0 0 30px #d62976;
+
+}
+
+.instagram-icon:hover {
+
+box-shadow : 0 0 2px #fff, inset 0 0 2px #fff, 0 0 10px #d62976, 0 0 20px #d62976, 0 0 40px #d62976;
+
+}
+
+.twitter-icon {
+
+box-shadow : 0 0 2px #fff, inset 0 0 2px #fff, 0 0 5px #00acee, 0 0 15px #00acee, 0 0 30px #00acee;
+
+}
+
+.twitter-icon:hover {
+
+box-shadow : 0 0 2px #fff, inset 0 0 2px #fff, 0 0 10px #00acee, 0 0 20px #00acee, 0 0 40px #00acee;
+
+}
+
+.linkedin-icon {
+
+box-shadow : 0 0 2px #fff, inset 0 0 2px #fff, 0 0 5px #0072b1, 0 0 15px #0072b1, 0 0 30px #0072b1;
+
+}
+
+.linkedin-icon:hover {
+
+box-shadow : 0 0 2px #fff, inset 0 0 2px #fff, 0 0 10px #0072b1, 0 0 20px #0072b1, 0 0 40px #0072b1;
+
+}
+
+.facebook-icon {
+
+box-shadow : 0 0 2px #fff, inset 0 0 2px #fff, 0 0 5px #3b5998, 0 0 15px #3b5998, 0 0 30px #3b5998;
+
+}
+
+.facebook-icon:hover {
+
+box-shadow : 0 0 2px #fff, inset 0 0 2px #fff, 0 0 10px #3b5998, 0 0 20px #3b5998, 0 0 40px #3b5998;
+
+}
+
+@keyframes slideInTop {
+
+0% {
+
+    transform : translateY( -50px );
+    opacity : 0;
+
+}
+100% {
+
+    transform : translateY( 0 );
+    opacity : 1;
+
+}
+
+}
+
+.animate-slideInTop {
+
+animation : slideInTop 0.3s both;
+
+}
+
+@keyframes pulse {
+
+0% {
+
+    transform : scale( 1 );
+
+}
+50% {
+
+    transform : scale( 1.05 );
+
+}
+100% {
+
+    transform : scale( 1 );
+
+}
+
+}
+
+/* Scroll to top button. */
+.scroll-top-button {
+
+position : fixed;
+bottom : 1.5rem;
+right : 1.5rem;
+width : 2.5rem;
+height : 2.5rem;
+background : rgba( 152 , 84 , 248 , 0.8 );
+border : none;
+border-radius : 50%;
+color : white;
+display : flex;
+align-items : center;
+justify-content : center;
+cursor : pointer;
+opacity : 0;
+visibility : hidden;
+transition : all 0.3s ease;
+box-shadow : 0 0 10px rgba( 152 , 84 , 248 , 0.5 );
+z-index : 100;
+font-size : 0.9rem;
+
+}
+
+.scroll-top-button.visible {
+
+opacity : 1;
+visibility : visible;
+
+}
+
+.scroll-top-button:hover {
+
+background : rgba( 255 , 68 , 204 , 0.8 );
+transform : translateY( -5px );
+
+}
+
+@media ( max-width : 640px ) {
+
+.nav-links-container {
+
+    flex-direction : column;
+    gap : 0.75rem;
+
+}
+
+}

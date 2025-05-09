@@ -1,66 +1,66 @@
 
-// Imports : ( React ) , ( ResponsiveLine ).
-import React from "react";
+// Imports : ( ResponsiveLine ).
 import { ResponsiveLine } from "@nivo/line";
 
 // Function : ( SalesTrendChart ).
 function SalesTrendChart ( { invoiceData } ) {
 
-  // Process data for sales trend chart.
+  // Process data to get sales by month
   const salesByMonth = processSalesByMonth ( invoiceData );
 
   return (
 
     <ResponsiveLine
+
       data = { salesByMonth }
-      margin = { { top : 20 , right : 50 , bottom : 70 , left : 80 } }
+      margin = { { top : 20 , right : 20 , bottom : 50 , left : 80 } }
       xScale = { { type : 'point' } }
-      yScale = { {
-        type : 'linear',
-        min : 'auto',
-        max : 'auto',
-        stacked : false,
-        reverse : false
+      yScale = { { 
+        type : 'linear' , 
+        min : 'auto' , 
+        max : 'auto' , 
+        stacked : false , 
+        reverse : false 
       } }
       yFormat = " >-.2f"
       axisTop = { null }
       axisRight = { null }
       axisBottom = { {
+
+        orient : 'bottom',
         tickSize : 5,
         tickPadding : 5,
-        tickRotation : -45,
+        tickRotation : 0,
         legend : 'Month',
-        legendOffset : 50,
+        legendOffset : 36,
         legendPosition : 'middle'
+
       } }
       axisLeft = { {
+
+        orient : 'left',
         tickSize : 5,
         tickPadding : 5,
         tickRotation : 0,
         legend : 'Sales (Rs)',
         legendOffset : -60,
         legendPosition : 'middle'
+
       } }
-      colors = { ['#8a2be2'] }
       pointSize = { 10 }
-      pointColor = { '#8a2be2' }
+      pointColor = { { theme : 'background' } }
       pointBorderWidth = { 2 }
-      pointBorderColor = { '#6a1b9a' }
+      pointBorderColor = { { from : 'serieColor' } }
       pointLabelYOffset = { -12 }
       useMesh = { true }
-      curve = "monotoneX" 
-      lineWidth = { 3 } 
-      enablePoints = { true }
-      enableGridX = { true }
-      enableGridY = { true }
-      enableSlices = "x"
       legends = { [
+
         {
-          anchor : 'bottom',
-          direction : 'row',
+          anchor : 'bottom-right',
+          direction : 'column',
           justify : false,
           translateX : 0,
-          translateY : 70,
+          translateY : 0,
           itemsSpacing : 0,
           itemDirection : 'left-to-right',
           itemWidth : 80,
@@ -68,17 +68,18 @@ function SalesTrendChart ( { invoiceData } ) {
           itemOpacity : 0.75,
           symbolSize : 12,
           symbolShape : 'circle',
-          symbolBorderColor : 'rgba ( 0 , 0 , 0 , .5 )',
+          symbolBorderColor : 'rgba(0, 0, 0, .5)',
           effects : [
             {
               on : 'hover',
               style : {
-                itemBackground : 'rgba ( 0 , 0 , 0 , .03 )',
+                itemBackground : 'rgba(0, 0, 0, .03)',
                 itemOpacity : 1
               }
             }
           ]
         }
+
       ] }
       theme = { {
         axis : {
@@ -105,70 +106,73 @@ function SalesTrendChart ( { invoiceData } ) {
             background : '#ffffff',
             fontSize : 14,
             borderRadius : 4,
-            boxShadow : '0 4px 8px rgba ( 0 , 0 , 0 , 0.15 )'
+            boxShadow : '0 4px 8px rgba(0, 0, 0, 0.15)'
           }
         }
       } }
+
     />
+
   );
+
 }
 
-// Helper function to process sales data by month.
+// Helper function to process sales by month.
 function processSalesByMonth ( invoiceData ) {
 
-  // Create a map to store sales by month
-  const salesMap = { };
-  
-  // Process each invoice.
-  invoiceData.forEach ( invoice => {
+  // Check if invoiceData is available
+  if (!invoiceData || invoiceData.length === 0) {
+    return [{ id: 'No Data', color: "hsl(240, 70%, 50%)", data: [] }];
+  }
 
-    const date = new Date ( invoice.invoice.date );
-    const monthYear = `${ date.toLocaleString ( 'default' , { month : 'short' } ) } ${ date.getFullYear ( ) }`;
-    
-    if ( !salesMap [ monthYear ] ) {
-      salesMap [ monthYear ] = 0;
-    }
-    
-    salesMap [ monthYear ] += invoice.invoice.total;
+  // Get current year
+  const currentYear = new Date().getFullYear();
 
-  } );
-  
-  // Converting the map to an array of data points.
-  const dataPoints = Object.entries ( salesMap ).map ( ( [ month , total ] ) => ( {
-
-    x : month,
-    y : total
-
-  } ) );
-  
-  // Sorting by date.
-  dataPoints.sort ( ( a , b ) => {
-
-    const [ monthA , yearA ] = a.x.split ( ' ' );
-    const [ monthB , yearB ] = b.x.split ( ' ' );
-    
-    if ( yearA !== yearB ) {
-
-      return parseInt ( yearA ) - parseInt ( yearB );
-
-    }
-    
-    const months = [ 'Jan' , 'Feb' , 'Mar' , 'Apr' , 'May' , 'Jun' , 'Jul' , 'Aug' , 'Sep' , 'Oct' , 'Nov' , 'Dec' ];
-    return months.indexOf ( monthA ) - months.indexOf ( monthB );
-
-  } );
-  
-  // Returning the processed data.
-  return [
-
-    {
-      id : "Sales",
-      color : "#8a2be2",
-      data : dataPoints
-    }
-
+  // Initialize months array with all months
+  const months = [
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
   ];
 
+  // Initialize sales data for current year
+  const salesData = months.map(month => ({ x: month, y: 0 }));
+
+  // Check if we have the old or new data structure
+  const hasNestedInvoice = invoiceData[0] && invoiceData[0].invoice;
+
+  // Process each invoice
+  invoiceData.forEach(invoice => {
+    let date;
+    let total;
+  
+    if (hasNestedInvoice) {
+      // Old structure
+      date = new Date(invoice.invoice.date);
+      total = invoice.invoice.total;
+    } else {
+      // New structure
+      date = new Date(invoice.updatedAt || invoice.createdAt);
+      total = invoice.total;
+    }
+  
+    // Only process invoices with valid dates
+    if (date && !isNaN(date.getTime())) {
+      // Only process invoices from current year
+      if (date.getFullYear() === currentYear) {
+        const month = date.getMonth();
+        salesData[month].y += total;
+      }
+    }
+  });
+
+  // Return formatted data for the chart
+  return [
+    {
+      id: `Sales ${currentYear}`,
+      color: "hsl(240, 70%, 50%)",
+      data: salesData
+    }
+  ];
 }
 
 // Exporting the SalesTrendChart component.
