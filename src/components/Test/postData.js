@@ -56,14 +56,14 @@ const updateCart = {
 
 const product = {
 
-  barcode : "4fsdfsdfdfsf",
-  name : "phone 14",
+  barcode : "4fsidfdfsf",
+  name : "phone 15",
   categoryId : 1,
   unit : "PIECE",
   description : "some description",
   image : null,
   discount : 5,
-  price : 1000.0,
+  price : 100000.0,
   isActive : true,
 
 };
