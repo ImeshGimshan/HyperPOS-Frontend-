@@ -11,7 +11,8 @@ const SummaryFooter = ({ cartItems, cash, setCash, change,setChange }) => {
   useEffect(() => {
     const parsedCash = parseFloat(cash);
     setChange(  parsedCash - grandTotal || 0);
-  }, [cash]);
+    console.log("Change:", change);
+  }, [cash, grandTotal]);
 
   const handleCashChange = (e) => {
     setCash(e.target.value);
@@ -29,7 +30,7 @@ const SummaryFooter = ({ cartItems, cash, setCash, change,setChange }) => {
           <label>Cash:</label>
           <input
             type="number"
-            value={cash}
+            value={Number(cash|| 0)}
             onChange={handleCashChange}
             className="bg-red-700 p-1 rounded w-20 text-white"
           />
@@ -40,7 +41,7 @@ const SummaryFooter = ({ cartItems, cash, setCash, change,setChange }) => {
           <input
             type="text"
             readOnly
-            value={change > 0 ? change.toFixed(2) : "0.00"}
+            value={(change|| 0).toFixed(2)}
             className="bg-green-700 p-1 rounded w-20 text-white"
           />
         </div>

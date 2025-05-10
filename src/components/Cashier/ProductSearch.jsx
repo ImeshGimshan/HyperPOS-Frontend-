@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getProductStock } from "../../API/APIProducts";
 
-const ProductSearch = ({ onAdd, invoice, setProductList }) => {
+const ProductSearch = ({ onAdd, invoice,setProductList }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [barcode, setBarcode] = useState("");
   const [selectedProductId, setSelectedProductId] = useState("");
@@ -95,16 +95,16 @@ const ProductSearch = ({ onAdd, invoice, setProductList }) => {
           <ul className="suggestions-list border border-gray-300 bg-purple-900 max-h-40 overflow-y-auto rounded shadow-md mt-1 absolute">
             {suggestions.map((product) => (
               <li
-                key={product.id}
+                key={product?.id}
                 className="cursor-pointer hover:bg-purple-500 px-2 py-1 flex justify-between"
                 onClick={() => {
-                  setSelectedProductId(product.id);
-                  setSearchTerm(product.name);
-                  setBarcode(product.barcode);
+                  setSelectedProductId(product?.id);
+                  setSearchTerm(product?.name);
+                  setBarcode(product?.barcode);
                 }}
               >
-                <span>{product.name}</span>
-                <span>| {product.stock}</span>
+                <span>{product?.name}</span>
+                <span>| {product?.stock}</span>
               </li>
             ))}
           </ul>
@@ -129,8 +129,8 @@ const ProductSearch = ({ onAdd, invoice, setProductList }) => {
           >
             <option value="">Select Item</option>
             {products.map((product) => (
-              <option key={product.id} value={product.id}>
-                {product.name}
+              <option key={product?.id} value={product?.id}>
+                {product?.name} |  ( {product?.stock} )
               </option>
             ))}
           </select>

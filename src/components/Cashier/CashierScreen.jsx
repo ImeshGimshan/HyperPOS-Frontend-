@@ -40,8 +40,7 @@ const CashierScreen = () => {
       console.log("Invoice saved:", response);
       setInvoice(response);
     } catch (error) {
-      const errorMessage = (error.response?.data?.message) || error?.message;
-      alert(errorMessage);
+      console.error("Error saving invoice:", error);
     }
   };
   const getCustomersList = async () => {
@@ -49,10 +48,9 @@ const CashierScreen = () => {
       const response = await getCustomers();
       setCustomerList(response);
     } catch (error) {
-      const errorMessage = (error.response?.data?.message) || error?.message;
-      alert(errorMessage);
+      console.error("Error fetching customers:", error);
     }
-  };
+  }
   const handleAddToCart = (product) => {
     if (invoice == null) {
       alert("Please create an invoice first!");
@@ -85,7 +83,7 @@ const CashierScreen = () => {
     getNewInvoice();
     setPrintInvoice(null);
     setCartItems([]);
-    setCash(0);
+    setCash("");
     setCustomer(1);
     setInvoiceNumber(`1`);
   };
@@ -95,7 +93,6 @@ const CashierScreen = () => {
       alert("Please add items to the cart before submitting the invoice.");
       return;
     }
-   
 
     const invoiceData = {
       id: invoice.id,
@@ -117,7 +114,6 @@ const CashierScreen = () => {
     };
     const salesData = {
       invoice: invoiceData,
-      customerId: customer,
       items: cartItems,
       cash: parseFloat(cash),
       change:
@@ -129,11 +125,10 @@ const CashierScreen = () => {
         ),
     };
     const submitSaleData = async () => {
-       if (cash < salesData.invoice.total) {
-      alert("Please enter a valid cash amount."+cash+"<"+salesData.invoice.total);
-      return;
-    }
-      console.log("Sales Data:", salesData);
+      if(cash < salesData.invoice.total) {
+        alert("Cash is not enough to pay the invoice.");
+        return;
+      }
       try {
         const response = await submitSale(salesData);
         handlePrintInvoice(response);
@@ -154,28 +149,17 @@ const CashierScreen = () => {
   return (
     <div className="min-h-screen bg-gray-900 text-white p-4 w-full cashier-app">
       <div className="max-w-screen-xl mx-auto cashier-container">
-        <Header
-          customers={customerList}
-          invoice={invoice}
-          setCustomer={setCustomer}
-          customer={customer}
-        />
+        <Header customers={customerList} invoice={invoice} />
 
-        {printInvoice && (
-          <div className="w-full flex justify-center ">
-            <InvoicePreview
-              invoice={printInvoice}
-              productList={ProductList}
-              setPrintInvoice={setPrintInvoice}
-              newInvoice={handleNewInvoice}
-            />
-          </div>
-        )}
+        {printInvoice && 
+        (<div className="w-full flex justify-center ">
+          <InvoicePreview invoice={printInvoice} productList={ProductList} setPrintInvoice={setPrintInvoice} close={handleNewInvoice}/>
+          </div>)}
 
-        <ProductSearch
-          onAdd={handleAddToCart}
-          invoice={invoice}
-          setProductList={setProductList}
+        <ProductSearch 
+        onAdd={handleAddToCart} 
+        invoice={invoice} 
+        setProductList={setProductList} 
         />
         <CartTable
           cartItems={cartItems}

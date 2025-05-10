@@ -1,25 +1,20 @@
-import { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import "./styles.css";
 import { FaWindowClose } from "react-icons/fa";
 
-const InvoicePreview = ({
-  invoice,
-  productList,
-  setPrintInvoice,
-  newInvoice,
-}) => {
+const InvoicePreview = ({ invoice, productList, close }) => {
   const printRef = useRef();
   const [subtotal, setSubtotal] = useState(0);
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
     const sumTotal = invoice.items.reduce(
-      (sum, item) => sum + item.unitPrice * item.quantity,
+      (sum, item) => sum + item?.unitPrice * item?.quantity,
       0
     );
     setSubtotal(sumTotal);
-    setTotal(invoice.invoice.total);
+    setTotal(invoice?.invoice?.total);
   }, [invoice]);
   const handlePrint = () => {
     const printContents = printRef.current.innerHTML;
@@ -45,15 +40,15 @@ const InvoicePreview = ({
     win.print();
   };
   const handleClose = () => {
-    newInvoice();
+    setPrintInvoice(null);
   };
 
   return (
     <div className="cashier-invoice-panel absolute">
       <div ref={printRef}>
         <button
-          onClick={() => handleClose()}
-          className=" right-5 top-5 absolute"
+          onClick={() => close()}
+          className=" right-5 top-5 absolute cursor-pointer"
         >
           <FaWindowClose className="text-red-500 scale-200" />
         </button>
@@ -64,26 +59,26 @@ const InvoicePreview = ({
             <p>
               <strong>Date:</strong>{" "}
               {new Date(
-                invoice.invoice.createdAt || invoice.invoice.updatedAt
+                invoice.invoice.createdAt || invoice?.invoice?.updatedAt
               ).toLocaleDateString()}
             </p>
             <p>
               <strong>Time:</strong>{" "}
               {new Date(
-                invoice.invoice.createdAt || invoice.invoice.updatedAt
+                invoice.invoice.createdAt || invoice?.invoice?.updatedAt
               ).toLocaleTimeString()}
             </p>
           </div>
           <div className="flex flex-row justify-between">
             <p>
-              <strong>Invoice No:</strong> {invoice.invoice.id}
+              <strong>Invoice No:</strong> {invoice?.invoice?.id}
             </p>
             <p>
-              <strong>Customer:</strong> {invoice.invoice.customerId}
+              <strong>Customer:</strong> {invoice?.invoice?.customerId}
             </p>
           </div>
         </div>
-        <div className="max-h-[40vh] overflow-scroll">
+        <div className="h-[40vh] overflow-scroll">
           <table className="cashier-invoice-table">
             <thead>
               <tr>
@@ -98,47 +93,39 @@ const InvoicePreview = ({
               {invoice?.items.map((item, idx) => (
                 <tr key={idx}>
                   {productList
-                    .filter((product) => product.id === item.productId)
+                    .filter((product) => product?.id === item?.productId)
                     .map((product) => (
-                      <td key={product.id}>{product.name}</td>
+                      <td key={product?.id}>{product?.name}</td>
                     ))}
                   <td>{item.quantity}</td>
                   {productList
-                    .filter((product) => product.id === item.productId)
+                    .filter((product) => product?.id === item?.productId)
                     .map((product) => (
                       <td key={product.id}>{product.unit}</td>
                     ))}
-
-                  <td>Rs.{item.unitPrice.toFixed(2)}</td>
-                  <td>Rs.{item.amount.toFixed(2)}</td>
+                  <td>Rs.{item?.unitPrice.toFixed(2)}</td>
+                  <td>Rs.{item?.amount.toFixed(2)}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
 
-        <div className="cashier-invoice-total right-0">
+        <div className="cashier-invoice-total">
           <p>
-            <strong>Subtotal:</strong> Rs.{subtotal.toFixed(2)}
+            <strong>Subtotal:</strong> Rs.{subtotal}
           </p>
           <p>
-            <strong>Discount:</strong> Rs.
-            {(subtotal - total).toFixed(2)}
+            <strong>Discount:</strong> Rs.{subtotal - total}
           </p>
           <p>
             <strong>Grand Total:</strong> Rs.{total}
           </p>
-          {/* <p>
-            <strong>Cash:</strong> Rs.{invoice?.cash?.toFixed(2)}
-          </p>
-          <p>
-            <strong>Change:</strong> Rs.{invoice?.change?.toFixed(2)}
-          </p> */}
         </div>
 
         <div className="hidden">
           <QRCodeSVG
-            value={`Invoice: ${invoice.invoice.id}, Total: Rs.${invoice.invoice.total}`}
+            value={`Invoice: ${invoice?.invoice?.id}, Total: Rs.${invoice?.invoice?.total}`}
           />
         </div>
       </div>
