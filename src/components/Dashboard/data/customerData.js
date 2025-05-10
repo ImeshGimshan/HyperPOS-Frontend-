@@ -1,5 +1,5 @@
-
 import { getCustomers } from "../../../API/APICustomer";
+import React, { useEffect, useState } from "react";
 
 const getCustomerData = async ( ) => {
 
@@ -15,7 +15,7 @@ const getCustomerData = async ( ) => {
     return [];
 
   }
-
 };
+
 
 export { getCustomerData };
