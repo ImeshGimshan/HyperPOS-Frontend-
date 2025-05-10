@@ -50,7 +50,7 @@ const CashierScreen = () => {
     } catch (error) {
       console.error("Error fetching customers:", error);
     }
-  };
+  }
   const handleAddToCart = (product) => {
     if (invoice == null) {
       alert("Please create an invoice first!");
@@ -85,6 +85,7 @@ const CashierScreen = () => {
     setCartItems([]);
     setCash("");
     setCustomer(1);
+    setInvoiceNumber(`1`);
   };
 
   const handleSubmitInvoice = () => {
@@ -148,29 +149,17 @@ const CashierScreen = () => {
   return (
     <div className="min-h-screen bg-gray-900 text-white p-4 w-full cashier-app">
       <div className="max-w-screen-xl mx-auto cashier-container">
-        <Header
-          customers={customerList}
-          invoice={invoice}
-          customer={customer}
-          setCustomer={setCustomer}
-        />
+        <Header customers={customerList} invoice={invoice} />
 
-        {printInvoice && (
-          <div className="w-full flex justify-center ">
-            <InvoicePreview
-              invoice={printInvoice}
-              productList={ProductList}
-              customer={customer}
-              setCustomer={setCustomer}
-              close={handleNewInvoice}
-            />
-          </div>
-        )}
+        {printInvoice && 
+        (<div className="w-full flex justify-center ">
+          <InvoicePreview invoice={printInvoice} productList={ProductList} setPrintInvoice={setPrintInvoice}/>
+          </div>)}
 
-        <ProductSearch
-          onAdd={handleAddToCart}
-          invoice={invoice}
-          setProductList={setProductList}
+        <ProductSearch 
+        onAdd={handleAddToCart} 
+        invoice={invoice} 
+        setProductList={setProductList} 
         />
         <CartTable
           cartItems={cartItems}

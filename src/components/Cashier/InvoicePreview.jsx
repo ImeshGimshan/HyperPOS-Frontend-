@@ -39,6 +39,9 @@ const InvoicePreview = ({ invoice, productList, close }) => {
     win.document.close();
     win.print();
   };
+  const handleClose = () => {
+    setPrintInvoice(null);
+  };
 
   return (
     <div className="cashier-invoice-panel absolute">
