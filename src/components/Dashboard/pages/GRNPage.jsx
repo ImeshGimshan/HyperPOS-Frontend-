@@ -425,7 +425,6 @@ function GRNPage ( ) {
 
       {/* Responsive table container */}
       <div className = "overflow-x-auto bg-white rounded-xl shadow-md">
-
         {isFetching ? (
           <FetchLoader />
         ) : loading ? (
@@ -433,50 +432,49 @@ function GRNPage ( ) {
         ) : error ? (
           <div className = "p-6 text-center text-red-500">{error}</div>
         ) : (
-          <table className = "min-w-full text-sm text-left">
-
-            <thead>
-              <tr className = "bg-purple-800 text-white">
-                <th className = "p-3 whitespace-nowrap">GRN ID</th>
-                <th className = "p-3 whitespace-nowrap">Supplier ID</th>
-                <th className = "p-3 whitespace-nowrap">Total Amount</th>
-                <th className = "p-3 whitespace-nowrap hidden md:table-cell">Created At</th>
-                <th className = "p-3 whitespace-nowrap hidden lg:table-cell">Updated At</th>
-                <th className = "p-3 text-center whitespace-nowrap">View</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredData.length > 0 ? (
-                filteredData.map ( ( grn ) => (
-
-                  <tr key = { grn.id } className = "border-t hover:bg-gray-50 transition duration-200 ease-in-out">
-                    <td className = "p-3 font-medium">{ grn.id }</td>
-                    <td className = "p-3">{ grn.supplierId || "—" }</td>
-                    <td className = "p-3 font-semibold text-green-700">Rs { grn.total?.toLocaleString() || "—" }</td>
-                    <td className = "p-3 hidden md:table-cell">{ formatDate(grn.createdAt) }</td>
-                    <td className = "p-3 hidden lg:table-cell">{ formatDate(grn.updatedAt) }</td>
-                    <td className = "p-3 text-center">
-                      <button
-                        onClick = { ( ) => setSelectedGRN ( grn ) }
-                        className = "text-purple-700 hover:text-purple-900 cursor-pointer transition"
-                        aria-label = "View GRN details"
-                      >
-                        <Eye size = { 18 } />
-                      </button>
-                    </td>
+          <div className = "relative">
+            <div className = "max-h-[70vh] overflow-y-auto overflow-x-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-purple-300/50 hover:[&::-webkit-scrollbar-thumb]:bg-purple-400/70">
+              <table className = "w-full text-sm text-left">
+                <thead className = "sticky top-0 z-10">
+                  <tr className = "bg-purple-800 text-white shadow-sm">
+                    <th className = "p-3 whitespace-nowrap rounded-tl-lg">GRN ID</th>
+                    <th className = "p-3 whitespace-nowrap">Supplier ID</th>
+                    <th className = "p-3 whitespace-nowrap">Total Amount</th>
+                    <th className = "p-3 whitespace-nowrap hidden md:table-cell">Created At</th>
+                    <th className = "p-3 whitespace-nowrap hidden lg:table-cell">Updated At</th>
+                    <th className = "p-3 text-center whitespace-nowrap rounded-tr-lg">View</th>
                   </tr>
-
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="6" className="p-3 text-center font-medium text-gray-500">No GRN records found</td>
-                </tr>
-              )}
-            </tbody>
-
-          </table>
+                </thead>
+                <tbody>
+                  {filteredData.length > 0 ? (
+                    filteredData.map ( ( grn ) => (
+                      <tr key = { grn.id } className = "border-t hover:bg-gray-50 transition duration-200 ease-in-out">
+                        <td className = "p-3 font-medium">{ grn.id }</td>
+                        <td className = "p-3">{ grn.supplierId || "—" }</td>
+                        <td className = "p-3 font-semibold text-green-700">Rs { grn.total?.toLocaleString() || "—" }</td>
+                        <td className = "p-3 hidden md:table-cell">{ formatDate(grn.createdAt) }</td>
+                        <td className = "p-3 hidden lg:table-cell">{ formatDate(grn.updatedAt) }</td>
+                        <td className = "p-3 text-center">
+                          <button
+                            onClick = { ( ) => setSelectedGRN ( grn ) }
+                            className = "text-purple-700 hover:text-purple-900 cursor-pointer transition"
+                            aria-label = "View GRN details"
+                          >
+                            <Eye size = { 18 } />
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="6" className="p-3 text-center font-medium text-gray-500">No GRN records found</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
         )}
-
       </div>
 
       { selectedGRN && <ViewModal grn = { selectedGRN } onClose = { ( ) => setSelectedGRN ( null ) } />}

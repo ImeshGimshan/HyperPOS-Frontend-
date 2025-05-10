@@ -35,7 +35,7 @@ function ViewModal ( { sale , onClose } ) {
             &times;
           </button>
         </div>
-  
+
         {/* Container with padding to create space for scrollbar */}
         <div className = "px-2">
           {/* Scrollable content area with purple-themed scrollbar */}
@@ -63,7 +63,7 @@ function ViewModal ( { sale , onClose } ) {
                   </div>
                 </div>
               </div>
-          
+
               {/* Financial Information */}
               <div className = "bg-green-50 p-3 sm:p-4 rounded-xl">
                 <h3 className = "text-md font-semibold text-green-800 mb-2 sm:mb-3 text-center">Financial Information</h3>
@@ -76,7 +76,7 @@ function ViewModal ( { sale , onClose } ) {
                   </div>
                 </div>
               </div>
-          
+
               {/* Items Information */}
               <div className = "bg-blue-50 p-3 sm:p-4 rounded-xl">
                 <h3 className = "text-md font-semibold text-blue-800 mb-2 sm:mb-3 text-center">Items ({ sale.items.length })</h3>
@@ -114,7 +114,7 @@ function ViewModal ( { sale , onClose } ) {
             </div>
           </div>
         </div>
-  
+
         {/* Footer */}
         <div className = "px-4 sm:px-6 py-3 sm:py-4 border-t border-gray-100">
           <div className = "flex justify-center">
@@ -181,9 +181,9 @@ function FilterModal ( { onClose, onApply, customerList, paymentMethods, current
         >
           &times;
         </button>
-    
+
         <h2 className = "text-xl font-semibold text-purple-900 mb-4 text-center">Advanced Filters</h2>
-    
+
         {/* Customer Information */}
         <div className = "mb-4">
           <h3 className = "text-md font-medium text-purple-700 mb-2 text-center">Customer Information</h3>
@@ -203,7 +203,7 @@ function FilterModal ( { onClose, onApply, customerList, paymentMethods, current
             </div>
           </div>
         </div>
-    
+
         {/* Payment Information */}
         <div className = "mb-4">
           <h3 className = "text-md font-medium text-purple-700 mb-2 text-center">Payment Information</h3>
@@ -223,7 +223,7 @@ function FilterModal ( { onClose, onApply, customerList, paymentMethods, current
             </div>
           </div>
         </div>
-    
+
         {/* Financial Information */}
         <div className = "mb-4">
           <h3 className = "text-md font-medium text-purple-700 mb-2 text-center">Financial Information</h3>
@@ -248,7 +248,7 @@ function FilterModal ( { onClose, onApply, customerList, paymentMethods, current
             </div>
           </div>
         </div>
-    
+
         {/* Date Range */}
         <div className = "mb-4">
           <h3 className = "text-md font-medium text-purple-700 mb-2 text-center">Date Range</h3>
@@ -273,7 +273,7 @@ function FilterModal ( { onClose, onApply, customerList, paymentMethods, current
             </div>
           </div>
         </div>
-    
+
         <div className = "flex justify-center gap-4 mt-6">
           <button onClick = { handleReset } className = "px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 cursor-pointer">Reset</button>
           <button onClick = { handleApply } className = "px-6 py-2 bg-purple-700 text-white rounded-lg hover:bg-purple-800 cursor-pointer">Apply</button>
@@ -313,33 +313,33 @@ function SalePage ( ) {
     const fetchData = async ( ) => {
 
       try {
-  
+
         setLoading ( true );
         setIsFetching ( true );
         const data = await getSaleData ( );
-  
+
         if ( data ) {
-    
+
           setSaleData ( data );
-    
+
         } else {
-    
+
           setError ( "No data returned from API" );
-    
+
         }
-  
+
       } catch ( err ) {
-  
+
         setError ( "Failed to fetch sale data" );
         console.error ( "Error fetching sale data:", err );
-  
+
       } finally {
-  
+
         setLoading ( false );
         setTimeout(() => {
           setIsFetching ( false );
         }, 1500); // Keep the fetch loader visible for at least 1.5 seconds
-  
+
       }
 
     };
@@ -377,14 +377,14 @@ function SalePage ( ) {
     // Apply filters
     const matchesCustomerId = !filters.customerId || 
       sale.invoice.customerId?.toString() === filters.customerId;
-  
+
     const matchesPaymentMethod = !filters.paymentMethod || 
       sale.invoice.paymentMethod === filters.paymentMethod;
-  
+
     const matchesTotal = 
       (!filters.minTotal || (sale.invoice.total && sale.invoice.total >= Number(filters.minTotal))) && 
       (!filters.maxTotal || (sale.invoice.total && sale.invoice.total <= Number(filters.maxTotal)));
-  
+
     const matchesDate = 
       (!filters.startDate || !sale.invoice.updatedAt || new Date(sale.invoice.updatedAt) >= new Date(filters.startDate)) && 
       (!filters.endDate || !sale.invoice.updatedAt || new Date(sale.invoice.updatedAt) <= new Date(filters.endDate + "T23:59:59"));
@@ -424,47 +424,49 @@ function SalePage ( ) {
         ) : error ? (
           <div className = "p-6 text-center text-red-500">{ error }</div>
         ) : (
-          <div className = "overflow-x-auto">
-            <table className = "min-w-full text-sm text-left">
-              <thead>
-                <tr className = "bg-purple-800 text-white">
-                  <th className = "p-3 whitespace-nowrap">Invoice ID</th>
-                  <th className = "p-3 whitespace-nowrap">Customer ID</th>
-                  <th className = "p-3 whitespace-nowrap">Total</th>
-                  <th className = "p-3 whitespace-nowrap hidden sm:table-cell">Payment</th>
-                  <th className = "p-3 whitespace-nowrap hidden md:table-cell">Items</th>
-                  <th className = "p-3 whitespace-nowrap hidden lg:table-cell">Date</th>
-                  <th className = "p-3 text-center whitespace-nowrap">View</th>
-                </tr>
-              </thead>
-              <tbody>
-                { filteredData.length > 0 ? (
-                  filteredData.map ( ( sale ) => (
-                    <tr key = { sale.invoice.id } className = "border-t hover:bg-gray-50 transition duration-200 ease-in-out">
-                      <td className = "p-3 font-medium">{ sale.invoice.id }</td>
-                      <td className = "p-3">{ sale.invoice.customerId }</td>
-                      <td className = "p-3 font-semibold text-green-700">Rs { sale.invoice.total.toLocaleString() }</td>
-                      <td className = "p-3 hidden sm:table-cell">{ sale.invoice.paymentMethod }</td>
-                      <td className = "p-3 hidden md:table-cell">{ sale.items.length }</td>
-                      <td className = "p-3 hidden lg:table-cell">{ formatDate ( sale.invoice.updatedAt ) }</td>
-                      <td className = "p-3 text-center">
-                        <button
-                          onClick = { ( ) => setSelectedSale ( sale ) }
-                          className = "text-purple-700 hover:text-purple-900 cursor-pointer transition"
-                          aria-label = "View sale details"
-                        >
-                          <Eye size = { 18 } />
-                        </button>
-                      </td>
-                    </tr>
-                  ) )
-                ) : (
-                  <tr>
-                    <td colSpan = "7" className = "p-3 text-center font-medium text-gray-500">No sales found</td>
+          <div className = "relative">
+            <div className = "max-h-[70vh] overflow-y-auto overflow-x-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-purple-300/50 hover:[&::-webkit-scrollbar-thumb]:bg-purple-400/70">
+              <table className = "w-full text-sm text-left">
+                <thead className = "sticky top-0 z-10">
+                  <tr className = "bg-purple-800 text-white shadow-sm">
+                    <th className = "p-3 whitespace-nowrap rounded-tl-lg">Invoice ID</th>
+                    <th className = "p-3 whitespace-nowrap">Customer ID</th>
+                    <th className = "p-3 whitespace-nowrap">Total</th>
+                    <th className = "p-3 whitespace-nowrap hidden sm:table-cell">Payment</th>
+                    <th className = "p-3 whitespace-nowrap hidden md:table-cell">Items</th>
+                    <th className = "p-3 whitespace-nowrap hidden lg:table-cell">Date</th>
+                    <th className = "p-3 text-center whitespace-nowrap rounded-tr-lg">View</th>
                   </tr>
-                ) }
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  { filteredData.length > 0 ? (
+                    filteredData.map ( ( sale ) => (
+                      <tr key = { sale.invoice.id } className = "border-t hover:bg-gray-50 transition duration-200 ease-in-out">
+                        <td className = "p-3 font-medium">{ sale.invoice.id }</td>
+                        <td className = "p-3">{ sale.invoice.customerId }</td>
+                        <td className = "p-3 font-semibold text-green-700">Rs { sale.invoice.total.toLocaleString() }</td>
+                        <td className = "p-3 hidden sm:table-cell">{ sale.invoice.paymentMethod }</td>
+                        <td className = "p-3 hidden md:table-cell">{ sale.items.length }</td>
+                        <td className = "p-3 hidden lg:table-cell">{ formatDate ( sale.invoice.updatedAt ) }</td>
+                        <td className = "p-3 text-center">
+                          <button
+                            onClick = { ( ) => setSelectedSale ( sale ) }
+                            className = "text-purple-700 hover:text-purple-900 cursor-pointer transition"
+                            aria-label = "View sale details"
+                          >
+                            <Eye size = { 18 } />
+                          </button>
+                        </td>
+                      </tr>
+                    ) )
+                  ) : (
+                    <tr>
+                      <td colSpan = "7" className = "p-3 text-center font-medium text-gray-500">No sales found</td>
+                    </tr>
+                  ) }
+                </tbody>
+              </table>
+            </div>
           </div>
         ) }
       </div>

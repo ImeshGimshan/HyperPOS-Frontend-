@@ -23,7 +23,7 @@ function ViewModal ( { invoice, onClose } ) {
 
     <div className = "fixed inset-0 bg-black/50 flex justify-center items-center z-50 p-4">
 
-      <div className = "bg-white rounded-2xl p-4 sm:p-6 w-full max-w-md shadow-2xl max-h-[90vh] overflow-y-auto">
+      <div className = "bg-white rounded-2xl p-4 sm:p-6 w-full max-w-md shadow-2xl use-h-[90vh] overflow-y-auto">
 
         <div className = "flex justify-between items-center mb-4">
           <div className = "w-full text-center">
@@ -119,7 +119,7 @@ function FilterModal ( { onClose, onApply, currentFilters, customerList, payment
   const [ startDate, setStartDate ] = useState ( currentFilters.startDate || "" );
   const [ endDate, setEndDate ] = useState ( currentFilters.endDate || "" );
 
-  // Arrow Function : ( handleApply )
+  // Arrow Function : ( handle handle )
   const handleApply = ( ) => {
 
     // Calling the onApply function to apply the filter.
@@ -138,8 +138,7 @@ function FilterModal ( { onClose, onApply, currentFilters, customerList, payment
     setMinTotal ( "" );
     setMaxTotal ( "" );
     setStartDate ( "" );
-    setEndDate ( "" );
-
+    setEndDate ( "" )
   };
 
   return (
@@ -191,7 +190,7 @@ function FilterModal ( { onClose, onApply, currentFilters, customerList, payment
         </div>
 
         {/* Financial Details Section */}
-        <div className = "mb-4">
+      <div className = "mb-4">
           <h3 className = "text-md font-medium text-purple-700 mb-2 text-center">Financial Details</h3>
           <div className = "grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
             <div className = "flex flex-col">
@@ -250,7 +249,6 @@ function FilterModal ( { onClose, onApply, currentFilters, customerList, payment
       </div>
 
     </div>
-
   );
 
 }
@@ -281,18 +279,18 @@ function InvoicePage ( ) {
         const data = await getInvoiceData ( );
 
         if ( data ) {
-  
+
           setInvoiceData ( data );
-  
+
         } else {
-  
+
           setError ( "No data returned from API" );
-  
+
         }
 
       } catch ( err ) {
 
-        setError ( "Failed to fetch invoice data" );
+        setError ( "Failed to fetch invoice data" )
         console.error ( "Error fetching invoice data:", err );
 
       } finally {
@@ -389,7 +387,7 @@ function InvoicePage ( ) {
         />
         <button
           onClick = { ( ) => setShowFilterModal ( true ) }
-          className = "px-4 py-2 bg-purple-700 text-white rounded-lg hover:bg-purple-800 transition flex items-center justify-center gap-2 cursor-pointer"
+          className = "px-4 py-2 bg-purple-700 text-white rounded-lg hover:bg-purple-800 transition duration-200 items-center justify-center gap-2 cursor-pointer"
         >
           <SlidersHorizontal size = { 16 } /> Options
         </button>
@@ -404,47 +402,49 @@ function InvoicePage ( ) {
         ) : error ? (
           <div className = "p-6 text-center text-red-500">{ error }</div>
         ) : (
-          <div className = "overflow-x-auto">
-            <table className = "min-w-full text-sm text-left">
-              <thead>
-                <tr className = "bg-purple-800 text-white">
-                  <th className = "p-3 whitespace-nowrap">ID</th>
-                  <th className = "p-3 whitespace-nowrap">Customer ID</th>
-                  <th className = "p-3 whitespace-nowrap">Total</th>
-                  <th className = "p-3 whitespace-nowrap hidden sm:table-cell">Payment Method</th>
-                  <th className = "p-3 whitespace-nowrap hidden md:table-cell">Created At</th>
-                  <th className = "p-3 whitespace-nowrap hidden lg:table-cell">Updated At</th>
-                  <th className = "p-3 text-center whitespace-nowrap">View</th>
-                </tr>
-              </thead>
-              <tbody>
-                { filteredData.length > 0 ? (
-                  filteredData.map ( ( invoice ) => (
-                    <tr key = { invoice.id } className = "border-t hover:bg-gray-50 transition duration-200 ease-in-out">
-                      <td className = "p-3 font-medium">{ invoice.id }</td>
-                      <td className = "p-3 text-gray-700">{ invoice.customerId }</td>
-                      <td className = "p-3 font-semibold text-green-700">Rs { invoice.total.toLocaleString() }</td>
-                      <td className = "p-3 text-gray-700 hidden sm:table-cell">{ invoice.paymentMethod }</td>
-                      <td className = "p-3 text-gray-700 hidden md:table-cell">{ formatDate ( invoice.createdAt ) }</td>
-                      <td className = "p-3 text-gray-700 hidden lg:table-cell">{ formatDate ( invoice.updatedAt ) }</td>
-                      <td className = "p-3 text-center">
-                        <button
-                          onClick = { ( ) => setSelectedInvoice ( invoice ) }
-                          className = "text-purple-700 hover:text-purple-900 cursor-pointer transition"
-                          aria-label = "View invoice details"
-                        >
-                          <Eye size = { 18 } />
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan = "7" className = "p-3 text-center font-medium text-gray-500">No invoices found</td>
+          <div className = "relative">
+            <div className = "max-h-[70vh] overflow-y-auto overflow-x-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-purple-300/50 hover:[&::-webkit-scrollbar-thumb]:bg-purple-400/70">
+              <table className = "w-full text-sm text-left">
+                <thead className = "sticky top-0 z-10">
+                  <tr className = "bg-purple-800 text-white shadow-sm">
+                    <th className = "p-3 whitespace-nowrap rounded-tl-lg">ID</th>
+                    <th className = "p-3 whitespace-nowrap">Customer ID</th>
+                    <th className = "p-3 whitespace-nowrap">Total</th>
+                    <th className = "p-3 whitespace-nowrap hidden sm:table-cell">Payment Method</th>
+                    <th className = "p-3 whitespace-nowrap hidden md:table-cell">Created At</th>
+                    <th className = "p-3 whitespace-nowrap hidden lg:table-cell">Updated At</th>
+                    <th className = "p-3 text-center whitespace-nowrap rounded-tr-lg">View</th>
                   </tr>
-                )}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  { filteredData.length > 0 ? (
+                    filteredData.map ( ( invoice ) => (
+                      <tr key = { invoice.id } className = "border-t hover:bg-gray-50 transition duration-200 ease-in-out">
+                        <td className = "p-3 font-medium">{ invoice.id }</td>
+                        <td className = "p-3 text-gray-700">{ invoice.customerId }</td>
+                        <td className = "p-3 font-semibold text-green-700">Rs { invoice.total.toLocaleString() }</td>
+                        <td className = "p-3 text-gray-700 hidden sm:table-cell">{ invoice.paymentMethod }</td>
+                        <td className = "p-3 text-gray-700 hidden md:table-cell">{ formatDate ( invoice.createdAt ) }</td>
+                        <td className = "p-3 text-gray-700 hidden lg:table-cell">{ formatDate ( invoice.updatedAt ) }</td>
+                        <td className = "p-3 text-center">
+                          <button
+                            onClick = { ( ) => setSelectedInvoice ( invoice ) }
+                            className = "text-purple-700 hover:text-purple-900 cursor-pointer transition"
+                            aria-label = "View invoice details"
+                          >
+                            <Eye size = { 18 } />
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan = "7" className = "p-3 text-center font-medium text-gray-500">No invoices found</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
       </div>

@@ -1,3 +1,4 @@
+
 // Imports : ( useState , useEffect ) , ( Eye , SlidersHorizontal ) , ( productData )
 import { useState, useEffect } from "react";
 
@@ -87,7 +88,7 @@ function ViewModal ( { product, onClose } ) {
                   </div>
                 </div>
               </div>
-    
+
               {/* Description */}
               {product.description && (
                 <div className = "bg-amber-50 p-3 sm:p-4 rounded-xl">
@@ -99,7 +100,7 @@ function ViewModal ( { product, onClose } ) {
                   </div>
                 </div>
               )}
-    
+
               {/* Product Image */}
               {product.image && (
                 <div className = "bg-green-50 p-3 sm:p-4 rounded-xl">
@@ -466,55 +467,57 @@ function ProductPage ( ) {
         ) : error ? (
           <div className = "p-6 text-center text-red-500">{ error }</div>
         ) : (
-          <div className = "overflow-x-auto">
-            <table className = "min-w-full text-sm text-left">
-              <thead>
-                <tr className = "bg-purple-800 text-white">
-                  <th className = "p-3 whitespace-nowrap">ID</th>
-                  <th className = "p-3 whitespace-nowrap">Name</th>
-                  <th className = "p-3 whitespace-nowrap hidden md:table-cell">Barcode</th>
-                  <th className = "p-3 whitespace-nowrap hidden sm:table-cell">Category</th>
-                  <th className = "p-3 whitespace-nowrap hidden lg:table-cell">Unit</th>
-                  <th className = "p-3 whitespace-nowrap">Price</th>
-                  <th className = "p-3 whitespace-nowrap hidden sm:table-cell">Discount</th>
-                  <th className = "p-3 whitespace-nowrap">Status</th>
-                  <th className = "p-3 text-center whitespace-nowrap">View</th>
-                </tr>
-              </thead>
-              <tbody>
-                { filteredData.length > 0 ? (
-                  filteredData.map ( ( product ) => (
-                    <tr key = { product.id } className = "border-t hover:bg-gray-50 transition duration-200 ease-in-out">
-                      <td className = "p-3 font-medium">{ product.id }</td>
-                      <td className = "p-3 font-semibold text-purple-900">{ product.name }</td>
-                      <td className = "p-3 text-gray-700 hidden md:table-cell">{ product.barcode || "—" }</td>
-                      <td className = "p-3 text-gray-700 hidden sm:table-cell">{ product.categoryId }</td>
-                      <td className = "p-3 text-gray-700 hidden lg:table-cell">{ product.unit }</td>
-                      <td className = "p-3 text-gray-700">Rs { product.price.toLocaleString() }</td>
-                      <td className = "p-3 text-gray-700 hidden sm:table-cell">{ product.discount }%</td>
-                      <td className = "p-3">
-                        <span className = {`px-2 py-1 rounded-full text-xs font-medium ${product.isActive ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
-                          { product.isActive ? "Active" : "Inactive" }
-                        </span>
-                      </td>
-                      <td className = "p-3 text-center">
-                        <button
-                          onClick = { ( ) => setSelectedProduct ( product ) }
-                          className = "text-purple-700 hover:text-purple-900 cursor-pointer transition"
-                          aria-label = "View product details"
-                        >
-                          <Eye size = { 18 } />
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan = "9" className = "p-3 text-center font-medium text-gray-500">No products found</td>
+          <div className = "relative">
+            <div className = "max-h-[70vh] overflow-y-auto overflow-x-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-purple-300/50 hover:[&::-webkit-scrollbar-thumb]:bg-purple-400/70">
+              <table className = "w-full text-sm text-left">
+                <thead className = "sticky top-0 z-10">
+                  <tr className = "bg-purple-800 text-white shadow-sm">
+                    <th className = "p-3 whitespace-nowrap rounded-tl-lg">ID</th>
+                    <th className = "p-3 whitespace-nowrap">Name</th>
+                    <th className = "p-3 whitespace-nowrap hidden md:table-cell">Barcode</th>
+                    <th className = "p-3 whitespace-nowrap hidden sm:table-cell">Category</th>
+                    <th className = "p-3 whitespace-nowrap hidden lg:table-cell">Unit</th>
+                    <th className = "p-3 whitespace-nowrap">Price</th>
+                    <th className = "p-3 whitespace-nowrap hidden sm:table-cell">Discount</th>
+                    <th className = "p-3 whitespace-nowrap">Status</th>
+                    <th className = "p-3 text-center whitespace-nowrap rounded-tr-lg">View</th>
                   </tr>
-                )}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  { filteredData.length > 0 ? (
+                    filteredData.map ( ( product ) => (
+                      <tr key = { product.id } className = "border-t hover:bg-gray-50 transition duration-200 ease-in-out">
+                        <td className = "p-3 font-medium">{ product.id }</td>
+                        <td className = "p-3 font-semibold text-purple-900">{ product.name }</td>
+                        <td className = "p-3 text-gray-700 hidden md:table-cell">{ product.barcode || "—" }</td>
+                        <td className = "p-3 text-gray-700 hidden sm:table-cell">{ product.categoryId }</td>
+                        <td className = "p-3 text-gray-700 hidden lg:table-cell">{ product.unit }</td>
+                        <td className = "p-3 text-gray-700">Rs { product.price.toLocaleString() }</td>
+                        <td className = "p-3 text-gray-700 hidden sm:table-cell">{ product.discount }%</td>
+                        <td className = "p-3">
+                          <span className = {`px-2 py-1 rounded-full text-xs font-medium ${product.isActive ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                            { product.isActive ? "Active" : "Inactive" }
+                          </span>
+                        </td>
+                        <td className = "p-3 text-center">
+                          <button
+                            onClick = { ( ) => setSelectedProduct ( product ) }
+                            className = "text-purple-700 hover:text-purple-900 cursor-pointer transition"
+                            aria-label = "View product details"
+                          >
+                            <Eye size = { 18 } />
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan = "9" className = "p-3 text-center font-medium text-gray-500">No products found</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
       </div>

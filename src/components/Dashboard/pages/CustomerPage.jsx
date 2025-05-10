@@ -36,7 +36,7 @@ function ViewModal ( { customer , onClose } ) {
             &times;
           </button>
         </div>
-  
+
         {/* Container with padding to create space for scrollbar */}
         <div className = "px-2">
           {/* Scrollable content area with purple-themed scrollbar */}
@@ -62,7 +62,7 @@ function ViewModal ( { customer , onClose } ) {
                   </div>
                 </div>
               </div>
-      
+
               {/* Contact Information */}
               <div className = "bg-blue-50 p-3 sm:p-4 rounded-xl">
                 <h3 className = "text-md font-semibold text-blue-800 mb-2 sm:mb-3 text-center">Contact Information</h3>
@@ -81,7 +81,7 @@ function ViewModal ( { customer , onClose } ) {
                   </div>
                 </div>
               </div>
-      
+
               {/* Date Information */}
               <div className = "bg-amber-50 p-3 sm:p-4 rounded-xl">
                 <h3 className = "text-md font-semibold text-amber-800 mb-2 sm:mb-3 text-center">Date Information</h3>
@@ -99,7 +99,7 @@ function ViewModal ( { customer , onClose } ) {
             </div>
           </div>
         </div>
-  
+
         {/* Footer */}
         <div className = "px-4 sm:px-6 py-3 sm:py-4 border-t border-gray-100">
           <div className = "flex justify-center">
@@ -164,9 +164,9 @@ function FilterModal ( { onClose, onApply, currentFilters } ) {
         >
           &times;
         </button>
-  
+
         <h2 className = "text-xl font-semibold text-purple-900 mb-4 text-center">Advanced Filters</h2>
-  
+
         {/* Basic Information Section */}
         <div className = "mb-4">
           <h3 className = "text-md font-medium text-purple-700 mb-2 text-center">Basic Information</h3>
@@ -195,7 +195,7 @@ function FilterModal ( { onClose, onApply, currentFilters } ) {
             </div>
           </div>
         </div>
-  
+
         {/* Contact Information Section */}
         <div className = "mb-4">
           <h3 className = "text-md font-medium text-purple-700 mb-2 text-center">Contact Information</h3>
@@ -232,7 +232,7 @@ function FilterModal ( { onClose, onApply, currentFilters } ) {
             </div>
           </div>
         </div>
-  
+
         <div className = "flex justify-center gap-4 mt-6">
           <button onClick = { handleReset } className = "px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 cursor-pointer">Reset</button>
           <button onClick = { handleApply } className = "px-6 py-2 bg-purple-700 text-white rounded-lg hover:bg-purple-800 cursor-pointer">Apply</button>
@@ -273,34 +273,34 @@ function CustomerPage ( ) {
     const fetchData = async ( ) => {
 
       try {
-  
+
         setLoading ( true );
         setIsFetching ( true ); // Set isFetching to true
         const data = await getCustomerData ( );
-  
+
         if ( data ) {
-    
+
           setCustomerData ( data );
-    
+
         } else {
-    
+
           setError ( "No data returned from API" );
-    
+
         }
-  
+
       } catch ( err ) {
-  
+
         setError ( "Failed to fetch customer data" );
         console.error ( "Error fetching customer data:", err );
-  
+
       } finally {
-  
+
         setLoading ( false );
         // Add timeout for isFetching
         setTimeout(() => {
           setIsFetching ( false );
         }, 3000);
-  
+
       }
 
     };
@@ -370,55 +370,57 @@ function CustomerPage ( ) {
         ) : error ? (
           <div className = "p-6 text-center text-red-500">{ error }</div>
         ) : (
-          <div className = "overflow-x-auto">
-            <table className = "min-w-full text-sm text-left">
-              <thead>
-                <tr className = "bg-purple-800 text-white">
-                  <th className = "p-3 whitespace-nowrap">ID</th>
-                  <th className = "p-3 whitespace-nowrap">Name</th>
-                  <th className = "p-3 whitespace-nowrap hidden md:table-cell">Email</th>
-                  <th className = "p-3 whitespace-nowrap hidden sm:table-cell">Phone</th>
-                  <th className = "p-3 whitespace-nowrap hidden lg:table-cell">Address</th>
-                  <th className = "p-3 whitespace-nowrap">Status</th>
-                  <th className = "p-3 whitespace-nowrap hidden md:table-cell">Created</th>
-                  <th className = "p-3 whitespace-nowrap hidden sm:table-cell">Updated</th>
-                  <th className = "p-3 text-center whitespace-nowrap">View</th>
-                </tr>
-              </thead>
-              <tbody>
-                { filteredData.length > 0 ? (
-                  filteredData.map ( ( customer ) => (
-                    <tr key = { customer.id } className = "border-t hover:bg-gray-50 transition duration-200 ease-in-out">
-                      <td className = "p-3 font-medium">{ customer.id }</td>
-                      <td className = "p-3 font-semibold text-purple-900">{ customer.name }</td>
-                      <td className = "p-3 text-gray-700 hidden md:table-cell">{ customer.email || "—" }</td>
-                      <td className = "p-3 text-gray-700 hidden sm:table-cell">{ customer.phone || "—" }</td>
-                      <td className = "p-3 truncate max-w-[200px] text-gray-700 hidden lg:table-cell">{ customer.address || "—" }</td>
-                      <td className = "p-3">
-                        <span className = {`px-2 py-1 rounded-full text-xs font-medium ${customer.isActive ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
-                          { customer.isActive ? "Active" : "Inactive" }
-                        </span>
-                      </td>
-                      <td className = "p-3 text-gray-700 hidden md:table-cell">{ formatDate ( customer.createdAt ) }</td>
-                      <td className = "p-3 text-gray-700 hidden sm:table-cell">{ formatDate ( customer.updatedAt ) }</td>
-                      <td className = "p-3 text-center">
-                        <button
-                          onClick = { ( ) => setSelectedCustomer ( customer ) }
-                          className = "text-purple-700 hover:text-purple-900 cursor-pointer transition"
-                          aria-label = "View customer details"
-                        >
-                          <Eye size = { 18 } />
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan = "9" className = "p-3 text-center font-medium text-gray-500">No customers found</td>
+          <div className = "relative">
+            <div className = "max-h-[70vh] overflow-y-auto overflow-x-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-purple-300/50 hover:[&::-webkit-scrollbar-thumb]:bg-purple-400/70">
+              <table className = "w-full text-sm text-left">
+                <thead className = "sticky top-0 z-10">
+                  <tr className = "bg-purple-800 text-white shadow-sm">
+                    <th className = "p-3 whitespace-nowrap rounded-tl-lg">ID</th>
+                    <th className = "p-3 whitespace-nowrap">Name</th>
+                    <th className = "p-3 whitespace-nowrap hidden md:table-cell">Email</th>
+                    <th className = "p-3 whitespace-nowrap hidden sm:table-cell">Phone</th>
+                    <th className = "p-3 whitespace-nowrap hidden lg:table-cell">Address</th>
+                    <th className = "p-3 whitespace-nowrap">Status</th>
+                    <th className = "p-3 whitespace-nowrap hidden md:table-cell">Created</th>
+                    <th className = "p-3 whitespace-nowrap hidden sm:table-cell">Updated</th>
+                    <th className = "p-3 text-center whitespace-nowrap rounded-tr-lg">View</th>
                   </tr>
-                )}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  { filteredData.length > 0 ? (
+                    filteredData.map ( ( customer ) => (
+                      <tr key = { customer.id } className = "border-t hover:bg-gray-50 transition duration-200 ease-in-out">
+                        <td className = "p-3 font-medium">{ customer.id }</td>
+                        <td className = "p-3 font-semibold text-purple-900">{ customer.name }</td>
+                        <td className = "p-3 text-gray-700 hidden md:table-cell">{ customer.email || "—" }</td>
+                        <td className = "p-3 text-gray-700 hidden sm:table-cell">{ customer.phone || "—" }</td>
+                        <td className = "p-3 truncate max-w-[200px] text-gray-700 hidden lg:table-cell">{ customer.address || "—" }</td>
+                        <td className = "p-3">
+                          <span className = {`px-2 py-1 rounded-full text-xs font-medium ${customer.isActive ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                            { customer.isActive ? "Active" : "Inactive" }
+                          </span>
+                        </td>
+                        <td className = "p-3 text-gray-700 hidden md:table-cell">{ formatDate ( customer.createdAt ) }</td>
+                        <td className = "p-3 text-gray-700 hidden sm:table-cell">{ formatDate ( customer.updatedAt ) }</td>
+                        <td className = "p-3 text-center">
+                          <button
+                            onClick = { ( ) => setSelectedCustomer ( customer ) }
+                            className = "text-purple-700 hover:text-purple-900 cursor-pointer transition"
+                            aria-label = "View customer details"
+                          >
+                            <Eye size = { 18 } />
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan = "9" className = "p-3 text-center font-medium text-gray-500">No customers found</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
       </div>

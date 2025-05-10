@@ -1,3 +1,4 @@
+
 // Imports : ( useEffect , useState ) , ( Eye , SlidersHorizontal ) , ( userData )
 import { useState, useEffect } from "react";
 
@@ -84,7 +85,7 @@ function ViewModal ( { user, onClose } ) {
                   </div>
                 </div>
               </div>
-      
+
               {/* Date Information */}
               <div className = "bg-amber-50 p-3 sm:p-4 rounded-xl">
                 <h3 className = "text-md font-semibold text-amber-800 mb-2 sm:mb-3 text-center">Date Information</h3>
@@ -265,34 +266,34 @@ function UserPage ( ) {
     const fetchData = async ( ) => {
 
       try {
-  
+
         setLoading ( true );
         setIsFetching ( true ); // Set isFetching to true
         const data = await getUserData ( );
-  
+
         if ( data ) {
-    
+
           setUserData ( data );
-    
+
         } else {
-    
+
           setError ( "No data returned from API" );
-    
+
         }
-  
+
       } catch ( err ) {
-  
+
         setError ( "Failed to fetch user data" );
         console.error ( "Error fetching user data:", err );
-  
+
       } finally {
-  
+
         setLoading ( false );
         // Add timeout for isFetching
         setTimeout(() => {
           setIsFetching ( false );
         }, 3000);
-  
+
       }
 
     };
@@ -377,53 +378,55 @@ function UserPage ( ) {
         ) : error ? (
           <div className = "p-6 text-center text-red-500">{ error }</div>
         ) : (
-          <div className = "overflow-x-auto">
-            <table className = "min-w-full text-sm text-left">
-              <thead>
-                <tr className = "bg-purple-800 text-white">
-                  <th className = "p-3 whitespace-nowrap">ID</th>
-                  <th className = "p-3 whitespace-nowrap">Name</th>
-                  <th className = "p-3 whitespace-nowrap hidden sm:table-cell">Username</th>
-                  <th className = "p-3 whitespace-nowrap hidden md:table-cell">Email</th>
-                  <th className = "p-3 whitespace-nowrap">Role</th>
-                  <th className = "p-3 whitespace-nowrap hidden lg:table-cell">Created</th>
-                  <th className = "p-3 whitespace-nowrap">Status</th>
-                  <th className = "p-3 text-center whitespace-nowrap">View</th>
-                </tr>
-              </thead>
-              <tbody>
-                { filteredData.length > 0 ? (
-                  filteredData.map ( ( user ) => (
-                    <tr key = { user.id } className = "border-t hover:bg-gray-50 transition duration-200 ease-in-out">
-                      <td className = "p-3 font-medium">{ user.id }</td>
-                      <td className = "p-3 font-semibold text-purple-900">{ user.name }</td>
-                      <td className = "p-3 text-gray-700 hidden sm:table-cell">{ user.username }</td>
-                      <td className = "p-3 text-gray-700 hidden md:table-cell">{ user.email || "—" }</td>
-                      <td className = "p-3 text-gray-700">{ user.role }</td>
-                      <td className = "p-3 text-gray-700 hidden lg:table-cell">{ formatDate ( user.createdAt ) }</td>
-                      <td className = "p-3">
-                        <span className = {`px-2 py-1 rounded-full text-xs font-medium ${user.isActive ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
-                          { user.isActive ? "Active" : "Inactive" }
-                        </span>
-                      </td>
-                      <td className = "p-3 text-center">
-                        <button
-                          onClick = { ( ) => setSelectedUser ( user ) }
-                          className = "text-purple-700 hover:text-purple-900 cursor-pointer transition"
-                          aria-label = "View user details"
-                        >
-                          <Eye size = { 18 } />
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan = "8" className = "p-3 text-center font-medium text-gray-500">No users found</td>
+          <div className = "relative">
+            <div className = "max-h-[70vh] overflow-y-auto overflow-x-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-purple-300/50 hover:[&::-webkit-scrollbar-thumb]:bg-purple-400/70">
+              <table className = "w-full text-sm text-left">
+                <thead className = "sticky top-0 z-10">
+                  <tr className = "bg-purple-800 text-white shadow-sm">
+                    <th className = "p-3 whitespace-nowrap rounded-tl-lg">ID</th>
+                    <th className = "p-3 whitespace-nowrap">Name</th>
+                    <th className = "p-3 whitespace-nowrap hidden sm:table-cell">Username</th>
+                    <th className = "p-3 whitespace-nowrap hidden md:table-cell">Email</th>
+                    <th className = "p-3 whitespace-nowrap">Role</th>
+                    <th className = "p-3 whitespace-nowrap hidden lg:table-cell">Created</th>
+                    <th className = "p-3 whitespace-nowrap">Status</th>
+                    <th className = "p-3 text-center whitespace-nowrap rounded-tr-lg">View</th>
                   </tr>
-                )}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  { filteredData.length > 0 ? (
+                    filteredData.map ( ( user ) => (
+                      <tr key = { user.id } className = "border-t hover:bg-gray-50 transition duration-200 ease-in-out">
+                        <td className = "p-3 font-medium">{ user.id }</td>
+                        <td className = "p-3 font-semibold text-purple-900">{ user.name }</td>
+                        <td className = "p-3 text-gray-700 hidden sm:table-cell">{ user.username }</td>
+                        <td className = "p-3 text-gray-700 hidden md:table-cell">{ user.email || "—" }</td>
+                        <td className = "p-3 text-gray-700">{ user.role }</td>
+                        <td className = "p-3 text-gray-700 hidden lg:table-cell">{ formatDate ( user.createdAt ) }</td>
+                        <td className = "p-3">
+                          <span className = {`px-2 py-1 rounded-full text-xs font-medium ${user.isActive ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                            { user.isActive ? "Active" : "Inactive" }
+                          </span>
+                        </td>
+                        <td className = "p-3 text-center">
+                          <button
+                            onClick = { ( ) => setSelectedUser ( user ) }
+                            className = "text-purple-700 hover:text-purple-900 cursor-pointer transition"
+                            aria-label = "View user details"
+                          >
+                            <Eye size = { 18 } />
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan = "8" className = "p-3 text-center font-medium text-gray-500">No users found</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
       </div>
