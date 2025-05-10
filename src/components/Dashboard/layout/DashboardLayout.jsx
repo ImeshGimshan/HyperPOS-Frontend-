@@ -1,13 +1,28 @@
 
-// Imports : ( React ) , ( Outlet ) , ( Sidebar , Topbar )
-import React from "react";
+// Imports : ( Outlet ) , ( Sidebar , Topbar )
+import { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 
-import Sidebar from "../components/SideBar";
+import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
+import Loader from "../../ui/Loader";
 
 // Function : ( DashboardLayout )
-function DashboardLayout ( ) {
+function DashboardLayout() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2950);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
 
