@@ -1,10 +1,10 @@
 
-// Imports : ( React , useState ) , ( Eye , SlidersHorizontal ) , ( productData )
-import React, { useState } from "react";
+// Imports : ( useState , useEffect ) , ( Eye , SlidersHorizontal ) , ( productData )
+import { useState, useEffect } from "react";
 
 import { Eye, SlidersHorizontal } from "lucide-react";
 
-import productData from "../data/productData";
+import { getProductData } from "../data/productData";
 
 // Function : ( ViewModal )
 // Passing : ( product - The data props. , onClose - To close the filter modal. )
@@ -12,176 +12,121 @@ function ViewModal ( { product, onClose } ) {
 
   return (
 
-    <div className = "fixed inset-0 bg-black/50 flex justify-center items-center z-50 p-4">
+    <div className = "fixed inset-0 bg-black/50 flex justify-center items-center z-50 p-8">
 
-      <div className = "bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl max-h-[90vh] overflow-y-auto">
-
-        <div className = "flex justify-between items-center mb-4">
-
+      <div className = "bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden relative">
+        {/* Header */}
+        <div className = "px-6 py-4 border-b border-gray-100">
           <div className = "w-full text-center">
             <h2 className = "text-2xl font-bold text-purple-900">Product Details</h2>
           </div>
-
           <button
             onClick = { onClose }
             className = "absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-xl cursor-pointer"
           >
             &times;
           </button>
-
         </div>
+    
+        {/* Container with padding to create space for scrollbar */}
+        <div className = "px-2">
+          {/* Scrollable content area with purple-themed scrollbar */}
+          <div className = "max-h-[60vh] overflow-y-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-track]:bg-purple-50 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-purple-300 hover:[&::-webkit-scrollbar-thumb]:bg-purple-400 p-6">
+            {/* Basic Information */}
+            <div className = "space-y-5">
+              <div className = "bg-purple-50 p-4 rounded-xl">
+                <h3 className = "text-md font-semibold text-purple-800 mb-3 text-center">Basic Information</h3>
+                <div className = "grid grid-cols-2 gap-3 text-sm">
+                  <div className = "flex flex-col">
+                    <span className = "font-medium text-gray-600">Product ID</span>
+                    <span className = "p-2 bg-white rounded-md shadow-sm">{ product.id }</span>
+                  </div>
+                  <div className = "flex flex-col">
+                    <span className = "font-medium text-gray-600">Status</span>
+                    <span className = {`p-2 bg-white rounded-md shadow-sm ${product.isActive ? "text-green-600" : "text-red-600"}`}>
+                      { product.isActive ? "Active" : "Inactive" }
+                    </span>
+                  </div>
+                  <div className = "flex flex-col col-span-2">
+                    <span className = "font-medium text-gray-600">Name</span>
+                    <span className = "p-2 bg-white rounded-md shadow-sm">{ product.name }</span>
+                  </div>
+                  <div className = "flex flex-col col-span-2">
+                    <span className = "font-medium text-gray-600">Barcode</span>
+                    <span className = "p-2 bg-white rounded-md shadow-sm">{ product.barcode || "Not provided" }</span>
+                  </div>
+                  <div className = "flex flex-col">
+                    <span className = "font-medium text-gray-600">Category ID</span>
+                    <span className = "p-2 bg-white rounded-md shadow-sm">{ product.categoryId }</span>
+                  </div>
+                  <div className = "flex flex-col">
+                    <span className = "font-medium text-gray-600">Unit</span>
+                    <span className = "p-2 bg-white rounded-md shadow-sm">{ product.unit }</span>
+                  </div>
+                </div>
+              </div>
         
-        { product.image && (
-
-          <div className = "mb-6 flex justify-center">
-            <img 
-              src = { product.image } 
-              alt = { product.name } 
-              className = "h-40 object-contain rounded-md border border-gray-200"
-              onError = { ( e ) => {
-                e.target.onerror = null;
-                e.target.src = "https://via.placeholder.com/150?text=No+Image";
-              } }
-            />
-          </div>
-
-        ) }
-        
-        <div className = "space-y-4">
-
-          {/* Basic Information */}
-          <div className = "bg-purple-50 p-3 rounded-lg">
-
-            <h3 className = "text-md font-semibold text-purple-800 mb-2 text-center">Basic Information</h3>
-
-            <div className = "grid grid-cols-2 gap-3 text-sm">
-
-              <div className = "flex flex-col">
-                <span className = "font-medium text-gray-600">Product ID</span>
-                <span className = "p-2 bg-white rounded-md">{ product.id }</span>
+              {/* Price Information */}
+              <div className = "bg-blue-50 p-4 rounded-xl">
+                <h3 className = "text-md font-semibold text-blue-800 mb-3 text-center">Price Information</h3>
+                <div className = "grid grid-cols-2 gap-3 text-sm">
+                  <div className = "flex flex-col">
+                    <span className = "font-medium text-gray-600">Price</span>
+                    <span className = "p-2 bg-white rounded-md shadow-sm">Rs { product.price.toLocaleString() }</span>
+                  </div>
+                  <div className = "flex flex-col">
+                    <span className = "font-medium text-gray-600">Discount</span>
+                    <span className = "p-2 bg-white rounded-md shadow-sm">{ product.discount }%</span>
+                  </div>
+                  <div className = "flex flex-col col-span-2">
+                    <span className = "font-medium text-gray-600">Final Price</span>
+                    <span className = "p-2 bg-white rounded-md shadow-sm font-semibold text-green-700">
+                      Rs { (product.price * (1 - product.discount / 100)).toLocaleString() }
+                    </span>
+                  </div>
+                </div>
               </div>
-
-              <div className = "flex flex-col">
-                <span className = "font-medium text-gray-600">Barcode</span>
-                <span className = "p-2 bg-white rounded-md truncate">{ product.barcode }</span>
-              </div>
-
-              <div className = "flex flex-col col-span-2">
-                <span className = "font-medium text-gray-600">Name</span>
-                <span className = "p-2 bg-white rounded-md">{ product.name }</span>
-              </div>
-
-              <div className = "flex flex-col">
-                <span className = "font-medium text-gray-600">Category ID</span>
-                <span className = "p-2 bg-white rounded-md">{ product.categoryId }</span>
-              </div>
-
-              <div className = "flex flex-col">
-                <span className = "font-medium text-gray-600">Unit</span>
-                <span className = "p-2 bg-white rounded-md">{ product.unit }</span>
-              </div>
-
+            
+              {/* Description */}
+              {product.description && (
+                <div className = "bg-amber-50 p-4 rounded-xl">
+                  <h3 className = "text-md font-semibold text-amber-800 mb-3 text-center">Description</h3>
+                  <div className = "grid grid-cols-1 gap-3 text-sm">
+                    <div className = "flex flex-col">
+                      <span className = "p-2 bg-white rounded-md shadow-sm whitespace-pre-wrap">{ product.description }</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+            
+              {/* Product Image */}
+              {product.image && (
+                <div className = "bg-green-50 p-4 rounded-xl">
+                  <h3 className = "text-md font-semibold text-green-800 mb-3 text-center">Product Image</h3>
+                  <div className = "flex justify-center">
+                    <img 
+                      src = { product.image } 
+                      alt = { product.name } 
+                      className = "max-h-48 rounded-lg shadow-sm" 
+                    />
+                  </div>
+                </div>
+              )}
             </div>
-
           </div>
-          
-          {/* Description */}
-          <div className = "bg-blue-50 p-3 rounded-lg">
-
-            <h3 className = "text-md font-semibold text-blue-800 mb-2 text-center">Description</h3>
-
-            <div className = "text-sm">
-
-              <div className = "flex flex-col">
-                <span className = "p-2 bg-white rounded-md whitespace-pre-wrap">{ product.description || "No description available" }</span>
-              </div>
-
-            </div>
-
-          </div>
-          
-          {/* Pricing */}
-          <div className = "bg-green-50 p-3 rounded-lg">
-
-            <h3 className = "text-md font-semibold text-green-800 mb-2 text-center">Pricing</h3>
-
-            <div className = "grid grid-cols-2 gap-3 text-sm">
-
-              <div className = "flex flex-col">
-                <span className = "font-medium text-gray-600">Price</span>
-                <span className = "p-2 bg-white rounded-md">
-                  Rs { product.price.toLocaleString ( ) }
-                </span>
-              </div>
-
-              <div className = "flex flex-col">
-                <span className = "font-medium text-gray-600">Cost</span>
-                <span className = "p-2 bg-white rounded-md">
-                  Rs { product.cost.toLocaleString ( ) }
-                </span>
-              </div>
-
-              <div className = "flex flex-col">
-                <span className = "font-medium text-gray-600">Discount</span>
-                <span className = "p-2 bg-white rounded-md">
-                  { product.discount }%
-                </span>
-              </div>
-
-              <div className = "flex flex-col">
-                <span className = "font-medium text-gray-600">Profit Margin</span>
-                <span className = "p-2 bg-white rounded-md">
-                  { Math.round ( ( ( product.price - product.cost ) / product.price ) * 100 ) }%
-                </span>
-              </div>
-
-            </div>
-
-          </div>
-          
-          {/* Inventory */}
-          <div className = "bg-amber-50 p-3 rounded-lg">
-
-            <h3 className = "text-md font-semibold text-amber-800 mb-2 text-center">Inventory</h3>
-
-            <div className = "grid grid-cols-2 gap-3 text-sm">
-
-              <div className = "flex flex-col">
-                <span className = "font-medium text-gray-600">Quantity</span>
-                <span className = "p-2 bg-white rounded-md">{ product.quantity }</span>
-              </div>
-
-              <div className = "flex flex-col">
-                <span className = "font-medium text-gray-600">Status</span>
-                <span className = { `p-2 bg-white rounded-md ${ product.isActive ? "text-green-600" : "text-red-600" }` }>
-                  { product.isActive ? "Active" : "Inactive" }
-                </span>
-              </div>
-
-              <div className = "flex flex-col col-span-2">
-                <span className = "font-medium text-gray-600">Stock Value</span>
-                <span className = "p-2 bg-white rounded-md">
-                  Rs { ( product.quantity * product.cost ).toLocaleString ( ) }
-                </span>
-              </div>
-
-            </div>
-
-          </div>
-
         </div>
-        
-        <div className = "mt-6 flex justify-center">
-
-          <button
-            onClick = { onClose }
-            className = "px-6 py-2 bg-purple-700 text-white rounded-lg hover:bg-purple-800 transition duration-200 cursor-pointer"
-          >
-            Close
-          </button>
-
+    
+        {/* Footer */}
+        <div className = "px-6 py-4 border-t border-gray-100">
+          <div className = "mt-2 flex justify-center">
+            <button
+              onClick = { onClose }
+              className = "px-6 py-2 bg-purple-700 text-white rounded-lg hover:bg-purple-800 transition duration-200 cursor-pointer shadow-sm"
+            >
+              Close
+            </button>
+          </div>
         </div>
-
       </div>
 
     </div>
@@ -191,23 +136,19 @@ function ViewModal ( { product, onClose } ) {
 }
 
 // Function : ( FilterModal )
-// Passing : ( onClose - To close the filter modal. , onApply - To apply the filter. , categoryList - To show the category list. , currentFilters - To show the current filters. )
-function FilterModal ( { onClose, onApply, categoryList, currentFilters } ) {
+// Passing : ( onClose - To close the filter modal. , onApply - To apply the filter. , currentFilters - To show the current filters. )
+function FilterModal ( { onClose, onApply, currentFilters, categories, units } ) {
 
   // Using useState to store the values of the filters.
   const [ name, setName ] = useState ( currentFilters.name || "" );
-  const [ barcode, setBarcode ] = useState ( currentFilters.barcode || "" );
+  const [ barcode, setBarcode ] = useState ( currentFilters.barcode || "" ); 
   const [ categoryId, setCategoryId ] = useState ( currentFilters.categoryId || "" );
   const [ unit, setUnit ] = useState ( currentFilters.unit || "" );
   const [ minPrice, setMinPrice ] = useState ( currentFilters.minPrice || "" );
   const [ maxPrice, setMaxPrice ] = useState ( currentFilters.maxPrice || "" );
-  const [ minCost, setMinCost ] = useState ( currentFilters.minCost || "" );
-  const [ maxCost, setMaxCost ] = useState ( currentFilters.maxCost || "" );
   const [ minDiscount, setMinDiscount ] = useState ( currentFilters.minDiscount || "" );
   const [ maxDiscount, setMaxDiscount ] = useState ( currentFilters.maxDiscount || "" );
-  const [ minQuantity, setMinQuantity ] = useState ( currentFilters.minQuantity || "" );
-  const [ maxQuantity, setMaxQuantity ] = useState ( currentFilters.maxQuantity || "" );
-  const [ isActive, setIsActive ] = useState ( currentFilters.isActive || "" );
+  const [ status, setStatus ] = useState ( currentFilters.status || "" );
 
   // Arrow Function : ( handleApply )
   const handleApply = ( ) => {
@@ -220,13 +161,9 @@ function FilterModal ( { onClose, onApply, categoryList, currentFilters } ) {
       unit, 
       minPrice, 
       maxPrice, 
-      minCost, 
-      maxCost, 
       minDiscount, 
       maxDiscount, 
-      minQuantity, 
-      maxQuantity, 
-      isActive 
+      status 
     } );
     // Calling the onClose function to close the modal.
     onClose ( );
@@ -243,13 +180,9 @@ function FilterModal ( { onClose, onApply, categoryList, currentFilters } ) {
     setUnit ( "" );
     setMinPrice ( "" );
     setMaxPrice ( "" );
-    setMinCost ( "" );
-    setMaxCost ( "" );
     setMinDiscount ( "" );
     setMaxDiscount ( "" );
-    setMinQuantity ( "" );
-    setMaxQuantity ( "" );
-    setIsActive ( "" );
+    setStatus ( "" );
 
   };
 
@@ -265,31 +198,24 @@ function FilterModal ( { onClose, onApply, categoryList, currentFilters } ) {
         >
           &times;
         </button>
-        
+    
         <h2 className = "text-xl font-semibold text-purple-900 mb-4 text-center">Advanced Filters</h2>
-        
+    
         {/* Basic Information Section */}
         <div className = "mb-4">
-
-          <h3 className = "text-md font-medium text-purple-700 mb-2">Basic Information</h3>
-
+          <h3 className = "text-md font-medium text-purple-700 mb-2 text-center">Basic Information</h3>
           <div className = "grid grid-cols-2 gap-4 text-sm">
-
-            <div className = "flex flex-col col-span-2">
-
-              <label className = "text-gray-600 mb-1">Product Name</label>
+            <div className = "flex flex-col">
+              <label className = "text-gray-600 mb-1">Name</label>
               <input
                 type = "text"
                 value = { name }
                 onChange = { ( e ) => setName ( e.target.value ) }
                 className = "p-2 rounded-lg border border-gray-300 focus:outline-none"
-                placeholder = "Filter by product name"
+                placeholder = "Filter by name"
               />
-
             </div>
-            
             <div className = "flex flex-col">
-
               <label className = "text-gray-600 mb-1">Barcode</label>
               <input
                 type = "text"
@@ -298,175 +224,95 @@ function FilterModal ( { onClose, onApply, categoryList, currentFilters } ) {
                 className = "p-2 rounded-lg border border-gray-300 focus:outline-none"
                 placeholder = "Filter by barcode"
               />
-
             </div>
-            
             <div className = "flex flex-col">
-
-              <label className = "text-gray-600 mb-1">Status</label>
-              <select
-                value = { isActive }
-                onChange = { ( e ) => setIsActive ( e.target.value ) }
-                className = "p-2 rounded-lg border border-gray-300 focus:outline-none"
-              >
-                <option value = "">All</option>
-                <option value = "true">Active</option>
-                <option value = "false">Inactive</option>
-              </select>
-
-            </div>
-            
-            <div className = "flex flex-col">
-
-              <label className = "text-gray-600 mb-1">Category ID</label>
+              <label className = "text-gray-600 mb-1">Category</label>
               <select
                 value = { categoryId }
                 onChange = { ( e ) => setCategoryId ( e.target.value ) }
                 className = "p-2 rounded-lg border border-gray-300 focus:outline-none"
               >
                 <option value = "">All</option>
-                { categoryList.map ( ( c ) => (
-                  <option key = { c } value = { c }>{ c }</option>
+                { categories.map ( ( category ) => (
+                  <option key = { category.id } value = { category.id }>{ category.name }</option>
                 ) ) }
               </select>
-
             </div>
-            
             <div className = "flex flex-col">
-
               <label className = "text-gray-600 mb-1">Unit</label>
-              <input
-                type = "text"
+              <select
                 value = { unit }
                 onChange = { ( e ) => setUnit ( e.target.value ) }
                 className = "p-2 rounded-lg border border-gray-300 focus:outline-none"
-                placeholder = "Filter by unit"
-              />
-
+              >
+                <option value = "">All</option>
+                { units.map ( ( unitOption ) => (
+                  <option key = { unitOption } value = { unitOption }>{ unitOption }</option>
+                ) ) }
+              </select>
             </div>
-
+            <div className = "flex flex-col">
+              <label className = "text-gray-600 mb-1">Status</label>
+              <select
+                value = { status }
+                onChange = { ( e ) => setStatus ( e.target.value ) }
+                className = "p-2 rounded-lg border border-gray-300 focus:outline-none"
+              >
+                <option value = "">All</option>
+                <option value = "active">Active</option>
+                <option value = "inactive">Inactive</option>
+              </select>
+            </div>
           </div>
-
         </div>
-        
-        {/* Price Section */}
+    
+        {/* Price Information Section */}
         <div className = "mb-4">
-
-          <h3 className = "text-md font-medium text-purple-700 mb-2">Price & Cost</h3>
-
+          <h3 className = "text-md font-medium text-purple-700 mb-2 text-center">Price Information</h3>
           <div className = "grid grid-cols-2 gap-4 text-sm">
-
             <div className = "flex flex-col">
-
-              <label className = "text-gray-600 mb-1">Min Price (Rs)</label>
-              <input 
-                type = "number" 
-                className = "p-2 rounded-lg border border-gray-300" 
-                value = { minPrice } 
-                onChange = { ( e ) => setMinPrice ( e.target.value ) } 
+              <label className = "text-gray-600 mb-1">Min Price</label>
+              <input
+                type = "number"
+                value = { minPrice }
+                onChange = { ( e ) => setMinPrice ( e.target.value ) }
+                className = "p-2 rounded-lg border border-gray-300 focus:outline-none"
+                placeholder = "Minimum price"
               />
-
             </div>
-
             <div className = "flex flex-col">
-
-              <label className = "text-gray-600 mb-1">Max Price (Rs)</label>
-              <input 
-                type = "number" 
-                className = "p-2 rounded-lg border border-gray-300" 
+              <label className = "text-gray-600 mb-1">Max Price</label>
+              <input
+                type = "number"
                 value = { maxPrice }
-                onChange = { ( e ) => setMaxPrice ( e.target.value ) } 
+                onChange = { ( e ) => setMaxPrice ( e.target.value ) }
+                className = "p-2 rounded-lg border border-gray-300 focus:outline-none"
+                placeholder = "Maximum price"
               />
-
             </div>
-            
             <div className = "flex flex-col">
-
-              <label className = "text-gray-600 mb-1">Min Cost (Rs)</label>
-              <input 
-                type = "number" 
-                className = "p-2 rounded-lg border border-gray-300" 
-                value = { minCost } 
-                onChange = { ( e ) => setMinCost ( e.target.value ) } 
-              />
-
-            </div>
-
-            <div className = "flex flex-col">
-
-              <label className = "text-gray-600 mb-1">Max Cost (Rs)</label>
-              <input 
-                type = "number" 
-                className = "p-2 rounded-lg border border-gray-300" 
-                value = { maxCost }
-                onChange = { ( e ) => setMaxCost ( e.target.value ) } 
-              />
-
-            </div>
-
-          </div>
-
-        </div>
-        
-        {/* Inventory Section */}
-        <div className = "mb-4">
-
-          <h3 className = "text-md font-medium text-purple-700 mb-2">Inventory & Discount</h3>
-
-          <div className = "grid grid-cols-2 gap-4 text-sm">
-
-            <div className = "flex flex-col">
-
               <label className = "text-gray-600 mb-1">Min Discount (%)</label>
-              <input 
-                type = "number" 
-                className = "p-2 rounded-lg border border-gray-300" 
-                value = { minDiscount } 
-                onChange = { ( e ) => setMinDiscount ( e.target.value ) } 
+              <input
+                type = "number"
+                value = { minDiscount }
+                onChange = { ( e ) => setMinDiscount ( e.target.value ) }
+                className = "p-2 rounded-lg border border-gray-300 focus:outline-none"
+                placeholder = "Minimum discount"
               />
-
             </div>
-
             <div className = "flex flex-col">
-
               <label className = "text-gray-600 mb-1">Max Discount (%)</label>
-              <input 
-                type = "number" 
-                className = "p-2 rounded-lg border border-gray-300" 
+              <input
+                type = "number"
                 value = { maxDiscount }
-                onChange = { ( e ) => setMaxDiscount ( e.target.value ) } 
+                onChange = { ( e ) => setMaxDiscount ( e.target.value ) }
+                className = "p-2 rounded-lg border border-gray-300 focus:outline-none"
+                placeholder = "Maximum discount"
               />
-
             </div>
-            
-            <div className = "flex flex-col">
-
-              <label className = "text-gray-600 mb-1">Min Quantity</label>
-              <input 
-                type = "number" 
-                className = "p-2 rounded-lg border border-gray-300" 
-                value = { minQuantity } 
-                onChange = { ( e ) => setMinQuantity ( e.target.value ) } 
-              />
-
-            </div>
-
-            <div className = "flex flex-col">
-
-              <label className = "text-gray-600 mb-1">Max Quantity</label>
-              <input 
-                type = "number" 
-                className = "p-2 rounded-lg border border-gray-300" 
-                value = { maxQuantity }
-                onChange = { ( e ) => setMaxQuantity ( e.target.value ) } 
-              />
-
-            </div>
-
           </div>
-
         </div>
-        
+      
         <div className = "flex justify-center gap-4 mt-6">
           <button onClick = { handleReset } className = "px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 cursor-pointer">Reset</button>
           <button onClick = { handleApply } className = "px-6 py-2 bg-purple-700 text-white rounded-lg hover:bg-purple-800 cursor-pointer">Apply</button>
@@ -487,110 +333,106 @@ function ProductPage ( ) {
   const [ selectedProduct, setSelectedProduct ] = useState ( null );
   const [ searchTerm, setSearchTerm ] = useState ( "" );
   const [ showFilterModal, setShowFilterModal ] = useState ( false );
-  const [ filters, setFilters ] = useState ( { } );
-  const [ isFiltering, setIsFiltering ] = useState ( false );
+  const [ filters, setFilters ] = useState ( {} );
+  const [ productData, setProductData ] = useState ( [] );
+  const [ loading, setLoading ] = useState ( true );
+  const [ error, setError ] = useState ( null );
 
-  // Get unique category IDs for the filter dropdown
-  const categoryList = [ ...new Set ( productData.map ( ( product ) => product.categoryId ) ) ];
+  // Fetch product data from API when component mounts
+  useEffect ( ( ) => {
+  
+    const fetchData = async ( ) => {
+    
+      try {
+      
+        setLoading ( true );
+        const data = await getProductData ( );
+      
+        if ( data ) {
+        
+          setProductData ( data );
+        
+        } else {
+        
+          setError ( "No data returned from API" );
+        
+        }
+      
+      } catch ( err ) {
+      
+        setError ( "Failed to fetch product data" );
+        console.error ( "Error fetching product data:", err );
+      
+      } finally {
+      
+        setLoading ( false );
+      
+      }
+    
+    };
 
-  // Log the product data to verify it's loaded correctly
-  console.log ( "Product Data:", productData );
-  console.log ( "Current Filters:", filters );
+    fetchData ( );
+  
+  }, [] );
+
+  // Get unique categories and units from product data
+  const categories = Array.isArray(productData) 
+    ? [ ...new Set ( productData.map ( product => product.categoryId ) ) ]
+        .map ( id => ({ id, name: `Category ${id}` }) ) 
+    : [];
+  
+  const units = Array.isArray(productData) 
+    ? [ ...new Set ( productData.map ( product => product.unit ) ) ] 
+    : [];
 
   // Filtering the data based on the search term and other filters
-  const filteredData = productData.filter ( ( product ) => {
-
-    try {
+  const filteredData = Array.isArray(productData) 
+    ? productData.filter ( ( product ) => {
 
       // Search across all fields
       const searchFields = [
         product.id.toString ( ),
+        product.name,
         product.barcode || "",
-        product.name || "",
-        product.categoryId?.toString ( ) || "",
         product.unit || "",
-        product.description || "",
-        product.price?.toString ( ) || "",
-        product.cost?.toString ( ) || "",
-        product.discount?.toString ( ) || "",
-        product.quantity?.toString ( ) || ""
+        product.description || ""
       ];
-      
-      const matchesSearch = searchTerm === "" || searchFields.some ( field => 
-        field && field.toLowerCase ( ).includes ( searchTerm.toLowerCase ( ) )
+    
+      const matchesSearch = searchFields.some ( field => 
+        field.toLowerCase ( ).includes ( searchTerm.toLowerCase ( ) )
       );
 
-      // If we're not actively filtering, just apply the search
-      if ( !isFiltering && Object.keys ( filters ).length === 0 ) {
-        return matchesSearch;
-      }
-
       // Apply filters
-      const matchesName = !filters.name || 
-        ( product.name && product.name.toLowerCase ( ).includes ( filters.name.toLowerCase ( ) ) );
-      
-      const matchesBarcode = !filters.barcode || 
-        ( product.barcode && product.barcode.includes ( filters.barcode ) );
-      
-      const matchesCategoryId = !filters.categoryId || 
-        product.categoryId?.toString ( ) === filters.categoryId;
-      
-      const matchesUnit = !filters.unit || 
-        ( product.unit && product.unit.includes ( filters.unit ) );
-      
-      const matchesStatus = filters.isActive === "" || 
-        product.isActive?.toString ( ) === filters.isActive;
+      const matchesName = !filters.name || product.name.toLowerCase ( ).includes ( filters.name.toLowerCase ( ) );
+      const matchesBarcode = !filters.barcode || ( product.barcode && product.barcode.includes ( filters.barcode ) );
+      const matchesCategoryId = !filters.categoryId || product.categoryId.toString() === filters.categoryId.toString();
+      const matchesUnit = !filters.unit || product.unit === filters.unit;
       
       const matchesPrice = 
-        ( !filters.minPrice || product.price >= +filters.minPrice ) && 
-        ( !filters.maxPrice || product.price <= +filters.maxPrice );
-      
-      const matchesCost = 
-        ( !filters.minCost || product.cost >= +filters.minCost ) && 
-        ( !filters.maxCost || product.cost <= +filters.maxCost );
+        ( !filters.minPrice || product.price >= Number(filters.minPrice) ) && 
+        ( !filters.maxPrice || product.price <= Number(filters.maxPrice) );
       
       const matchesDiscount = 
-        ( !filters.minDiscount || product.discount >= +filters.minDiscount ) && 
-        ( !filters.maxDiscount || product.discount <= +filters.maxDiscount );
+        ( !filters.minDiscount || product.discount >= Number(filters.minDiscount) ) && 
+        ( !filters.maxDiscount || product.discount <= Number(filters.maxDiscount) );
       
-      const matchesQuantity = 
-        ( !filters.minQuantity || product.quantity >= +filters.minQuantity ) && 
-        ( !filters.maxQuantity || product.quantity <= +filters.maxQuantity );
+      const matchesStatus = !filters.status || 
+        (filters.status === "active" && product.isActive) || 
+        (filters.status === "inactive" && !product.isActive);
 
       // Return true if all conditions are met
       return matchesSearch && matchesName && matchesBarcode && matchesCategoryId && 
-             matchesUnit && matchesStatus && matchesPrice && matchesCost && 
-             matchesDiscount && matchesQuantity;
+             matchesUnit && matchesPrice && matchesDiscount && matchesStatus;
 
-    } catch ( error ) {
-      console.error ( "Error filtering product:", error, product );
-      return false;
-    }
-
-  } );
-
-  console.log ( "Filtered Data:", filteredData );
-
-  // Function to handle applying filters
-  const handleApplyFilters = ( newFilters ) => {
-    setIsFiltering ( true );
-    setFilters ( newFilters );
-  };
-
-  // Function to clear all filters
-  const clearFilters = ( ) => {
-    setIsFiltering ( false );
-    setFilters ( { } );
-  };
+    })
+    : [];
 
   return (
 
     <div className = "p-6">
-
-      <h1 className = "text-3xl font-bold mb-6 text-purple-900 text-center">Products</h1>
+      <h1 className = "text-3xl font-bold mb-6 text-purple-900 text-center">Product Management</h1>
 
       <div className = "flex flex-wrap justify-center gap-4 mb-6">
-
         <input
           type = "text"
           placeholder = "Search..."
@@ -604,106 +446,79 @@ function ProductPage ( ) {
         >
           <SlidersHorizontal size = { 16 } /> Options
         </button>
-        { isFiltering && (
-          <button
-            onClick = { clearFilters }
-            className = "px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 transition cursor-pointer"
-          >
-            Clear Filters
-          </button>
-        ) }
-
       </div>
 
-      { filteredData.length === 0 ? (
-
-        <div className = "bg-white rounded-xl shadow-md p-8 text-center">
-          <p className = "text-gray-500">No products found matching your criteria.</p>
-          { isFiltering && (
-            <button 
-              onClick = { clearFilters }
-              className = "mt-4 px-4 py-2 bg-purple-700 text-white rounded-lg hover:bg-purple-800 transition cursor-pointer"
-            >
-              Clear Filters
-            </button>
-          ) }
-        </div>
-
-      ) : (
-
-        <div className = "overflow-x-auto bg-white rounded-xl shadow-md">
-
+      <div className = "overflow-x-auto bg-white rounded-xl shadow-md">
+        { loading ? (
+          <div className = "p-6 text-center">Loading product data...</div>
+        ) : error ? (
+          <div className = "p-6 text-center text-red-500">{ error }</div>
+        ) : (
           <table className = "min-w-full text-sm text-left">
-
             <thead>
               <tr className = "bg-purple-800 text-white">
                 <th className = "p-3">ID</th>
-                <th className = "p-3">Barcode</th>
                 <th className = "p-3">Name</th>
-                <th className = "p-3">Category ID</th>
+                <th className = "p-3">Barcode</th>
+                <th className = "p-3">Category</th>
                 <th className = "p-3">Unit</th>
                 <th className = "p-3">Price</th>
-                <th className = "p-3">Cost</th>
                 <th className = "p-3">Discount</th>
-                <th className = "p-3">Quantity</th>
                 <th className = "p-3">Status</th>
                 <th className = "p-3 text-center">View</th>
               </tr>
             </thead>
-
             <tbody>
-              { filteredData.map ( ( product ) => (
-
-                <tr key = { product.id } className = "border-t hover:bg-gray-50 transition duration-200 ease-in-out">
-                  <td className = "p-3">{ product.id }</td>
-                  <td className = "p-3">{ product.barcode }</td>
-                  <td className = "p-3">{ product.name }</td>
-                  <td className = "p-3">{ product.categoryId }</td>
-                  <td className = "p-3">{ product.unit }</td>
-                  <td className = "p-3">Rs { product.price.toLocaleString ( ) }</td>
-                  <td className = "p-3">Rs { product.cost.toLocaleString ( ) }</td>
-                  <td className = "p-3">{ product.discount }%</td>
-                  <td className = "p-3">{ product.quantity }</td>
-                  <td className = "p-3">
-                    <span className = { `${ product.isActive ? "text-green-600" : "text-red-600" }` }>
-                      { product.isActive ? "Active" : "Inactive" }
-                    </span>
-                  </td>
-                  <td className = "p-3 text-center">
-                    <button
-                      onClick = { ( ) => setSelectedProduct ( product ) }
-                      className = "text-purple-700 hover:text-purple-900 cursor-pointer transition"
-                    >
-                      <Eye size = { 18 } />
-                    </button>
-                  </td>
+              { filteredData.length > 0 ? (
+                filteredData.map ( ( product ) => (
+                  <tr key = { product.id } className = "border-t hover:bg-gray-50 transition duration-200 ease-in-out">
+                    <td className = "p-3 font-medium">{ product.id }</td>
+                    <td className = "p-3 font-semibold text-purple-900">{ product.name }</td>
+                    <td className = "p-3 text-gray-700">{ product.barcode || "—" }</td>
+                    <td className = "p-3 text-gray-700">{ product.categoryId }</td>
+                    <td className = "p-3 text-gray-700">{ product.unit }</td>
+                    <td className = "p-3 text-gray-700">Rs { product.price.toLocaleString() }</td>
+                    <td className = "p-3 text-gray-700">{ product.discount }%</td>
+                    <td className = "p-3">
+                      <span className = {`px-2 py-1 rounded-full text-xs font-medium ${product.isActive ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                        { product.isActive ? "Active" : "Inactive" }
+                      </span>
+                    </td>
+                    <td className = "p-3 text-center">
+                      <button
+                        onClick = { ( ) => setSelectedProduct ( product ) }
+                        className = "text-purple-700 hover:text-purple-900 cursor-pointer transition"
+                      >
+                        <Eye size = { 18 } />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan = "9" className = "p-3 text-center font-medium text-gray-500">No products found</td>
                 </tr>
-
-              ) ) }
+              )}
             </tbody>
-
           </table>
-
-        </div>
-
-      ) }
+        )}
+      </div>
 
       { selectedProduct && <ViewModal product = { selectedProduct } onClose = { ( ) => setSelectedProduct ( null ) } /> }
       { showFilterModal && (
-
         <FilterModal
-          categoryList = { categoryList }
+          categories = { categories }
+          units = { units }
           currentFilters = { filters }
           onClose = { ( ) => setShowFilterModal ( false ) }
-          onApply = { handleApplyFilters }
+          onApply = { setFilters }
         />
-
-      ) }
-
+      )}
     </div>
 
   );
 
 }
 
+// Exporting the component
 export default ProductPage;

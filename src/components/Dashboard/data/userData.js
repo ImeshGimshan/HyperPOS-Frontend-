@@ -1,16 +1,21 @@
 
-const userData = [
+import { getUsers } from "../../../API/APIUser";
 
-  {
-    "id":1,
-    "name":"Cash",
-    "phone":null,
-    "email":"alice@example.com",
-    "password":"password123",
-    "role":"admin"
+const getUserData = async ( ) => {
+
+  try {
+
+    const response = await getUsers();
+    return response;
+
+  } 
+  catch ( error ) {
+    
+    console.error ( "Error fetching user data:" , error );
+    return [ ];
+
   }
 
-  ];
-  
-  // Exporting the userData.
-  export default userData;
+};
+
+export { getUserData };

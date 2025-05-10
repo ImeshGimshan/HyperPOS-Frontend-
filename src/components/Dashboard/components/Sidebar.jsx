@@ -1,18 +1,18 @@
 
-// Imports : ( React ) , ( NavLink )
-import React from "react";
+// Imports : ( NavLink )
 import { NavLink } from "react-router-dom";
 
 // Creating the array of navigation items ( to - The destination. , label - The display text. ).
 const navItems = [
-  
+
   { to : "/dashboard" , label : "Dashboard" },
   { to : "/dashboard/grn" , label : "GRN" },
   { to : "/dashboard/invoices" , label : "Invoices" },
   { to : "/dashboard/users" , label : "Users" },
   { to : "/dashboard/customers" , label : "Customers" },
   { to : "/dashboard/products" , label : "Products" },
-  { to : "/dashboard/inventory" , label : "Inventory" },
+  { to : "/dashboard/sales" , label : "Sales" },
+  { to : "/dashboard/purchases" , label : "Purchases" },
 
 ];
 
@@ -32,7 +32,7 @@ function Sidebar ( ) {
             end = { item.to === "/dashboard" }
             className = { ( { isActive } ) =>
               `block px-3 py-2 rounded-md 
-               ${ isActive ? "bg-purple-700" : "hover:bg-purple-800" }`
+              ${ isActive ? "bg-purple-700" : "hover:bg-purple-800" }`
             }
           >
             { item.label }
