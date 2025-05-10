@@ -1,6 +1,6 @@
 
-// Imports : ( useEffect , useState , useMemo ) , ( SummaryCard , SalesTrendChart , TopProductsChart , RecentInvoices , InventoryStatus , DateRangeSelector ) , ( invoiceData , productData , userData ).
-import { useState , useEffect } from "react";
+// Imports : ( useEffect , useState ).
+import { useState, useEffect } from "react";
 
 import SummaryCard from "../components/SummaryCard";
 import SalesTrendChart from "../components/SalesTrendChart";
@@ -15,124 +15,140 @@ import { getCustomerData } from "../data/customerData";
 import { getSaleData } from "../data/salesData";
 
 // Function : ( DashboardHome ).
-function DashboardHome() {
+function DashboardHome ( ) {
 
   // State for date range.
-  const [dateRange, setDateRange] = useState({ startDate: "", endDate: "" });
+  const [ dateRange, setDateRange ] = useState ( { startDate: "", endDate: "" } );
   // State for customer data.
-  const [customerData, setCustomerData] = useState([]);
+  const [ customerData, setCustomerData ] = useState ( [ ] );
   // State for product data.
-  const [productData, setProductData] = useState([]);
+  const [ productData, setProductData ] = useState ( [ ] );
   // State for sale data.
-  const [saleData, setSaleData] = useState([]);
+  const [ saleData, setSaleData ] = useState ( [ ] );
   // State for invoice data.
-  const [invoiceData, setInvoiceData] = useState([]);
+  const [ invoiceData, setInvoiceData ] = useState ( [ ] );
+  // State for loading status
+  const [ isLoading, setIsLoading ] = useState ( true );
 
   // Fetch data when component mounts.
-  useEffect(() => {
+  useEffect ( ( ) => {
   
-    const fetchData = async () => {
+    const fetchData = async ( ) => {
     
       try {
+        setIsLoading ( true );
       
         // Fetch customer data
-        const customerResponse = await getCustomerData();
-        setCustomerData(customerResponse || []);
+        const customerResponse = await getCustomerData ( );
+        setCustomerData ( customerResponse || [ ] );
       
         // Fetch product data
-        const productResponse = await getProductData();
-        setProductData(productResponse || []);
+        const productResponse = await getProductData ( );
+        setProductData ( productResponse || [ ] );
       
         // Fetch sale data
-        const saleResponse = await getSaleData();
-        setSaleData(saleResponse || []);
+        const saleResponse = await getSaleData ( );
+        setSaleData ( saleResponse || [ ] );
       
         // Fetch invoice data
-        const invoiceResponse = await getInvoiceData();
-        setInvoiceData(invoiceResponse || []);
+        const invoiceResponse = await getInvoiceData ( );
+        setInvoiceData ( invoiceResponse || [ ] );
       
-      } catch (error) {
+      } catch ( error ) {
       
-        console.error("Error fetching dashboard data:", error);
+        console.error ( "Error fetching dashboard data:", error );
+      
+      } finally {
+      
+        setIsLoading ( false );
       
       }
     
     };
   
-    fetchData();
+    fetchData ( );
   
-  }, []);
+  }, [ ] );
 
   return (
 
-    <div className="p-6">
+    <div className = "p-4 sm:p-6">
       {/* Date Range Selector */}
-      <DateRangeSelector 
-        onRangeChange={(newRange) => setDateRange(newRange)}
-        initialStartDate={dateRange.startDate}
-        initialEndDate={dateRange.endDate}
-      />
-
-      {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-        <SummaryCard 
-          title="Total Sales" 
-          value={saleData.length > 0 ? `${saleData.reduce((sum, sale) => sum + sale.total, 0).toLocaleString()}` : "Loading..."} 
-          subtitle="From sales" 
-          borderColor="border-purple-600" 
-        />
-  
-        <SummaryCard 
-          title="Total Products" 
-          value={productData.length > 0 ? productData.length : "Loading..."}  
-          subtitle="In inventory" 
-          borderColor="border-blue-600" 
-        />
-  
-        <SummaryCard 
-          title="Total Customers" 
-          value={customerData.length > 0 ? customerData.length : "Loading..."} 
-          subtitle="Registered accounts" 
-          borderColor="border-green-600" 
-        />
-  
-        <SummaryCard 
-          title="Inventory Value" 
-          value={productData.length > 0 ? `${productData.reduce((sum, product) => sum + (product.price * product.stock), 0).toLocaleString()}` : "Loading..."} 
-          subtitle="Current stock value" 
-          borderColor="border-amber-600" 
+      <div className = "mb-6">
+        <DateRangeSelector 
+          onRangeChange = { ( newRange ) => setDateRange ( newRange ) }
+          initialStartDate = { dateRange.startDate }
+          initialEndDate = { dateRange.endDate }
         />
       </div>
 
-      {/* Visualization Charts */}
-      <div className="mb-10">
-        <div className="bg-white rounded-xl shadow-md p-6 mb-10">
-          <h2 className="text-xl font-semibold text-purple-900 mb-4">Sales Trend</h2>
-          <div className="h-96">
-            <SalesTrendChart invoiceData={invoiceData} />
+      {/* Summary Cards - Responsive grid with stacking on mobile */}
+      <div className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-6 sm:mb-10">
+        <SummaryCard 
+          title = "Total Sales" 
+          value = { saleData.length > 0 ? `${ saleData.reduce ( ( sum, sale ) => sum + sale.total, 0 ).toLocaleString ( ) }` : "Loading..." } 
+          subtitle = "From sales" 
+          borderColor = "border-purple-600" 
+          isLoading = { isLoading }
+        />
+  
+        <SummaryCard 
+          title = "Total Products" 
+          value = { productData.length > 0 ? productData.length : "Loading..." }  
+          subtitle = "In inventory" 
+          borderColor = "border-blue-600" 
+          isLoading = { isLoading }
+        />
+  
+        <SummaryCard 
+          title = "Total Customers" 
+          value = { customerData.length > 0 ? customerData.length : "Loading..." } 
+          subtitle = "Registered accounts" 
+          borderColor = "border-green-600" 
+          isLoading = { isLoading }
+        />
+  
+        <SummaryCard 
+          title = "Inventory Value" 
+          value = { productData.length > 0 ? `${ productData.reduce ( ( sum, product ) => sum + ( product.price * product.stock ), 0 ).toLocaleString ( ) }` : "Loading..." } 
+          subtitle = "Current stock value" 
+          borderColor = "border-amber-600" 
+          isLoading = { isLoading }
+        />
+      </div>
+
+      {/* Visualization Charts - Improved responsiveness */}
+      <div className = "mb-6 sm:mb-10">
+        <div className = "bg-white rounded-xl shadow-md p-4 sm:p-6 mb-6 sm:mb-10">
+          <h2 className = "text-lg sm:text-xl font-semibold text-purple-900 mb-3 sm:mb-4">Sales Trend</h2>
+          <div className = "h-64 sm:h-80 md:h-96">
+            <SalesTrendChart invoiceData = { invoiceData } isLoading = { isLoading } />
           </div>
         </div>
   
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-white rounded-xl shadow-md p-6">
-            <h2 className="text-xl font-semibold text-purple-900 mb-4">Top Products</h2>
-            <div className="h-96">
-              <TopProductsChart invoiceData={invoiceData} productData={productData} />
+        <div className = "grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+          <div className = "bg-white rounded-xl shadow-md p-4 sm:p-6">
+            <h2 className = "text-lg sm:text-xl font-semibold text-purple-900 mb-3 sm:mb-4">Top Products</h2>
+            <div className = "h-64 sm:h-80">
+              <TopProductsChart invoiceData = { invoiceData } productData = { productData } isLoading = { isLoading } />
             </div>
           </div>
     
-          <div className="bg-white rounded-xl shadow-md p-6">
-            <h2 className="text-xl font-semibold text-purple-900 mb-4">Inventory Status</h2>
-            <div className="h-96">
-              <InventoryStatus productData={productData} />
+          <div className = "bg-white rounded-xl shadow-md p-4 sm:p-6">
+            <h2 className = "text-lg sm:text-xl font-semibold text-purple-900 mb-3 sm:mb-4">Inventory Status</h2>
+            <div className = "h-64 sm:h-80">
+              <InventoryStatus productData = { productData } isLoading = { isLoading } />
             </div>
           </div>
         </div>
       </div>
 
-      <div className="bg-white rounded-xl shadow-md p-6">
-        <h2 className="text-xl font-semibold text-purple-900 mb-4">Recent Sales</h2>
-        <RecentInvoices invoiceData={invoiceData} />
+      {/* Recent Sales Table - Responsive container */}
+      <div className = "bg-white rounded-xl shadow-md p-4 sm:p-6">
+        <h2 className = "text-lg sm:text-xl font-semibold text-purple-900 mb-3 sm:mb-4">Recent Sales</h2>
+        <div className = "overflow-x-auto">
+          <RecentInvoices invoiceData = { invoiceData } isLoading = { isLoading } />
+        </div>
       </div>
     </div>
 

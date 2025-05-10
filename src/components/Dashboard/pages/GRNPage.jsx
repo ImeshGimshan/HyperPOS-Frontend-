@@ -1,15 +1,16 @@
 
 // Imports : ( useEffect , useState ) , ( Eye , SlidersHorizontal ) , ( grnData )
-import { useState , useEffect } from "react";
+import { useState, useEffect } from "react";
 
-import { Eye , SlidersHorizontal } from "lucide-react";
+import { Eye, SlidersHorizontal } from "lucide-react";
 
 import { getGRNData } from "../data/grnData";
+
 import FetchLoader from "../../ui/FetchLoader";
 
 // Function : ( ViewModal )
 // Passing : ( grn - The data props. , onClose - To close the filter modal. )
-function ViewModal ( { grn , onClose } ) {
+function ViewModal ( { grn, onClose } ) {
 
   // Function to format date strings
   const formatDate = ( dateString ) => {
@@ -22,31 +23,31 @@ function ViewModal ( { grn , onClose } ) {
 
     <div className = "fixed inset-0 bg-black/50 flex justify-center items-center z-50 p-4">
 
-      <div className = "bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl max-h-[90vh] overflow-y-auto">
+      <div className = "bg-white rounded-2xl p-4 sm:p-6 w-full max-w-md shadow-2xl max-h-[90vh] overflow-y-auto">
 
         <div className = "flex justify-between items-center mb-4">
 
           <div className = "w-full text-center">
-            <h2 className = "text-2xl font-bold text-purple-900">GRN Details</h2>
+            <h2 className = "text-xl sm:text-2xl font-bold text-purple-900">GRN Details</h2>
           </div>
 
           <button
             onClick = { onClose }
-            className = "absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-xl cursor-pointer"
+            className = "absolute top-3 right-3 sm:top-4 sm:right-4 text-gray-600 hover:text-gray-900 text-xl cursor-pointer"
           >
             &times;
           </button>
 
         </div>
-  
+
         <div className = "space-y-4">
 
           {/* Basic Information */}
           <div className = "bg-purple-50 p-3 rounded-lg">
 
             <h3 className = "text-md font-semibold text-purple-800 mb-2 text-center">Basic Information</h3>
-      
-            <div className = "grid grid-cols-2 gap-3 text-sm">
+
+            <div className = "grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
 
               <div className = "flex flex-col">
                 <span className = "font-medium text-gray-600">GRN ID</span>
@@ -61,7 +62,7 @@ function ViewModal ( { grn , onClose } ) {
             </div>
 
           </div>
-    
+
           {/* Financial Details */}
           <div className = "bg-green-50 p-3 rounded-lg">
 
@@ -79,13 +80,13 @@ function ViewModal ( { grn , onClose } ) {
             </div>
 
           </div>
-    
+
           {/* Date Information */}
           <div className = "bg-amber-50 p-3 rounded-lg">
 
             <h3 className = "text-md font-semibold text-amber-800 mb-2 text-center">Date Information</h3>
 
-            <div className = "grid grid-cols-2 gap-3 text-sm">
+            <div className = "grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
 
               <div className = "flex flex-col">
                 <span className = "font-medium text-gray-600">Created At</span>
@@ -106,7 +107,7 @@ function ViewModal ( { grn , onClose } ) {
           </div>
 
         </div>
-  
+
         <div className = "mt-6 flex justify-center">
 
           <button
@@ -168,17 +169,17 @@ function FilterModal ( { onClose, onApply, supplierList, currentFilters } ) {
 
     <div className = "fixed inset-0 bg-black/50 flex justify-center items-center z-50">
 
-      <div className = "bg-white rounded-2xl p-6 w-full max-w-lg shadow-2xl relative max-h-[90vh] overflow-y-auto">
+      <div className = "bg-white rounded-2xl p-4 sm:p-6 w-full max-w-lg shadow-2xl relative max-h-[90vh] overflow-y-auto m-4">
 
         <button
           onClick = { onClose }
-          className = "absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-xl cursor-pointer"
+          className = "absolute top-3 right-3 sm:top-4 sm:right-4 text-gray-600 hover:text-gray-900 text-xl cursor-pointer"
         >
           &times;
         </button>
-  
+
         <h2 className = "text-xl font-semibold text-purple-900 mb-4 text-center">Advanced Filters</h2>
-  
+
         {/* Basic Information Section */}
         <div className = "mb-4">
 
@@ -205,13 +206,13 @@ function FilterModal ( { onClose, onApply, supplierList, currentFilters } ) {
           </div>
 
         </div>
-  
+
         {/* Amount Section */}
         <div className = "mb-4">
 
           <h3 className = "text-md font-medium text-purple-700 mb-2">Total Amount</h3>
 
-          <div className = "grid grid-cols-2 gap-4 text-sm">
+          <div className = "grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
 
             <div className = "flex flex-col">
 
@@ -240,13 +241,13 @@ function FilterModal ( { onClose, onApply, supplierList, currentFilters } ) {
           </div>
 
         </div>
-  
+
         {/* Date Section */}
         <div className = "mb-4">
 
           <h3 className = "text-md font-medium text-purple-700 mb-2">Date Range</h3>
 
-          <div className = "grid grid-cols-2 gap-4 text-sm">
+          <div className = "grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
 
             <div className = "flex flex-col">
               <label className = "text-gray-600 mb-1">Start Date</label>
@@ -271,7 +272,7 @@ function FilterModal ( { onClose, onApply, supplierList, currentFilters } ) {
           </div>
 
         </div>
-  
+
         <div className = "flex justify-center gap-4 mt-6">
           <button onClick = { handleReset } className = "px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 cursor-pointer">Reset</button>
           <button onClick = { handleApply } className = "px-6 py-2 bg-purple-700 text-white rounded-lg hover:bg-purple-800 cursor-pointer">Apply</button>
@@ -303,37 +304,37 @@ function GRNPage ( ) {
   useEffect ( ( ) => {
 
     const fetchData = async ( ) => {
-  
+
       try {
-  
+
         setLoading ( true );
         setIsFetching ( true );
         const data = await getGRNData ( );
-  
+
         if ( data ) {
-    
+
           setGRNData ( data );
-    
+
         } else {
-    
+
           setError ( "No data returned from API" );
-    
+
         }
-  
+
       } catch ( err ) {
-  
+
         setError ( "Failed to fetch GRN data" );
         console.error ( "Error fetching GRN data:", err );
-  
+
       } finally {
-  
+
         setLoading ( false );
         setTimeout(() => {
           setIsFetching ( false );
-        }, 1000); // Keep the fetch loader visible for at least 1 second
-  
+        }, 3000);
+
       }
-  
+
     };
 
     fetchData ( );
@@ -374,7 +375,7 @@ function GRNPage ( ) {
     let matchesDate = true;
     if ( filters.startDate || filters.endDate ) {
       const grnDate = g.updatedAt ? new Date ( g.updatedAt ) : null;
-  
+
       if ( !grnDate ) {
         matchesDate = false;
       } else {
@@ -383,7 +384,7 @@ function GRNPage ( ) {
           startDate.setHours ( 0, 0, 0, 0 );
           if ( grnDate < startDate ) matchesDate = false;
         }
-  
+
         if ( filters.endDate ) {
           const endDate = new Date ( filters.endDate );
           endDate.setHours ( 23, 59, 59, 999 );
@@ -399,28 +400,30 @@ function GRNPage ( ) {
 
   return (
 
-    <div className = "p-6">
+    <div className = "p-4 sm:p-6">
 
-      <h1 className = "text-3xl font-bold mb-6 text-purple-900 text-center">Goods Received Notes</h1>
+      <h1 className = "text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-purple-900 text-center">Goods Received Notes</h1>
 
-      <div className = "flex flex-wrap justify-center gap-4 mb-6">
+      {/* Responsive search and filter controls */}
+      <div className = "flex flex-col sm:flex-row justify-center items-stretch sm:items-center gap-3 sm:gap-4 mb-6">
 
         <input
           type = "text"
           placeholder = "Search..."
           value = { searchTerm }
           onChange = { ( e ) => setSearchTerm ( e.target.value ) }
-          className = "px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-400"
+          className = "px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-400 w-full sm:w-auto"
         />
         <button
           onClick = { ( ) => setShowFilterModal ( true ) }
-          className = "px-4 py-2 bg-purple-700 text-white rounded-lg hover:bg-purple-800 transition flex items-center gap-2 cursor-pointer"
+          className = "px-4 py-2 bg-purple-700 text-white rounded-lg hover:bg-purple-800 transition flex items-center justify-center gap-2 cursor-pointer"
         >
           <SlidersHorizontal size = { 16 } /> Options
         </button>
 
       </div>
 
+      {/* Responsive table container */}
       <div className = "overflow-x-auto bg-white rounded-xl shadow-md">
 
         {isFetching ? (
@@ -434,12 +437,12 @@ function GRNPage ( ) {
 
             <thead>
               <tr className = "bg-purple-800 text-white">
-                <th className = "p-3">GRN ID</th>
-                <th className = "p-3">Supplier ID</th>
-                <th className = "p-3">Total Amount</th>
-                <th className = "p-3">Created At</th>
-                <th className = "p-3">Updated At</th>
-                <th className = "p-3 text-center">View</th>
+                <th className = "p-3 whitespace-nowrap">GRN ID</th>
+                <th className = "p-3 whitespace-nowrap">Supplier ID</th>
+                <th className = "p-3 whitespace-nowrap">Total Amount</th>
+                <th className = "p-3 whitespace-nowrap hidden md:table-cell">Created At</th>
+                <th className = "p-3 whitespace-nowrap hidden lg:table-cell">Updated At</th>
+                <th className = "p-3 text-center whitespace-nowrap">View</th>
               </tr>
             </thead>
             <tbody>
@@ -450,12 +453,13 @@ function GRNPage ( ) {
                     <td className = "p-3 font-medium">{ grn.id }</td>
                     <td className = "p-3">{ grn.supplierId || "—" }</td>
                     <td className = "p-3 font-semibold text-green-700">Rs { grn.total?.toLocaleString() || "—" }</td>
-                    <td className = "p-3">{ formatDate(grn.createdAt) }</td>
-                    <td className = "p-3">{ formatDate(grn.updatedAt) }</td>
+                    <td className = "p-3 hidden md:table-cell">{ formatDate(grn.createdAt) }</td>
+                    <td className = "p-3 hidden lg:table-cell">{ formatDate(grn.updatedAt) }</td>
                     <td className = "p-3 text-center">
                       <button
                         onClick = { ( ) => setSelectedGRN ( grn ) }
                         className = "text-purple-700 hover:text-purple-900 cursor-pointer transition"
+                        aria-label = "View GRN details"
                       >
                         <Eye size = { 18 } />
                       </button>

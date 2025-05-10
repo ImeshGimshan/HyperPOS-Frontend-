@@ -44,10 +44,10 @@ function DateRangeSelector ( { onRangeChange , initialStartDate , initialEndDate
     const end = new Date ( );
     const start = new Date ( );
     start.setDate ( end.getDate ( ) - days );
-    
+  
     const formattedEndDate = end.toISOString ( ).split ( 'T' ) [ 0 ];
     const formattedStartDate = start.toISOString ( ).split ( 'T' ) [ 0 ];
-    
+  
     setStartDate ( formattedStartDate );
     setEndDate ( formattedEndDate );
     setActivePreset ( presetName );
@@ -60,10 +60,10 @@ function DateRangeSelector ( { onRangeChange , initialStartDate , initialEndDate
 
     const today = new Date ( );
     const start = new Date ( today.getFullYear ( ) , today.getMonth ( ) , 1 );
-    
+  
     const formattedEndDate = today.toISOString ( ).split ( 'T' ) [ 0 ];
     const formattedStartDate = start.toISOString ( ).split ( 'T' ) [ 0 ];
-    
+  
     setStartDate ( formattedStartDate );
     setEndDate ( formattedEndDate );
     setActivePreset ( 'thisMonth' );
@@ -78,13 +78,13 @@ function DateRangeSelector ( { onRangeChange , initialStartDate , initialEndDate
     const lastMonth = today.getMonth ( ) - 1;
     const year = lastMonth < 0 ? today.getFullYear ( ) - 1 : today.getFullYear ( );
     const month = lastMonth < 0 ? 11 : lastMonth;
-    
+  
     const start = new Date ( year , month , 1 );
     const end = new Date ( year , month + 1 , 0 );
-    
+  
     const formattedEndDate = end.toISOString ( ).split ( 'T' ) [ 0 ];
     const formattedStartDate = start.toISOString ( ).split ( 'T' ) [ 0 ];
-    
+  
     setStartDate ( formattedStartDate );
     setEndDate ( formattedEndDate );
     setActivePreset ( 'lastMonth' );
@@ -94,16 +94,16 @@ function DateRangeSelector ( { onRangeChange , initialStartDate , initialEndDate
 
   return (
 
-    <div className = "bg-white rounded-xl shadow-md p-6 mb-6 text-center">
-      <h3 className = "text-xl font-semibold text-purple-900 mb-4">Sales Period Analysis</h3>
-      
+    <div className = "bg-white rounded-xl shadow-md p-4 sm:p-6 mb-4 sm:mb-6 text-center">
+      <h3 className = "text-lg sm:text-xl font-semibold text-purple-900 mb-3 sm:mb-4">Sales Period Analysis</h3>
+    
       { /*Input field to set the start date.*/ }
-      <div className = "flex flex-wrap justify-center items-end gap-4 mb-4">
-        <div>
+      <div className = "flex flex-col sm:flex-row flex-wrap justify-center items-center sm:items-end gap-3 sm:gap-4 mb-4">
+        <div className = "w-full sm:w-auto">
           <label className = "block text-sm text-gray-600 mb-1">From</label>
           <input 
             type = "date" 
-            className = "p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400" 
+            className = "w-full sm:w-auto p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400" 
             value = { startDate }
             onChange = { ( e ) => {
 
@@ -113,13 +113,13 @@ function DateRangeSelector ( { onRangeChange , initialStartDate , initialEndDate
             } }
           />
         </div>
-        
+      
         { /*Input field to set the end date.*/ }
-        <div>
+        <div className = "w-full sm:w-auto">
           <label className = "block text-sm text-gray-600 mb-1">To</label>
           <input 
             type = "date" 
-            className = "p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400" 
+            className = "w-full sm:w-auto p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400" 
             value = { endDate }
             onChange = { ( e ) => {
 
@@ -129,29 +129,29 @@ function DateRangeSelector ( { onRangeChange , initialStartDate , initialEndDate
             } }
           />
         </div>
-        
+      
         { /*Button to apply the selected date range.*/ }
         <button 
           onClick = { handleApply }
-          className = "px-4 py-2 bg-purple-700 text-white rounded-lg hover:bg-purple-800 transition"
+          className = "w-full sm:w-auto px-4 py-2 bg-purple-700 text-white rounded-lg hover:bg-purple-800 transition"
         >
           Apply
         </button>
-        
+      
         { /*Button to reset the date range.*/ }
         <button 
           onClick = { handleReset }
-          className = "px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition"
+          className = "w-full sm:w-auto px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition"
         >
           Reset
         </button>
       </div>
-      
+    
       { /*Button to set today's date.*/ }
-      <div className = "flex flex-wrap justify-center gap-3 mt-2">
+      <div className = "flex flex-wrap justify-center gap-2 sm:gap-3 mt-2 overflow-x-auto">
         <button 
           onClick = { ( ) => setPresetRange ( 7 , 'last7Days' ) }
-          className = { `px-4 py-2 rounded-lg transition text-sm ${
+          className = { `px-3 sm:px-4 py-2 rounded-lg transition text-xs sm:text-sm ${
             activePreset === 'last7Days' 
               ? 'bg-purple-100 text-purple-800 border border-purple-300' 
               : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -159,11 +159,11 @@ function DateRangeSelector ( { onRangeChange , initialStartDate , initialEndDate
         >
           Last 7 Days
         </button>
-        
+      
         { /*Button to set last month's date.*/ }
         <button 
           onClick = { ( ) => setPresetRange ( 30 , 'last30Days' ) }
-          className = { `px-4 py-2 rounded-lg transition text-sm ${
+          className = { `px-3 sm:px-4 py-2 rounded-lg transition text-xs sm:text-sm ${
             activePreset === 'last30Days' 
               ? 'bg-purple-100 text-purple-800 border border-purple-300' 
               : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -171,11 +171,11 @@ function DateRangeSelector ( { onRangeChange , initialStartDate , initialEndDate
         >
           Last 30 Days
         </button>
-        
+      
         { /*Button to set this month's date.*/ }
         <button 
           onClick = { setThisMonth }
-          className = { `px-4 py-2 rounded-lg transition text-sm ${
+          className = { `px-3 sm:px-4 py-2 rounded-lg transition text-xs sm:text-sm ${
             activePreset === 'thisMonth' 
               ? 'bg-purple-100 text-purple-800 border border-purple-300' 
               : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -183,11 +183,11 @@ function DateRangeSelector ( { onRangeChange , initialStartDate , initialEndDate
         >
           This Month
         </button>
-        
+      
         { /*Button to set last month's date.*/ }
         <button 
           onClick = { setLastMonth }
-          className = { `px-4 py-2 rounded-lg transition text-sm ${
+          className = { `px-3 sm:px-4 py-2 rounded-lg transition text-xs sm:text-sm ${
             activePreset === 'lastMonth' 
               ? 'bg-purple-100 text-purple-800 border border-purple-300' 
               : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -195,11 +195,11 @@ function DateRangeSelector ( { onRangeChange , initialStartDate , initialEndDate
         >
           Last Month
         </button>
-        
+      
         { /*Button to set last 90 days' date.*/ }
         <button 
           onClick = { ( ) => setPresetRange ( 90 , 'last90Days' ) }
-          className = { `px-4 py-2 rounded-lg transition text-sm ${
+          className = { `px-3 sm:px-4 py-2 rounded-lg transition text-xs sm:text-sm ${
             activePreset === 'last90Days' 
               ? 'bg-purple-100 text-purple-800 border border-purple-300' 
               : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -207,11 +207,11 @@ function DateRangeSelector ( { onRangeChange , initialStartDate , initialEndDate
         >
           Last 90 Days
         </button>
-        
+      
         { /*Button to set last year's date.*/ }
         <button 
           onClick = { ( ) => setPresetRange ( 365 , 'lastYear' ) }
-          className = { `px-4 py-2 rounded-lg transition text-sm ${
+          className = { `px-3 sm:px-4 py-2 rounded-lg transition text-xs sm:text-sm ${
             activePreset === 'lastYear' 
               ? 'bg-purple-100 text-purple-800 border border-purple-300' 
               : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
