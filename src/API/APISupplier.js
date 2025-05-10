@@ -3,7 +3,7 @@ import { APILinks } from "../API/APILinks";
 
 const getSuppliers = async () => {
   const token = localStorage.getItem("token");
-  const response = await axios.get(APILinks.getSuppliers(), {
+  const response = await axios.get(APILinks.getSuppliers, {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,

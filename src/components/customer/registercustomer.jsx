@@ -1,20 +1,63 @@
-import React, { useState } from 'react';
-import {saveCustomer} from '../../API/APICustomer';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import {
+  saveCustomer,
+  updateCustomer,
+  getCustomers,
+} from "../../API/APICustomer";
 
 const Customerregister = () => {
+  const [customers, setCustomers] = useState([]);
+  const [isUpdate, setIsUpdate] = useState(false);
+
+  useEffect(() => {
+    getAllCustomers();
+  }, []);
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    address: ''
+    id: undefined,
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
   });
 
+  const getAllCustomers = async () => {
+    try {
+      const response = await getCustomers();
+      setCustomers(response);
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || error?.message;
+      alert(errorMessage);
+    }
+  };
+  const setCustomerToUpdate = (e) => {
+    if (e.target.value == "New Customer") {
+      setFormData({
+        id: undefined,
+        name: "",
+        email: "",
+        phone: "",
+        address: "",
+      });
+      setIsUpdate(false);
+      return;
+    }
+    const customer = customers.find(
+      (customer) => customer.id == e.target.value
+    );
+    setFormData({
+      id: customer.id,
+      name: customer.name,
+      email: customer.email,
+      phone: customer.phone,
+      address: customer.address,
+    });
+    setIsUpdate(true);
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -22,22 +65,28 @@ const Customerregister = () => {
     e.preventDefault();
     submitForm();
 
-
-    console.log('Form submitted:', formData);
   };
   const submitForm = async () => {
+    if (isUpdate) {
+      try {
+        const response = await updateCustomer(formData?.id, formData);
+        alert("Customer updated successfully");
+        getAllCustomers();
+      } catch (error) {
+        const errorMessage = error.response?.data?.message || error?.message;
+        alert(errorMessage);
+      }
+    } else {
     try {
       const response = await saveCustomer(formData);
-      alert('Customer saved successfully');
-      console.log('Customer saved:', response);
-      // Handle success or navigate to another page
+      alert("Customer saved successfully");
+      getAllCustomers();
     } catch (error) {
-      const errorMessage = (error.response?.data?.message) || error?.message;
+      const errorMessage = error.response?.data?.message || error?.message;
       alert(errorMessage);
-      // Handle error
     }
+  }
   };
-
 
   return (
     <div className="min-h-screen bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
@@ -45,16 +94,37 @@ const Customerregister = () => {
         <div className="p-8">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-extrabold text-white">
-              Customer Registration
+              Add / Update Customer
             </h2>
-            <p className="mt-2 text-gray-400">
-              Join our network of trusted suppliers
-            </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-300">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-300"
+              >
+                Select Customer
+              </label>
+              <select
+                name="id"
+                onChange={setCustomerToUpdate}
+                className="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              >
+                <option value="New Customer">New Customer</option>
+                {customers.map((customer) => (
+                  <option key={customer.id} value={customer.id}>
+                    {customer.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-300"
+              >
                 Name *
               </label>
               <input
@@ -69,7 +139,10 @@ const Customerregister = () => {
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-300">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-300"
+              >
                 Email Address *
               </label>
               <input
@@ -84,7 +157,10 @@ const Customerregister = () => {
             </div>
 
             <div>
-              <label htmlFor="phone" className="block text-sm font-medium text-gray-300">
+              <label
+                htmlFor="phone"
+                className="block text-sm font-medium text-gray-300"
+              >
                 Phone Number *
               </label>
               <input
@@ -99,7 +175,10 @@ const Customerregister = () => {
             </div>
 
             <div>
-              <label htmlFor="address" className="block text-sm font-medium text-gray-300">
+              <label
+                htmlFor="address"
+                className="block text-sm font-medium text-gray-300"
+              >
                 Address *
               </label>
               <textarea
@@ -113,7 +192,6 @@ const Customerregister = () => {
               />
             </div>
 
-           
             <div>
               <button
                 type="submit"

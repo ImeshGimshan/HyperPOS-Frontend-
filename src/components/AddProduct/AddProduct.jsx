@@ -1,5 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
-import { saveProduct,saveProductImage } from "../../API/APIProducts";
+import {
+  saveProduct,
+  saveProductImage,
+  updateProduct,
+  getProducts,
+} from "../../API/APIProducts";
 import { getCategories } from "../../API/APICategory";
 
 import { FiCamera } from "react-icons/fi";
@@ -7,17 +12,61 @@ import { BiBarcode } from "react-icons/bi";
 
 const AddProduct = () => {
   const [categories, setCategories] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [isUpdate, setIsUpdate] = useState(false);
 
-useEffect(() => {
+  useEffect(() => {
     getCategoriesData();
+    getAllProducts();
   }, []);
+  const getAllProducts = async () => {
+    try {
+      const response = await getProducts();
+      setProducts(response);
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || error?.message;
+      alert(errorMessage);
+    }
+  };
+  const setProductToUpdate = (e) => {
+    if (e.target.value == "New Product") {
+      setForm({
+        id: undefined,
+        barcode: "",
+        name: "",
+        unit: "",
+        price: "",
+        categoryId: "",
+        discount: 0,
+        description: "",
+        photo: null,
+      });
+      setIsUpdate(false);
+      return;
+    }
+    console.log(e.target.value);
+    const product = products.find((product) => product.id == e.target.value);
+    setForm({
+      id: product.id,
+      barcode: product.barcode,
+      name: product.name,
+      unit: product.unit,
+      price: product.price,
+      categoryId: product.categoryId,
+      discount: product.discount,
+      description: product.description,
+      photo: null,
+    });
+    setIsUpdate(true);
+  };
+
   const unit = [
     "KG",
     "GRAM",
     "MILLIGRAM",
     "LITRE",
-    'MILLILITRE',
-    'PIECE',
+    "MILLILITRE",
+    "PIECE",
     "PACKET",
     "BAG",
     "BOX",
@@ -42,8 +91,10 @@ useEffect(() => {
     "REEL",
     "LOAF",
     "TUBE",
-    "SACHET"];
+    "SACHET",
+  ];
   const [form, setForm] = useState({
+    id: undefined,
     barcode: "",
     name: "",
     unit: "",
@@ -63,7 +114,6 @@ useEffect(() => {
     }
   };
 
-
   const [errors, setErrors] = useState({});
   const barcodeRef = useRef(null);
 
@@ -75,7 +125,7 @@ useEffect(() => {
     } else {
       setForm({ ...form, [name]: value });
     }
-
+    console.log(form);
     setErrors({ ...errors, [name]: "" });
   };
 
@@ -87,11 +137,9 @@ useEffect(() => {
     if (!form.price || isNaN(form.price))
       newErrors.price = "Valid price is required.";
     if (!form.categoryId) newErrors.categoryId = "Please select a categoryId.";
-    if (!form.description.trim())
-      newErrors.description = "Description is required.";
     if (form.discount < 0) newErrors.discount = "Discount cannot be negative.";
-    if (form.discount > 100) newErrors.discount = "Discount cannot be more than 100%.";
-    if (!form.photo) newErrors.photo = "Please upload a photo.";
+    if (form.discount > 100)
+      newErrors.discount = "Discount cannot be more than 100%.";
 
     return newErrors;
   };
@@ -108,48 +156,50 @@ useEffect(() => {
     submitForm();
   };
   const submitForm = async () => {
-    let pid = null
-    let image = form.photo;
-    try {
-      const response = await saveProduct(form)
-      pid = response.id
-      console.log("Product added successfully:", response.id);
-      alert("Product added successfully!");
-      barcodeRef.current.value = "";
-      setForm({
-        name: "",
-        unit: "",
-        price: "",
-        categoryId: "",
-        discount: 0,
-        description: "",
-        photo: null,
-      });
-    } catch (error) {
-      const errorMessage = error.response?.data?.message || error?.message;
-      alert(errorMessage);
+    let pid = null;
+    let image = form?.photo;
+    if (isUpdate) {
+      try {
+        const response = await updateProduct(form?.id, form);
+        pid = response?.id;
+        alert("Product updated successfully!");
+        getAllProducts();
+      } catch (error) {
+        const errorMessage = error.response?.data?.message || error?.message;
+        alert(errorMessage);
+      }
+      return;
+    } else {
+      try {
+        const response = await saveProduct(form);
+        pid = response?.id;
+        alert("Product added successfully!");
+        barcodeRef.current.value = "";
+        setForm({
+          name: "",
+          unit: "",
+          price: "",
+          categoryId: "",
+          discount: 0,
+          description: "",
+          photo: null,
+        });
+        getAllProducts();
+      } catch (error) {
+        const errorMessage = error.response?.data?.message || error?.message;
+        alert(errorMessage);
+      }
     }
-    if (pid) {
-       try {
-      const response = await saveProductImage(pid, image);
-      alert("Image saved successfully");
-    } catch (error) {
-      const errorMessage = error.response?.data?.message || error?.message;
-      alert(errorMessage);
-    }
+    if (pid && image) {
+      try {
+        const response = await saveProductImage(pid, image);
+        alert("Image saved successfully");
+      } catch (error) {
+        const errorMessage = error.response?.data?.message || error?.message;
+        alert(errorMessage);
+      }
     }
   };
-
-  const submitImage = async (id) => {
-    try {
-      const response = await saveProductImage(id, form.photo);
-      alert("Image saved successfully");
-    } catch (error) {
-      const errorMessage = error.response?.data?.message || error?.message;
-      alert(errorMessage);
-    }
-  };
-  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#2a0036] to-[#000828] px-4">
@@ -158,9 +208,32 @@ useEffect(() => {
         className="bg-[#1c1233] text-white p-8 rounded-3xl w-full max-w-xl shadow-lg"
       >
         <h2 className="text-2xl font-semibold text-center mb-6 border-b border-gray-600 pb-2">
-          Add Product
+          Add / Update Product
         </h2>
 
+        {/* products */}
+        <div className="mb-4">
+          <label className="block mb-1 text-sm">
+            Select Product for update
+          </label>
+          <select
+            name="id"
+            value={form.id}
+            onChange={(e) => setProductToUpdate(e)}
+            className="w-full px-4 py-2 rounded-lg bg-[#3a2a55] placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+          >
+            <option value="New Product">New Product</option>
+            {products.map((product) => (
+              <option
+                key={product.id}
+                value={product.id}
+                onClick={() => console.log("hi")}
+              >
+                {product.name}
+              </option>
+            ))}
+          </select>
+        </div>
         {/* Barcode */}
         <div className="mb-4">
           <label className="block mb-1 text-sm">Barcode</label>
@@ -236,39 +309,40 @@ useEffect(() => {
             <p className="text-red-400 text-sm mt-1">{errors.unit}</p>
           )}
         </div>
+        <div className="flex gap-1 justify-between">
+          {/* Price */}
+          <div className="mb-4">
+            <label className="block mb-1 text-sm">Price</label>
+            <input
+              type="number"
+              name="price"
+              placeholder="Enter Price"
+              value={form.price}
+              onChange={handleChange}
+              className="w-full px-4 py-2 rounded-md bg-[#3a2a55] placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            />
 
-        {/* Price */}
-        <div className="mb-4">
-          <label className="block mb-1 text-sm">Price</label>
-          <input
-            type="number"
-            name="price"
-            placeholder="Enter Price"
-            value={form.price}
-            onChange={handleChange}
-            className="w-full px-4 py-2 rounded-md bg-[#3a2a55] placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
-          />
+            {errors.price && (
+              <p className="text-red-400 text-sm mt-1">{errors.price}</p>
+            )}
+          </div>
 
-          {errors.price && (
-            <p className="text-red-400 text-sm mt-1">{errors.price}</p>
-          )}
-        </div>
+          {/* discount */}
+          <div className="mb-4">
+            <label className="block mb-1 text-sm">Discount</label>
+            <input
+              type="number"
+              name="discount"
+              placeholder="Enter discount"
+              value={form.discount}
+              onChange={handleChange}
+              className="w-full px-4 py-2 rounded-md bg-[#3a2a55] placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            />
 
-        {/* discount */}
-        <div className="mb-4">
-          <label className="block mb-1 text-sm">Discount</label>
-          <input
-            type="number"
-            name="discount"
-            placeholder="Enter discount"
-            value={form.discount}
-            onChange={handleChange}
-            className="w-full px-4 py-2 rounded-md bg-[#3a2a55] placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
-          />
-
-          {errors.price && (
-            <p className="text-red-400 text-sm mt-1">{errors.price}</p>
-          )}
+            {errors.price && (
+              <p className="text-red-400 text-sm mt-1">{errors.price}</p>
+            )}
+          </div>
         </div>
 
         {/* CategoryId */}
@@ -286,12 +360,6 @@ useEffect(() => {
                 {category.name}
               </option>
             ))}
-
-
-
-            <option value="electronics">Electronics</option>
-            <option value="grocery">Grocery</option>
-            <option value="fashion">Fashion</option>
           </select>
 
           {errors.categoryId && (
@@ -315,49 +383,48 @@ useEffect(() => {
             <p className="text-red-400 text-sm mt-1">{errors.description}</p>
           )}
         </div>
+        <div className="flex gap-2 justify-evenly">
+          {/* Add Photo */}
+          <div className="mb-6">
+            <label
+              htmlFor="photo-upload"
+              className="flex items-center justify-center gap-3 px-4 py-3 bg-[#3a2a55] text-gray-300 rounded-lg cursor-pointer hover:bg-[#4b3b6e] transition"
+            >
+              <FiCamera className="text-xl" />
+              <span>{form.photo ? form.photo.name : "Choose Picture"}</span>
+              <input
+                id="photo-upload"
+                type="file"
+                name="photo"
+                accept="image/*"
+                onChange={handleChange}
+                className="hidden"
+              />
+            </label>
 
-        {/* Add Photo */}
-        <div className="mb-6">
-          <label className="block mb-2 text-sm">Add Photo</label>
-          <label
-            htmlFor="photo-upload"
-            className="flex items-center justify-center gap-3 px-4 py-3 bg-[#3a2a55] text-gray-300 rounded-lg cursor-pointer hover:bg-[#4b3b6e] transition"
-          >
-            <FiCamera className="text-xl" />
-            <span>{form.photo ? form.photo.name : "Choose Picture"}</span>
-            <input
-              id="photo-upload"
-              type="file"
-              name="photo"
-              accept="image/*"
-              onChange={handleChange}
-              className="hidden"
-            />
-          </label>
+            {errors.photo && (
+              <p className="text-red-400 text-sm mt-1">{errors.photo}</p>
+            )}
+            {/* Submit Button */}
+            <button
+              type="submit"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition mt-2"
+            >
+              Submit Product
+            </button>
+          </div>
 
-          {errors.photo && (
-            <p className="text-red-400 text-sm mt-1">{errors.photo}</p>
+          {/* Image */}
+          {form.photo && (
+            <div className="mb-6 text-center">
+              <img
+                src={URL.createObjectURL(form.photo)}
+                alt="Preview"
+                className="w-32 h-32 object-cover mx-auto rounded-lg border border-purple-500 shadow-md"
+              />
+            </div>
           )}
         </div>
-
-        {/* Image */}
-        {form.photo && (
-          <div className="mb-6 text-center">
-            <img
-              src={URL.createObjectURL(form.photo)}
-              alt="Preview"
-              className="w-32 h-32 object-cover mx-auto rounded-lg border border-purple-500 shadow-md"
-            />
-          </div>
-        )}
-
-        {/* Submit Button */}
-        <button
-          type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition"
-        >
-          Add Product
-        </button>
       </form>
     </div>
   );

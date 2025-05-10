@@ -49,13 +49,21 @@ const registerUser = async (user) => {
     });
     return response.data;
   };
+  const setCookie = (name, value, days) => {
+    let expires = "";
+    if (days) {
+      const date = new Date();
+      date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+      expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+  };
 
 
 
 
 
 
-
-export { APILogin, APILogout, APIGetUser, APIGetUserById, registerUser };
+export { APILogin, APILogout, APIGetUser, APIGetUserById, registerUser, setCookie };
 
 export default APILogin;

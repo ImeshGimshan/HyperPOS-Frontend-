@@ -130,7 +130,7 @@ const ProductSearch = ({ onAdd, invoice,setProductList }) => {
             <option value="">Select Item</option>
             {products.map((product) => (
               <option key={product?.id} value={product?.id}>
-                {product?.name}
+                {product?.name} |  ( {product?.stock} )
               </option>
             ))}
           </select>
