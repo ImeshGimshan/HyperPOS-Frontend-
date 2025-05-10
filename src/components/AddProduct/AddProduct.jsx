@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { saveProduct } from "../../API/APIProducts";
+import { saveProduct,saveProductImage } from "../../API/APIProducts";
 import { getCategories } from "../../API/APICategory";
 
 import { FiCamera } from "react-icons/fi";
@@ -108,10 +108,13 @@ useEffect(() => {
     submitForm();
   };
   const submitForm = async () => {
+    let pid = null
+    let image = form.photo;
     try {
-      await saveProduct(form);
+      const response = await saveProduct(form)
+      pid = response.id
+      console.log("Product added successfully:", response.id);
       alert("Product added successfully!");
-      
       barcodeRef.current.value = "";
       setForm({
         name: "",
@@ -126,7 +129,27 @@ useEffect(() => {
       const errorMessage = error.response?.data?.message || error?.message;
       alert(errorMessage);
     }
+    if (pid) {
+       try {
+      const response = await saveProductImage(pid, image);
+      alert("Image saved successfully");
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || error?.message;
+      alert(errorMessage);
+    }
+    }
   };
+
+  const submitImage = async (id) => {
+    try {
+      const response = await saveProductImage(id, form.photo);
+      alert("Image saved successfully");
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || error?.message;
+      alert(errorMessage);
+    }
+  };
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#2a0036] to-[#000828] px-4">

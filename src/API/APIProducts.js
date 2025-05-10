@@ -65,6 +65,18 @@ const getProductStockById = async (id) => {
   return response.data;
 };
 
+const saveProductImage = async (id, image) => {
+  const token = localStorage.getItem("token");
+  const formData = new FormData();
+  formData.append('image', image);
+  const response = await axios.post(APILinks.saveProductImage(id), formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+};
 export {
   getProducts,
   getProductById,
@@ -72,4 +84,5 @@ export {
   updateProduct,
   getProductStock,
   getProductStockById,
+  saveProductImage,
 };

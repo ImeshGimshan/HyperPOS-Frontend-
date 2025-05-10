@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-
+import { getSuppliers, getSupplierById, saveSupplier, updateSupplier } from '../../API/APISupplier';
 const SupplierRegistration = () => {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    name: '',
+    address: '',
     email: '',
-    phone: ''
+    phone: '',
   });
 
   const handleChange = (e) => {
@@ -18,8 +18,17 @@ const SupplierRegistration = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission
+    submitSupplier();
     console.log('Form submitted:', formData);
+  };
+  const submitSupplier = async () => {
+    try {
+      const response = await saveSupplier(formData);
+      console.log('Supplier saved:', response);
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || error?.message;
+      alert(errorMessage);
+    }
   };
 
   return (
@@ -30,38 +39,36 @@ const SupplierRegistration = () => {
             <h2 className="text-3xl font-extrabold text-white">
               Supplier Registration
             </h2>
-            <p className="mt-2 text-gray-400">
-              Join our network of trusted suppliers
-            </p>
+
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <div>
-                <label htmlFor="firstName" className="block text-sm font-medium text-gray-300">
-                  First Name *
+                <label htmlFor="name" className="block text-sm font-medium text-gray-300">
+                  Name *
                 </label>
                 <input
                   type="text"
-                  name="firstName"
-                  id="firstName"
+                  name="name"
+                  id="name"
                   required
-                  value={formData.firstName}
+                  value={formData.name}
                   onChange={handleChange}
                   className="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </div>
 
               <div>
-                <label htmlFor="lastName" className="block text-sm font-medium text-gray-300">
-                  Last Name *
+                <label htmlFor="address" className="block text-sm font-medium text-gray-300">
+                  Address *
                 </label>
-                <input
+                <textarea
                   type="text"
-                  name="lastName"
-                  id="lastName"
+                  name="address"
+                  id="address"
                   required
-                  value={formData.lastName}
+                  value={formData.address}
                   onChange={handleChange}
                   className="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />
@@ -105,7 +112,7 @@ const SupplierRegistration = () => {
                 type="submit"
                 className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
-                Register as Supplier
+                Register
               </button>
             </div>
           </form>
