@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import Select from 'react-select';
-const Header = ({invoice,customers}) => {
-  const [selectedCustomer, setSelectedCustomer] = useState(null);
+import React, { useState, useEffect } from "react";
+import Select from "react-select";
+const Header = ({ invoice, customers, setCustomer, customer }) => {
+  const [selectedCustomer, setSelectedCustomer] = useState(
+    invoice?.customerId || 1
+  );
 
   useEffect(() => {
-    if (invoice) {
-      setSelectedCustomer(invoice.customerId);
-    }
-  }, [invoice]);
+    setSelectedCustomer(customer);
+  }, [customer]);
 
   const customerOptions = customers.map((customer) => ({
     label: `${customer?.name} (ID: ${customer?.id})`,
@@ -16,6 +16,7 @@ const Header = ({invoice,customers}) => {
 
   const handleCustomerChange = (selectedOption) => {
     setSelectedCustomer(selectedOption);
+    setCustomer(selectedOption.value);
   };
 
   return (
@@ -32,7 +33,11 @@ const Header = ({invoice,customers}) => {
         <label>Customer:</label>
         <Select
           options={customerOptions}
-          value={selectedCustomer? customerOptions.find((c) => c.value === selectedCustomer) : 1}
+          value={
+            selectedCustomer
+              ? customerOptions.find((c) => c.value === selectedCustomer)
+              : 1
+          }
           // value={invoice?.customerId ? customerOptions.find((c) => c.value === invoice?.customerId) : null}
           onChange={handleCustomerChange}
           placeholder="Select Customer"

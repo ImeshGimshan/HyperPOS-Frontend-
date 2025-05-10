@@ -418,7 +418,7 @@ function CustomerPage() {
           onApply = { setFilters }
         />
       )}
-      )}
+      
     </div>
   );
 }

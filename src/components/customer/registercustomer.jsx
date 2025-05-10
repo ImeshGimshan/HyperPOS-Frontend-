@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import {saveCustomer} from '../../API/APICustomer';
+import { useNavigate } from 'react-router-dom';
 
 const Customerregister = () => {
   const [formData, setFormData] = useState({
@@ -18,9 +20,24 @@ const Customerregister = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission
+    submitForm();
+
+
     console.log('Form submitted:', formData);
   };
+  const submitForm = async () => {
+    try {
+      const response = await saveCustomer(formData);
+      alert('Customer saved successfully');
+      console.log('Customer saved:', response);
+      // Handle success or navigate to another page
+    } catch (error) {
+      const errorMessage = (error.response?.data?.message) || error?.message;
+      alert(errorMessage);
+      // Handle error
+    }
+  };
+
 
   return (
     <div className="min-h-screen bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">

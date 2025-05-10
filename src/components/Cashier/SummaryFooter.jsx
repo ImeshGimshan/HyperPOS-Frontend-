@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect } from "react";
 
-const SummaryFooter = ({ cartItems }) => {
-  const [cash, setCash] = useState('');
+const SummaryFooter = ({ cartItems, cash, setCash, change,setChange }) => {
+
+
   const grandTotal = cartItems.reduce((sum, item) => {
-    const total = item.price * item.quantity - (item.discount || 0);
+    const total = item.unitPrice * item.quantity - (item.discount || 0);
     return sum + (total > 0 ? total : 0);
   }, 0);
 
-  const parsedCash = parseFloat(cash);
-  const change = !isNaN(parsedCash) ? parsedCash - grandTotal : 0;
+  useEffect(() => {
+    const parsedCash = parseFloat(cash);
+    setChange(  parsedCash - grandTotal || 0);
+  }, [cash]);
 
   const handleCashChange = (e) => {
     setCash(e.target.value);
@@ -37,7 +40,7 @@ const SummaryFooter = ({ cartItems }) => {
           <input
             type="text"
             readOnly
-            value={change > 0 ? change.toFixed(2) : '0.00'}
+            value={change > 0 ? change.toFixed(2) : "0.00"}
             className="bg-green-700 p-1 rounded w-20 text-white"
           />
         </div>
