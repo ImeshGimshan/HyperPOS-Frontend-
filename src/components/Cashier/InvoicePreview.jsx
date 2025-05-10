@@ -48,7 +48,7 @@ const InvoicePreview = ({ invoice, productList, close }) => {
       <div ref={printRef}>
         <button
           onClick={() => close()}
-          className=" right-5 top-5 absolute"
+          className=" right-5 top-5 absolute cursor-pointer"
         >
           <FaWindowClose className="text-red-500 scale-200" />
         </button>

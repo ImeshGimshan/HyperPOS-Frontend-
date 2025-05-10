@@ -153,7 +153,7 @@ const CashierScreen = () => {
 
         {printInvoice && 
         (<div className="w-full flex justify-center ">
-          <InvoicePreview invoice={printInvoice} productList={ProductList} setPrintInvoice={setPrintInvoice}/>
+          <InvoicePreview invoice={printInvoice} productList={ProductList} setPrintInvoice={setPrintInvoice} close={handleNewInvoice}/>
           </div>)}
 
         <ProductSearch 
