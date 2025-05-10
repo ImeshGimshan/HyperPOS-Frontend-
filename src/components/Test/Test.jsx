@@ -16,7 +16,7 @@ import {
 import { getCategoryById } from "../../API/APICategory";
 
 import { cart, updateCart, product, updatedProduct } from "./postData";
-import testLogin from "../../API/testLogin";
+import APILogin from "../../API/APILogin";
 
 function Test() {
   const btnStyle =
@@ -136,7 +136,7 @@ function Test() {
 
   const handleLogin = async () => {
     try {
-      const response = await testLogin("Admin", "admin");
+      const response = await APILogin("Admin", "admin");
       console.log("Response:", response);
     } catch (error) {
       const errorMessage = (error.response?.data?.message) || error?.message;

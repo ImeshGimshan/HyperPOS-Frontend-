@@ -1,8 +1,7 @@
 import axios  from "axios";
 import APILinks from "./APILinks";
 
-const testLogin = async (username, password) => {
-  try {
+const APILogin = async (username, password) => {
     const response = await axios.post(APILinks.login, {
       username,
       password,
@@ -11,10 +10,7 @@ const testLogin = async (username, password) => {
     localStorage.setItem("user", JSON.stringify(response.data.user));
     console.log("Login successful:", response.data);
     return response.data;
-  } catch (error) {
-    console.error("Error during login:", error);
-    throw error;
-  }
+
 }
 
-export default testLogin;
+export default APILogin;

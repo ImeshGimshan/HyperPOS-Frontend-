@@ -1,5 +1,7 @@
-const BaseUrl = "http://152.67.176.77:8080/api";
-// const BaseUrl = "http://localhost:8080/api";
+import { saveProduct } from "./APIProducts";
+
+// const BaseUrl = "http://152.67.176.77:8080/api";
+const BaseUrl = "http://localhost:8080/api";
 
 const APILinks = {
 
@@ -52,6 +54,8 @@ const APILinks = {
   getPurchases: `${BaseUrl}/purchase`,
   savePurchase: `${BaseUrl}/purchase`,
   returnPurchase: (id) => `${BaseUrl}/purchase/${id}`,
+
+  saveProductImage: (id) => `${BaseUrl}/image/product/${id}`,
 
 };
 

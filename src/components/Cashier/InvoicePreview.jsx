@@ -1,11 +1,26 @@
-import React, { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import "./styles.css";
 import { FaWindowClose } from "react-icons/fa";
 
-const InvoicePreview = ({ invoice, productList,setPrintInvoice }) => {
+const InvoicePreview = ({
+  invoice,
+  productList,
+  setPrintInvoice,
+  newInvoice,
+}) => {
   const printRef = useRef();
+  const [subtotal, setSubtotal] = useState(0);
+  const [total, setTotal] = useState(0);
 
+  useEffect(() => {
+    const sumTotal = invoice.items.reduce(
+      (sum, item) => sum + item.unitPrice * item.quantity,
+      0
+    );
+    setSubtotal(sumTotal);
+    setTotal(invoice.invoice.total);
+  }, [invoice]);
   const handlePrint = () => {
     const printContents = printRef.current.innerHTML;
     const win = window.open("", "", "width=800,height=600");
@@ -30,18 +45,19 @@ const InvoicePreview = ({ invoice, productList,setPrintInvoice }) => {
     win.print();
   };
   const handleClose = () => {
-    setPrintInvoice(null);
+    newInvoice();
   };
 
   return (
     <div className="cashier-invoice-panel absolute">
       <div ref={printRef}>
-        <button onClick={()=>handleClose()} className=" right-5 top-5 absolute">
+        <button
+          onClick={() => handleClose()}
+          className=" right-5 top-5 absolute"
+        >
           <FaWindowClose className="text-red-500 scale-200" />
         </button>
-        <h2 className="cashier-invoice-title w-full">
-          INVOICE
-        </h2>
+        <h2 className="cashier-invoice-title w-full">INVOICE</h2>
 
         <div className="cashier-invoice-meta">
           <div className="flex flex-row justify-between">
@@ -67,7 +83,7 @@ const InvoicePreview = ({ invoice, productList,setPrintInvoice }) => {
             </p>
           </div>
         </div>
-        <div className="h-[40vh] overflow-scroll">
+        <div className="max-h-[40vh] overflow-scroll">
           <table className="cashier-invoice-table">
             <thead>
               <tr>
@@ -92,27 +108,38 @@ const InvoicePreview = ({ invoice, productList,setPrintInvoice }) => {
                     .map((product) => (
                       <td key={product.id}>{product.unit}</td>
                     ))}
-                  <td>Rs.{item.unitPrice.toFixed(2)}s</td>
-                  <td>Rs.{item.amount.toFixed(2)}g</td>
+
+                  <td>Rs.{item.unitPrice.toFixed(2)}</td>
+                  <td>Rs.{item.amount.toFixed(2)}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
 
-        <div className="cashier-invoice-total">
-          {/* <p><strong>Subtotal:</strong> Rs.{invoice.invoice.total.toFixed(2)}</p>
-          <p><strong>Discount:</strong> Rs.{invoice.invoice.discount.toFixed(2)}</p>
-          <p><strong>Grand Total:</strong> Rs.{invoice.invoice.total.toFixed(2)}</p>
-          <p><strong>Cash:</strong> Rs.{invoice.cash.toFixed(2)}</p>
-          <p><strong>Change:</strong> Rs.{invoice.change.toFixed(2)}</p> */}
+        <div className="cashier-invoice-total right-0">
+          <p>
+            <strong>Subtotal:</strong> Rs.{subtotal.toFixed(2)}
+          </p>
+          <p>
+            <strong>Discount:</strong> Rs.
+            {(subtotal - total).toFixed(2)}
+          </p>
+          <p>
+            <strong>Grand Total:</strong> Rs.{total}
+          </p>
+          {/* <p>
+            <strong>Cash:</strong> Rs.{invoice?.cash?.toFixed(2)}
+          </p>
+          <p>
+            <strong>Change:</strong> Rs.{invoice?.change?.toFixed(2)}
+          </p> */}
         </div>
 
-        <div style={{ textAlign: "center", marginTop: "20px" }}>
+        <div className="hidden">
           <QRCodeSVG
             value={`Invoice: ${invoice.invoice.id}, Total: Rs.${invoice.invoice.total}`}
           />
-          <p style={{ marginTop: "6px", fontSize: "12px" }}>Scan for Payment</p>
         </div>
       </div>
 

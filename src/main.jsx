@@ -24,6 +24,7 @@ import Test from './components/Test/Test';
 import BaseScreen from './components/BaseScreen/BaseScreen';
 
 import './index.css'
+import Customerregister from './components/customer/registercustomer.jsx';
 
 // Creating the router object.
 const router = createBrowserRouter([
@@ -43,6 +44,7 @@ const router = createBrowserRouter([
       { path: "cashier" , element : <CashierScreen /> },
       { path: "basescreen" , element : <BaseScreen /> },
       { path: "test" , element : <Test /> },
+      { path: "customerregister" , element : <Customerregister /> },
       {
         path: "dashboard",
         element: <DashboardLayout />,

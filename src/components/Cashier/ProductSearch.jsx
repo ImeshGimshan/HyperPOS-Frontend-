@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getProductStock } from "../../API/APIProducts";
 
-const ProductSearch = ({ onAdd, invoice }) => {
+const ProductSearch = ({ onAdd, invoice, setProductList }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [barcode, setBarcode] = useState("");
   const [selectedProductId, setSelectedProductId] = useState("");
@@ -16,6 +16,7 @@ const ProductSearch = ({ onAdd, invoice }) => {
     try {
       const response = await getProductStock();
       setProducts(response);
+      setProductList(response);
       console.log(response);
     } catch (error) {
       console.error("Error fetching product stock:", error);

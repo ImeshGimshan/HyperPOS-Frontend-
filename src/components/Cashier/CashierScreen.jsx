@@ -13,10 +13,10 @@ import InvoicePreview from "./InvoicePreview";
 
 const CashierScreen = () => {
   const [cartItems, setCartItems] = useState([]);
-  const [cash, setCash] = useState("");
-  const [invoiceNumber, setInvoiceNumber] = useState("");
+  const [cash, setCash] = useState(0);
+  const [change, setChange] = useState(0);
   const [customer, setCustomer] = useState(1);
-  const [invoice, setInvoice] = useState({  customerId: 1, total: 0 });
+  const [invoice, setInvoice] = useState({ customerId: 1, total: 0 });
   const [printInvoice, setPrintInvoice] = useState(null);
   const [ProductList, setProductList] = useState([]);
   const [customerList, setCustomerList] = useState([]);
@@ -40,7 +40,8 @@ const CashierScreen = () => {
       console.log("Invoice saved:", response);
       setInvoice(response);
     } catch (error) {
-      console.error("Error saving invoice:", error);
+      const errorMessage = (error.response?.data?.message) || error?.message;
+      alert(errorMessage);
     }
   };
   const getCustomersList = async () => {
@@ -48,9 +49,10 @@ const CashierScreen = () => {
       const response = await getCustomers();
       setCustomerList(response);
     } catch (error) {
-      console.error("Error fetching customers:", error);
+      const errorMessage = (error.response?.data?.message) || error?.message;
+      alert(errorMessage);
     }
-  }
+  };
   const handleAddToCart = (product) => {
     if (invoice == null) {
       alert("Please create an invoice first!");
@@ -83,12 +85,18 @@ const CashierScreen = () => {
     getNewInvoice();
     setPrintInvoice(null);
     setCartItems([]);
-    setCash("");
+    setCash(0);
     setCustomer(1);
     setInvoiceNumber(`1`);
   };
 
   const handleSubmitInvoice = () => {
+    if (cartItems.length === 0) {
+      alert("Please add items to the cart before submitting the invoice.");
+      return;
+    }
+   
+
     const invoiceData = {
       id: invoice.id,
       paymentMethod: "CASH",
@@ -109,6 +117,7 @@ const CashierScreen = () => {
     };
     const salesData = {
       invoice: invoiceData,
+      customerId: customer,
       items: cartItems,
       cash: parseFloat(cash),
       change:
@@ -120,6 +129,11 @@ const CashierScreen = () => {
         ),
     };
     const submitSaleData = async () => {
+       if (cash < salesData.invoice.total) {
+      alert("Please enter a valid cash amount."+cash+"<"+salesData.invoice.total);
+      return;
+    }
+      console.log("Sales Data:", salesData);
       try {
         const response = await submitSale(salesData);
         handlePrintInvoice(response);
@@ -140,17 +154,28 @@ const CashierScreen = () => {
   return (
     <div className="min-h-screen bg-gray-900 text-white p-4 w-full cashier-app">
       <div className="max-w-screen-xl mx-auto cashier-container">
-        <Header customers={customerList} invoice={invoice} />
+        <Header
+          customers={customerList}
+          invoice={invoice}
+          setCustomer={setCustomer}
+          customer={customer}
+        />
 
-        {printInvoice && 
-        (<div className="w-full flex justify-center ">
-          <InvoicePreview invoice={printInvoice} productList={ProductList} setPrintInvoice={setPrintInvoice}/>
-          </div>)}
+        {printInvoice && (
+          <div className="w-full flex justify-center ">
+            <InvoicePreview
+              invoice={printInvoice}
+              productList={ProductList}
+              setPrintInvoice={setPrintInvoice}
+              newInvoice={handleNewInvoice}
+            />
+          </div>
+        )}
 
-        <ProductSearch 
-        onAdd={handleAddToCart} 
-        invoice={invoice} 
-        setProductList={setProductList} 
+        <ProductSearch
+          onAdd={handleAddToCart}
+          invoice={invoice}
+          setProductList={setProductList}
         />
         <CartTable
           cartItems={cartItems}
@@ -163,6 +188,8 @@ const CashierScreen = () => {
           setCash={setCash}
           customer={customer}
           setCustomer={setCustomer}
+          change={change}
+          setChange={setChange}
         />
         <Controls
           onNewInvoice={handleNewInvoice}
