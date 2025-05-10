@@ -28,8 +28,8 @@ function ViewModal ( { customer , onClose } ) {
             <h2 className = "text-2xl font-bold text-purple-900">Customer Details</h2>
           </div>
           <button
-            onClick={onClose}
-            className="absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-xl cursor-pointer"
+            onClick = { onClose }
+            className = "absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-xl cursor-pointer"
           >
             &times;
           </button>
@@ -110,8 +110,11 @@ function ViewModal ( { customer , onClose } ) {
           </div>
         </div>
       </div>
+
     </div>
+
   );
+
 }
 
 // Function : ( FilterModal )
@@ -126,15 +129,18 @@ function FilterModal ( { onClose, onApply, currentFilters } ) {
   const [ status, setStatus ] = useState ( currentFilters.status || "" );
 
   // Arrow Function : ( handleApply )
-  const handleApply = () => {
+  const handleApply = ( ) => {
+
     // Calling the onApply function to apply the filter.
     onApply ( { name, email, phone, address, status } );
     // Calling the onClose function to close the modal.
-    onClose();
+    onClose ( );
+
   };
 
   // Arrow Function : ( handleReset )
-  const handleReset = () => {
+  const handleReset = ( ) => {
+
     // Setting the values of the filters to empty.
     setName ( "" );
     setEmail ( "" );
@@ -145,11 +151,14 @@ function FilterModal ( { onClose, onApply, currentFilters } ) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
-      <div className="bg-white rounded-2xl p-6 w-full max-w-lg shadow-2xl relative max-h-[90vh] overflow-y-auto">
+
+    <div className = "fixed inset-0 bg-black/50 flex justify-center items-center z-50">
+
+      <div className = "bg-white rounded-2xl p-6 w-full max-w-lg shadow-2xl relative max-h-[90vh] overflow-y-auto">
+
         <button
-          onClick={onClose}
-          className="absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-xl cursor-pointer"
+          onClick = { onClose }
+          className = "absolute top-4 right-4 text-gray-600 hover:text-gray-900 text-xl cursor-pointer"
         >
           &times;
         </button>
@@ -163,24 +172,12 @@ function FilterModal ( { onClose, onApply, currentFilters } ) {
             <div className = "flex flex-col">
               <label className = "text-gray-600 mb-1">Name</label>
               <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="p-2 rounded-lg border border-gray-300 focus:outline-none"
-                placeholder="Filter by name"
-              />
-            </div>
-            <div className = "flex flex-col">
-              <label className = "text-gray-600 mb-1">Status</label>
-              <select
-                value = { status }
-                onChange = { ( e ) => setStatus ( e.target.value ) }
+                type = "text"
+                value = { name }
+                onChange = { ( e ) => setName ( e.target.value ) }
                 className = "p-2 rounded-lg border border-gray-300 focus:outline-none"
-              >
-                <option value = "">All</option>
-                <option value = "active">Active</option>
-                <option value = "inactive">Inactive</option>
-              </select>
+                placeholder = "Filter by name"
+              />
             </div>
             <div className = "flex flex-col">
               <label className = "text-gray-600 mb-1">Status</label>
@@ -198,39 +195,37 @@ function FilterModal ( { onClose, onApply, currentFilters } ) {
         </div>
       
         {/* Contact Information Section */}
-        <div className="mb-4">
-          <h3 className="text-md font-medium text-purple-700 mb-2 text-center">
-            Contact Information
-          </h3>
-          <div className="grid grid-cols-2 gap-4 text-sm">
-            <div className="flex flex-col">
-              <label className="text-gray-600 mb-1">Email</label>
+        <div className = "mb-4">
+          <h3 className = "text-md font-medium text-purple-700 mb-2 text-center">Contact Information</h3>
+          <div className = "grid grid-cols-2 gap-4 text-sm">
+            <div className = "flex flex-col">
+              <label className = "text-gray-600 mb-1">Email</label>
               <input
-                type="text"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="p-2 rounded-lg border border-gray-300 focus:outline-none"
-                placeholder="Filter by email"
+                type = "text"
+                value = { email }
+                onChange = { ( e ) => setEmail ( e.target.value ) }
+                className = "p-2 rounded-lg border border-gray-300 focus:outline-none"
+                placeholder = "Filter by email"
               />
             </div>
-            <div className="flex flex-col">
-              <label className="text-gray-600 mb-1">Phone</label>
+            <div className = "flex flex-col">
+              <label className = "text-gray-600 mb-1">Phone</label>
               <input
-                type="text"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                className="p-2 rounded-lg border border-gray-300 focus:outline-none"
-                placeholder="Filter by phone"
+                type = "text"
+                value = { phone }
+                onChange = { ( e ) => setPhone ( e.target.value ) }
+                className = "p-2 rounded-lg border border-gray-300 focus:outline-none"
+                placeholder = "Filter by phone"
               />
             </div>
-            <div className="flex flex-col col-span-2">
-              <label className="text-gray-600 mb-1">Address</label>
+            <div className = "flex flex-col col-span-2">
+              <label className = "text-gray-600 mb-1">Address</label>
               <input
-                type="text"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                className="p-2 rounded-lg border border-gray-300 focus:outline-none"
-                placeholder="Filter by address"
+                type = "text"
+                value = { address }
+                onChange = { ( e ) => setAddress ( e.target.value ) }
+                className = "p-2 rounded-lg border border-gray-300 focus:outline-none"
+                placeholder = "Filter by address"
               />
             </div>
           </div>
@@ -240,16 +235,18 @@ function FilterModal ( { onClose, onApply, currentFilters } ) {
           <button onClick = { handleReset } className = "px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 cursor-pointer">Reset</button>
           <button onClick = { handleApply } className = "px-6 py-2 bg-purple-700 text-white rounded-lg hover:bg-purple-800 cursor-pointer">Apply</button>
         </div>
+
       </div>
+
     </div>
+
   );
+
 }
 
 // Function : ( CustomerPage )
-// function CustomerPage ( ) {
+function CustomerPage ( ) {
 
-// Function : ( CustomerPage )
-function CustomerPage() {
   // Using the useState to create a variable and then update it accordingly by the function.
   const [ selectedCustomer, setSelectedCustomer ] = useState ( null );
   const [ searchTerm, setSearchTerm ] = useState ( "" );
@@ -304,7 +301,8 @@ function CustomerPage() {
   }, [] );
 
   // Filtering the data based on the search term and other filters
-  const filteredData = customerData.filter((customer) => {
+  const filteredData = customerData.filter ( ( customer ) => {
+
     // Search across all fields
     const searchFields = [
       customer.id.toString ( ),
@@ -333,12 +331,11 @@ function CustomerPage() {
   } );
 
   return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold mb-6 text-purple-900 text-center">
-        Customer Management
-      </h1>
 
-      <div className="flex flex-wrap justify-center gap-4 mb-6">
+    <div className = "p-6">
+      <h1 className = "text-3xl font-bold mb-6 text-purple-900 text-center">Customer Management</h1>
+
+      <div className = "flex flex-wrap justify-center gap-4 mb-6">
         <input
           type = "text"
           placeholder = "Search..."
@@ -347,10 +344,10 @@ function CustomerPage() {
           className = "px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-400"
         />
         <button
-          onClick={() => setShowFilterModal(true)}
-          className="px-4 py-2 bg-purple-700 text-white rounded-lg hover:bg-purple-800 transition flex items-center gap-2 cursor-pointer"
+          onClick = { ( ) => setShowFilterModal ( true ) }
+          className = "px-4 py-2 bg-purple-700 text-white rounded-lg hover:bg-purple-800 transition flex items-center gap-2 cursor-pointer"
         >
-          <SlidersHorizontal size={16} /> Options
+          <SlidersHorizontal size = { 16 } /> Options
         </button>
       </div>
 
@@ -418,11 +415,11 @@ function CustomerPage() {
           onApply = { setFilters }
         />
       )}
-      
     </div>
+
   );
+
 }
 
 // Exporting the component
 export default CustomerPage;
-
