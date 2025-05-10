@@ -19,12 +19,12 @@ import InvoicePage from "./components/Dashboard/pages/InvoicePage.jsx";
 import UserPage from "./components/Dashboard/pages/UserPage.jsx";
 import CustomerPage from "./components/Dashboard/pages/CustomerPage.jsx";
 import ProductPage from "./components/Dashboard/pages/ProductPage.jsx";
-import InventoryPage from "./components/Dashboard/pages/InventoryPage.jsx";
+import SalePage from "./components/Dashboard/pages/SalePage.jsx";
 import Test from './components/Test/Test';
 import BaseScreen from './components/BaseScreen/BaseScreen';
+import PurchasePage from "./components/Dashboard/pages/PurchasePage";
 
 import './index.css'
-import Customerregister from './components/customer/registercustomer.jsx';
 
 // Creating the router object.
 const router = createBrowserRouter([
@@ -44,7 +44,6 @@ const router = createBrowserRouter([
       { path: "cashier" , element : <CashierScreen /> },
       { path: "basescreen" , element : <BaseScreen /> },
       { path: "test" , element : <Test /> },
-      { path: "customerregister" , element : <Customerregister /> },
       {
         path: "dashboard",
         element: <DashboardLayout />,
@@ -55,7 +54,8 @@ const router = createBrowserRouter([
           { path: "users" , element : <UserPage /> },
           { path: "customers" , element : <CustomerPage /> },
           { path: "products" , element : <ProductPage /> },
-          { path: "inventory" , element : <InventoryPage /> },
+          { path: "sales" , element : <SalePage /> },
+          { path: "purchases" , element : <PurchasePage /> },
         ],
       },
     ],

@@ -1,6 +1,6 @@
 
-// Imports : ( useEffect , useState , useMemo ) , ( SummaryCard , SalesTrendChart , TopProductsChart , RecentInvoices , InventoryStatus , DateRangeSelector ) , ( invoiceData , productData , customerData , inventoryData ).
-import { useState , useMemo , useEffect } from "react";
+// Imports : ( useEffect , useState , useMemo ) , ( SummaryCard , SalesTrendChart , TopProductsChart , RecentInvoices , InventoryStatus , DateRangeSelector ) , ( invoiceData , productData , userData ).
+import { useState , useEffect } from "react";
 
 import SummaryCard from "../components/SummaryCard";
 import SalesTrendChart from "../components/SalesTrendChart";
@@ -9,171 +9,136 @@ import RecentInvoices from "../components/RecentInvoices";
 import InventoryStatus from "../components/InventoryStatus";
 import DateRangeSelector from "../components/DateRangeSelector";
 
-// Change this import to use the getInvoiceData function
 import { getInvoiceData } from "../data/invoiceData";
-import productData from "../data/productData";
+import { getProductData } from "../data/productData";
 import { getCustomerData } from "../data/customerData";
-import inventoryData from "../data/inventoryData";
+import { getSaleData } from "../data/salesData";
 
 // Function : ( DashboardHome ).
-function DashboardHome ( ) {
+function DashboardHome() {
 
   // State for date range.
-  const [ dateRange , setDateRange ] = useState ( { startDate: "" , endDate: "" } );
+  const [dateRange, setDateRange] = useState({ startDate: "", endDate: "" });
   // State for customer data.
-  const [ customerData , setCustomerData ] = useState ( [ ] );
-  // Add state for invoice data
-  const [ invoiceData , setInvoiceData ] = useState ( [ ] );
+  const [customerData, setCustomerData] = useState([]);
+  // State for product data.
+  const [productData, setProductData] = useState([]);
+  // State for sale data.
+  const [saleData, setSaleData] = useState([]);
+  // State for invoice data.
+  const [invoiceData, setInvoiceData] = useState([]);
 
-  // Fetch customer data and invoice data when component mounts.
-  useEffect ( ( ) => {
-    
-    const fetchCustomerData = async ( ) => {
+  // Fetch data when component mounts.
+  useEffect(() => {
+  
+    const fetchData = async () => {
     
       try {
       
-        const data = await getCustomerData ( );
-        setCustomerData ( data || [ ] );
+        // Fetch customer data
+        const customerResponse = await getCustomerData();
+        setCustomerData(customerResponse || []);
       
-      } catch ( error ) {
+        // Fetch product data
+        const productResponse = await getProductData();
+        setProductData(productResponse || []);
       
-        console.error ( "Error fetching customer data:" , error );
-        setCustomerData ( [ ] );
+        // Fetch sale data
+        const saleResponse = await getSaleData();
+        setSaleData(saleResponse || []);
+      
+        // Fetch invoice data
+        const invoiceResponse = await getInvoiceData();
+        setInvoiceData(invoiceResponse || []);
+      
+      } catch (error) {
+      
+        console.error("Error fetching dashboard data:", error);
       
       }
     
     };
-    
-    const fetchInvoiceData = async ( ) => {
-    
-      try {
-      
-        const data = await getInvoiceData ( );
-        setInvoiceData ( data || [ ] );
-      
-      } catch ( error ) {
-      
-        console.error ( "Error fetching invoice data:" , error );
-        setInvoiceData ( [ ] );
-      
-      }
-    
-    };
-    
-    fetchCustomerData ( );
-    fetchInvoiceData ( );
-    
-  } , [ ] );
-
-  // Filtering the invoices based on the date range.
-  const filteredInvoiceData = useMemo ( ( ) => {
-
-    if ( !dateRange.startDate || !dateRange.endDate ) {
-      return invoiceData; // Return all data if no date range is selected ( Default ).
-    }
-    
-    const startDate = new Date ( dateRange.startDate ); // Initializing the start date.
-    const endDate = new Date ( dateRange.endDate ); // Initializing the end date.
-    endDate.setHours ( 23 , 59 , 59 , 999 ); // Setting the end date to the last second of the day.
-    
-    return invoiceData.filter ( inv => {
-      // Update this to use the new invoice data structure
-      const invoiceDate = new Date ( inv.updatedAt || inv.createdAt );
-      return invoiceDate >= startDate && invoiceDate <= endDate;
-    } );
-
-  } , [ dateRange , invoiceData ] ); // Add invoiceData as a dependency
-
-  // Calculating summary metrics based on filtered data.
-  // Update this to use the new invoice data structure
-  const totalSales = filteredInvoiceData.reduce ( ( sum , inv ) => sum + inv.total , 0 );
-  const totalProducts = productData.length;
-  const totalCustomers = customerData.length;
-  const totalInventoryValue = inventoryData.reduce ( ( sum , inv ) => sum + inv.total , 0 );
-
-  // Handling date range changes.
-  const handleDateRangeChange = ( newRange ) => {
-
-    setDateRange ( newRange );
-
-  };
+  
+    fetchData();
+  
+  }, []);
 
   return (
 
     <div className="p-6">
-    
-      { /* Date Range Selector */ }
+      {/* Date Range Selector */}
       <DateRangeSelector 
-        onRangeChange = { handleDateRangeChange }
-        initialStartDate = { dateRange.startDate }
-        initialEndDate = { dateRange.endDate }
+        onRangeChange={(newRange) => setDateRange(newRange)}
+        initialStartDate={dateRange.startDate}
+        initialEndDate={dateRange.endDate}
       />
-    
-      { /* Summary Cards */ }
-      <div className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+
+      {/* Summary Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
         <SummaryCard 
-          title = "Total Sales" 
-          value = { `Rs ${ totalSales.toLocaleString ( ) }` } 
-          subtitle = { `From ${ filteredInvoiceData.length } invoices` } 
-          borderColor = "border-purple-600" 
+          title="Total Sales" 
+          value={saleData.length > 0 ? `${saleData.reduce((sum, sale) => sum + sale.total, 0).toLocaleString()}` : "Loading..."} 
+          subtitle="From sales" 
+          borderColor="border-purple-600" 
         />
-      
+  
         <SummaryCard 
-          title = "Total Products" 
-          value = { totalProducts }  
-          subtitle = "In inventory" 
-          borderColor = "border-blue-600" 
+          title="Total Products" 
+          value={productData.length > 0 ? productData.length : "Loading..."}  
+          subtitle="In inventory" 
+          borderColor="border-blue-600" 
         />
-      
+  
         <SummaryCard 
-          title = "Total Customers" 
-          value = { totalCustomers } 
-          subtitle = "Registered accounts" 
-          borderColor = "border-green-600" 
+          title="Total Customers" 
+          value={customerData.length > 0 ? customerData.length : "Loading..."} 
+          subtitle="Registered accounts" 
+          borderColor="border-green-600" 
         />
-      
+  
         <SummaryCard 
-          title = "Inventory Value" 
-          value = { `Rs ${ totalInventoryValue.toLocaleString ( ) }` } 
-          subtitle = "Current stock value" 
-          borderColor = "border-amber-600" 
+          title="Inventory Value" 
+          value={productData.length > 0 ? `${productData.reduce((sum, product) => sum + (product.price * product.stock), 0).toLocaleString()}` : "Loading..."} 
+          subtitle="Current stock value" 
+          borderColor="border-amber-600" 
         />
       </div>
-    
+
       {/* Visualization Charts */}
-      <div className = "mb-10">
-        <div className = "bg-white rounded-xl shadow-md p-6 mb-10">
-          <h2 className = "text-xl font-semibold text-purple-900 mb-4">Sales Trend</h2>
-          <div className = "h-96">
-            <SalesTrendChart invoiceData = { filteredInvoiceData } />
+      <div className="mb-10">
+        <div className="bg-white rounded-xl shadow-md p-6 mb-10">
+          <h2 className="text-xl font-semibold text-purple-900 mb-4">Sales Trend</h2>
+          <div className="h-96">
+            <SalesTrendChart invoiceData={invoiceData} />
           </div>
         </div>
-      
-        <div className = "grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className = "bg-white rounded-xl shadow-md p-6">
-            <h2 className = "text-xl font-semibold text-purple-900 mb-4">Top Products</h2>
-            <div className = "h-96">
-              <TopProductsChart invoiceData = { filteredInvoiceData } productData = { productData } />
+  
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="bg-white rounded-xl shadow-md p-6">
+            <h2 className="text-xl font-semibold text-purple-900 mb-4">Top Products</h2>
+            <div className="h-96">
+              <TopProductsChart invoiceData={invoiceData} productData={productData} />
             </div>
           </div>
-        
-          <div className = "bg-white rounded-xl shadow-md p-6">
-            <h2 className = "text-xl font-semibold text-purple-900 mb-4">Inventory Status</h2>
-            <div className = "h-96">
-              <InventoryStatus productData = { productData } />
+    
+          <div className="bg-white rounded-xl shadow-md p-6">
+            <h2 className="text-xl font-semibold text-purple-900 mb-4">Inventory Status</h2>
+            <div className="h-96">
+              <InventoryStatus productData={productData} />
             </div>
           </div>
         </div>
       </div>
-    
-      <div className = "bg-white rounded-xl shadow-md p-6">
-        <h2 className = "text-xl font-semibold text-purple-900 mb-4">Recent Invoices</h2>
-        <RecentInvoices invoiceData = { filteredInvoiceData } />
+
+      <div className="bg-white rounded-xl shadow-md p-6">
+        <h2 className="text-xl font-semibold text-purple-900 mb-4">Recent Sales</h2>
+        <RecentInvoices invoiceData={invoiceData} />
       </div>
     </div>
 
   );
 
 }
+
 // Exporting the DashboardHome component.
 export default DashboardHome;
