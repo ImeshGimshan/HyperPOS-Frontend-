@@ -10,6 +10,18 @@ import { saveInvoice } from "../../API/APIInvoice";
 import { submitSale } from "../../API/APISale";
 import { getCustomers } from "../../API/APICustomer";
 import InvoicePreview from "./InvoicePreview";
+import React, { useState, useEffect } from "react";
+import Header from "./Header";
+import ProductSearch from "./ProductSearch";
+import CartTable from "./CartTable";
+import SummaryFooter from "./SummaryFooter";
+import Controls from "./Controls";
+import "./styles.css";
+import { q } from "framer-motion/client";
+import { saveInvoice } from "../../API/APIInvoice";
+import { submitSale } from "../../API/APISale";
+import { getCustomers } from "../../API/APICustomer";
+import InvoicePreview from "./InvoicePreview";
 
 const CashierScreen = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -22,6 +34,12 @@ const CashierScreen = () => {
   const [customerList, setCustomerList] = useState([]);
 
   useEffect(() => {
+    if (!invoice.id) {
+      getNewInvoice();
+    }
+    if (!customerList.length) {
+      getCustomersList();
+    }
     if (!invoice.id) {
       getNewInvoice();
     }
@@ -51,7 +69,34 @@ const CashierScreen = () => {
       console.error("Error fetching customers:", error);
     }
   }
+  useEffect(() => {
+    console.log("Cart Items:", cartItems);
+  }, [cartItems]);
+
+  const getNewInvoice = async () => {
+    try {
+      const response = await saveInvoice({ customerId: 1, total: 0 });
+      console.log("Invoice saved:", response);
+      setInvoice(response);
+    } catch (error) {
+      console.error("Error saving invoice:", error);
+    }
+  };
+  const getCustomersList = async () => {
+    try {
+      const response = await getCustomers();
+      setCustomerList(response);
+    } catch (error) {
+      console.error("Error fetching customers:", error);
+    }
+  }
   const handleAddToCart = (product) => {
+    if (invoice == null) {
+      alert("Please create an invoice first!");
+      return;
+    }
+    const discountedPrice = product.unitPrice * (1 - product.discount / 100);
+    console.log("discounted price: " + discountedPrice);
     if (invoice == null) {
       alert("Please create an invoice first!");
       return;
@@ -62,6 +107,7 @@ const CashierScreen = () => {
       ...prev,
       {
         ...product,
+        amount: discountedPrice * product.quantity,
         amount: discountedPrice * product.quantity,
       },
     ]);
@@ -82,7 +128,12 @@ const CashierScreen = () => {
   const handleNewInvoice = () => {
     getNewInvoice();
     setPrintInvoice(null);
+    getNewInvoice();
+    setPrintInvoice(null);
     setCartItems([]);
+    setCash("");
+    setCustomer(1);
+    setInvoiceNumber(`1`);
     setCash("");
     setCustomer(1);
     setInvoiceNumber(`1`);
@@ -98,11 +149,28 @@ const CashierScreen = () => {
       id: invoice.id,
       paymentMethod: "CASH",
       customerId: customer,
+      id: invoice.id,
+      paymentMethod: "CASH",
+      customerId: customer,
       total: cartItems.reduce(
         (sum, item) =>
           sum + item.unitPrice * item.quantity * (1 - item.discount / 100),
+          sum + item.unitPrice * item.quantity * (1 - item.discount / 100),
         0
       ),
+      cash: parseFloat(cash),
+      change:
+        parseFloat(cash) -
+        cartItems.reduce(
+          (sum, item) =>
+            sum + item.unitPrice * item.quantity * (1 - item.discount / 100),
+            sum + item.unitPrice * item.quantity * (1 - item.discount / 100),
+          0
+        ),
+    };
+    const salesData = {
+      invoice: invoiceData,
+      items: cartItems,
       cash: parseFloat(cash),
       change:
         parseFloat(cash) -
