@@ -1,7 +1,6 @@
-
 // Imports : ( ResponsiveBar ).
-
 import { ResponsiveBar } from "@nivo/bar";
+import { nivoTheme } from "../../../utils/nivoTheme";
 
 // Function : ( TopProductsChart ).
 function TopProductsChart ( { invoiceData , productData } ) {
@@ -20,7 +19,7 @@ function TopProductsChart ( { invoiceData , productData } ) {
       padding = { 0.3 }
       valueScale = { { type : 'linear' } }
       indexScale = { { type : 'band' , round : true } }
-      colors = { { scheme : 'blue_purple' } }
+      colors={['#6a3ca3', '#8a6db1', '#4a2d7d', '#9d85c1', '#d4c5e9']}
       borderColor = { { from : 'color' , modifiers : [ [ 'darker' , 1.6 ] ] } }
       axisTop = { null }
       axisRight = {null }
@@ -50,35 +49,7 @@ function TopProductsChart ( { invoiceData , productData } ) {
       animate = { true }
       motionStiffness = { 90 }
       motionDamping = { 15 }
-      theme = { {
-        axis : {
-          ticks : {
-            text : {
-              fontSize : 12
-            }
-          },
-          legend : {
-            text : {
-              fontSize : 14,
-              fontWeight : 'bold'
-            }
-          }
-        },
-        grid : {
-          line : {
-            stroke : '#e0e0e0',
-            strokeWidth : 1
-          }
-        },
-        tooltip : {
-          container : {
-            background : '#ffffff',
-            fontSize : 14,
-            borderRadius : 4,
-            boxShadow : '0 4px 8px rgba ( 0 , 0 , 0 , 0.15 )'
-          }
-        }
-      }}
+      theme = { nivoTheme }
 
     />
 
@@ -87,8 +58,7 @@ function TopProductsChart ( { invoiceData , productData } ) {
 }
 
 // Helper function to process top products data.
-function processTopProducts ( invoiceData , productData ) {
-
+function processTopProducts(invoiceData, productData) {
   // Check if invoiceData is available and has the expected structure
   if (!invoiceData || invoiceData.length === 0) {
     return [];
@@ -100,30 +70,30 @@ function processTopProducts ( invoiceData , productData ) {
   // If we have the old structure with items, process it as before
   if (hasItems) {
     // Creating a map to store sales by product ID.
-    const productSalesMap = { };
+    const productSalesMap = {};
   
     // Process each invoice item.
-    invoiceData.forEach ( invoice => {
-      invoice.items.forEach ( item => {
-        if ( !productSalesMap [ item.productId ] ) {
-          productSalesMap [ item.productId ] = 0;
+    invoiceData.forEach(invoice => {
+      invoice.items.forEach(item => {
+        if (!productSalesMap[item.productId]) {
+          productSalesMap[item.productId] = 0;
         }
       
-        productSalesMap [ item.productId ] += item.amount;
-      } );
-    } );
+        productSalesMap[item.productId] += item.amount;
+      });
+    });
   
     // Convert to array and sort by sales amount.
-    const productSales = Object.entries ( productSalesMap )
-      .map ( ( [ productId , sales ] ) => {
+    const productSales = Object.entries(productSalesMap)
+      .map(([productId, sales]) => {
         // Find product name from productData
-        const product = productData.find ( p => p.id === parseInt ( productId ) );
-        const name = product ? ( product.name || `Product ${ productId }` ) : `Product ${ productId }`;
+        const product = productData.find(p => p.id === parseInt(productId));
+        const name = product ? (product.name || `Product ${productId}`) : `Product ${productId}`;
       
-        return { productId : parseInt ( productId ) , name : name.substring ( 0 , 20 ) , sales };
-      } )
-      .sort ( ( a , b ) => b.sales - a.sales ) 
-      .slice ( 0 , 5 );
+        return { productId: parseInt(productId), name: name.substring(0, 20), sales };
+      })
+      .sort((a, b) => b.sales - a.sales) 
+      .slice(0, 5);
   
     return productSales;
   }
