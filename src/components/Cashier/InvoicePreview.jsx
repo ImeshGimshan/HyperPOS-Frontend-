@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import "./styles.css";
 import { FaWindowClose } from "react-icons/fa";
+import { FaWindowClose } from "react-icons/fa";
 
 const InvoicePreview = ({ invoice, productList, close }) => {
   const printRef = useRef();
@@ -42,8 +43,12 @@ const InvoicePreview = ({ invoice, productList, close }) => {
   const handleClose = () => {
     setPrintInvoice(null);
   };
+  const handleClose = () => {
+    setPrintInvoice(null);
+  };
 
   return (
+    <div className="cashier-invoice-panel absolute">
     <div className="cashier-invoice-panel absolute">
       <div ref={printRef}>
         <button
@@ -131,6 +136,9 @@ const InvoicePreview = ({ invoice, productList, close }) => {
       </div>
 
       <div style={{ textAlign: "center", marginTop: "16px" }}>
+        <button className="cashier-print-btn" onClick={handlePrint}>
+          Print Invoice
+        </button>
         <button className="cashier-print-btn" onClick={handlePrint}>
           Print Invoice
         </button>
