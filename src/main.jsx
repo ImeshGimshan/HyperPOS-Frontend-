@@ -24,6 +24,8 @@ import BaseScreen from './components/BaseScreen/BaseScreen';
 import PurchasePage from "./components/Dashboard/pages/PurchasePage";
 
 import './index.css'
+import Customerregister from './components/customer/registercustomer.jsx';
+import SupplierRegistration from './components/register/register.jsx';
 
 // Creating the router object.
 const router = createBrowserRouter ( [
@@ -44,6 +46,8 @@ const router = createBrowserRouter ( [
       { path: "cashier" , element : <CashierScreen /> },
       { path: "basescreen" , element : <BaseScreen /> },
       { path: "test" , element : <Test /> },
+      { path: "customerregister" , element : <Customerregister /> },
+      { path: "supplierregister", element: <SupplierRegistration/>},
       {
         path: "dashboard",
         element: <DashboardLayout />,
