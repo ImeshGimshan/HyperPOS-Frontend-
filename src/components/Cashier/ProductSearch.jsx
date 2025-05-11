@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { getProductStock } from "../../API/APIProducts";
-import React, { useState, useEffect } from "react";
-import { getProductStock } from "../../API/APIProducts";
 
 const ProductSearch = ({ onAdd, invoice,setProductList }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -28,7 +26,6 @@ const ProductSearch = ({ onAdd, invoice,setProductList }) => {
   useEffect(() => {
     if (barcode) {
       const found = products.find((p) => p.barcode === barcode.trim());
-      const found = products.find((p) => p.barcode === barcode.trim());
       if (found) {
         setSelectedProductId(found.id.toString());
         setSearchTerm(found.name);
@@ -38,7 +35,6 @@ const ProductSearch = ({ onAdd, invoice,setProductList }) => {
 
   useEffect(() => {
     const filtered = products.filter((p) =>
-    const filtered = products.filter((p) =>
       p.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setSuggestions(filtered);
@@ -46,45 +42,32 @@ const ProductSearch = ({ onAdd, invoice,setProductList }) => {
 
   const selectedProduct = products.find(
     (p) => p.id === parseInt(selectedProductId)
-    (p) => p.id === parseInt(selectedProductId)
   );
 
-  const unit = selectedProduct?.unit || "";
   const unit = selectedProduct?.unit || "";
   const price = selectedProduct?.price || 0;
   const discount = selectedProduct?.discount || 0;
   const amount = (price * quantity * (1 - discount / 100)).toFixed(2);
-  const amount = (price * quantity * (1 - discount / 100)).toFixed(2);
 
   const handleAdd = () => {
-    console.log("Selected Product:", selectedProduct);
-
     console.log("Selected Product:", selectedProduct);
 
     if (selectedProduct && quantity > 0) {
       onAdd({
         invoiceId: invoice.id,
         productId: selectedProduct.id,
-        invoiceId: invoice.id,
-        productId: selectedProduct.id,
         name: selectedProduct.name,
-        unitPrice: selectedProduct.price,
-        costPrice: selectedProduct.cost,
         unitPrice: selectedProduct.price,
         costPrice: selectedProduct.cost,
         unit: selectedProduct.unit,
         quantity,
         discount: selectedProduct.discount,
         amount: parseFloat(amount),
-        amount: parseFloat(amount),
       });
 
       setSearchTerm("");
       setSelectedProductId("");
-      setSearchTerm("");
-      setSelectedProductId("");
       setQuantity(1);
-      setBarcode("");
       setBarcode("");
     }
   };
@@ -106,11 +89,9 @@ const ProductSearch = ({ onAdd, invoice,setProductList }) => {
           value={barcode}
           onChange={(e) => setBarcode(e.target.value)}
           className="border p-2 rounded w-full "
-          className="border p-2 rounded w-full "
         />
 
         {suggestions.length > 0 && searchTerm && (
-          <ul className="suggestions-list border border-gray-300 bg-purple-900 max-h-40 overflow-y-auto rounded shadow-md mt-1 absolute">
           <ul className="suggestions-list border border-gray-300 bg-purple-900 max-h-40 overflow-y-auto rounded shadow-md mt-1 absolute">
             {suggestions.map((product) => (
               <li
@@ -131,14 +112,10 @@ const ProductSearch = ({ onAdd, invoice,setProductList }) => {
 
         <div className="product-info mt-2 flex flex-col md:flex-row justify-between mt-10">
           <div className="flex flex-row justify-between w-100">
-        <div className="product-info mt-2 flex flex-col md:flex-row justify-between mt-10">
-          <div className="flex flex-row justify-between w-100">
             <p>Unit: {unit}</p>
             <p>Price: Rs. {price.toFixed(2)}</p>
             <p>Discount: {discount}%</p>
           </div>
-          <div className="flex flex-row">
-            <p>Total: Rs. {amount}</p>
           <div className="flex flex-row">
             <p>Total: Rs. {amount}</p>
           </div>
@@ -166,10 +143,6 @@ const ProductSearch = ({ onAdd, invoice,setProductList }) => {
             className="border p-2 w-20 rounded"
           />
 
-          <button
-            className="bg-blue-600 text-white px-3 py-2 rounded"
-            onClick={handleAdd}
-          >
           <button
             className="bg-blue-600 text-white px-3 py-2 rounded"
             onClick={handleAdd}
