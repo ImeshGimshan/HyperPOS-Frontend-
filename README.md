@@ -29,6 +29,7 @@ navigate ( '/' )
 onClick = { toWhere }
 
 https://uiverse.io/loaders?page=0
+
 https://gradienty.codes/
 https://www.epicweb.dev/tips/creating-glassmorphism-effects-with-tailwind-css
 https://notchtools.com/css-glow-generator

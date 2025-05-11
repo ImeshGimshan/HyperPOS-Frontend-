@@ -29,6 +29,8 @@ const Login = () => {
       const response = await APILogin(username, password);
       console.log("Response:", response);
     } catch (error) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
       const errorMessage = error.response?.data?.message || error?.message;
       alert(errorMessage);
     }
@@ -37,13 +39,15 @@ const Login = () => {
   const handleSubmit = () => {
     if (validateForm()) {
       handleLogin();
-      if (localStorage.getItem("token")) {
-        // Redirect to the home page or any other page
-        navigate("/cashier");
-      }else{
-        alert("Invalid credentials");
-      }
-    }
+      
+      setTimeout(() => {
+        if (localStorage.getItem("token")) {
+          // Redirect to the home page or any other page
+          navigate("/basescreen");
+        } else {
+          alert("Invalid credentials");
+        }
+      }, 1000);    }
   };
 
 

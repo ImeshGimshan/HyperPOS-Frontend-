@@ -1,0 +1,81 @@
+/* Cashier Module Styles */
+.cashier-app {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #ffffff;
+}
+
+/* Container */
+.cashier-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header */
+.cashier-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #d8b4fe;
+  margin-bottom: 20px;
+}
+
+/* Inputs and Selects */
+.cashier-app input[type="text"],
+.cashier-app input[type="number"],
+.cashier-app select {
+  background-color: #2a213d;
+  color: #ffffff;
+  border: 1px solid #7c3aed;
+} 
+
+.cashier-invoice-panel {
+  background: white;
+  color: black;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.cashier-invoice-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.cashier-invoice-meta p {
+  margin: 4px 0;
+}
+
+.cashier-invoice-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.cashier-invoice-table th,
+.cashier-invoice-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.cashier-invoice-total p {
+  margin: 6px 0;
+  text-align: right;
+}
+
+.cashier-print-btn {
+  background-color: #4B0082;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cashier-print-btn:hover {
+  background-color: #3a0066;
+}
