@@ -1,6 +1,5 @@
-
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
 
 import { RouterProvider , createBrowserRouter } from "react-router-dom";
 
@@ -30,12 +29,13 @@ import SupplierRegistration from './components/register/register.jsx';
 import InvoiceReturn from './components/InvoiceRerurn/InvoiceReturn.jsx';
 
 // Creating the router object.
-const router = createBrowserRouter([
+const router = createBrowserRouter ( [
+
   {
+
     path: "/",
     element: <App />,
     children: [
-
       // index : true means that our default route is the login page.
       // path : "" means the url to use along with localhost:port/""
       { index: true , element : <Landing /> },
@@ -65,13 +65,15 @@ const router = createBrowserRouter([
         ],
       },
     ],
+
   },
-]);
 
-createRoot ( document.getElementById ( 'root' ) ).render(
+] );
 
-  <StrictMode>
+ReactDOM.createRoot ( document.getElementById ( 'root' ) ).render (
+
+  <React.StrictMode>
     <RouterProvider router = { router } />
-  </StrictMode>
-
-)
+  </React.StrictMode>
+  
+);

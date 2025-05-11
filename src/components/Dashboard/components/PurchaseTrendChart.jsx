@@ -1,15 +1,13 @@
-// Imports : ( ResponsiveLine ).
 import { ResponsiveLine } from "@nivo/line";
 import { nivoTheme } from "../../../utils/nivoTheme";
 
-// Function : ( SalesTrendChart ).
-function SalesTrendChart({ invoiceData }) {
-  // Process data to get sales by month
-  const salesByMonth = processSalesByMonth(invoiceData);
+function PurchaseTrendChart({ grnData }) {
+  // Process data to get purchases by month
+  const purchasesByMonth = processPurchasesByMonth(grnData);
 
   return (
     <ResponsiveLine
-      data={salesByMonth}
+      data={purchasesByMonth}
       margin={{ top: 20, right: 20, bottom: 50, left: 80 }}
       xScale={{ type: 'point' }}
       yScale={{ 
@@ -36,7 +34,7 @@ function SalesTrendChart({ invoiceData }) {
         tickSize: 5,
         tickPadding: 5,
         tickRotation: 0,
-        legend: 'Sales (Rs)',
+        legend: 'Purchases (Rs)',
         legendOffset: -60,
         legendPosition: 'middle'
       }}
@@ -46,7 +44,8 @@ function SalesTrendChart({ invoiceData }) {
       pointBorderColor={{ from: 'serieColor' }}
       pointLabelYOffset={-12}
       useMesh={true}
-      colors={['#6a3ca3']}
+      colors={['#8a6db1']}
+      theme={nivoTheme}
       legends={[
         {
           anchor: 'bottom-right',
@@ -73,16 +72,15 @@ function SalesTrendChart({ invoiceData }) {
           ]
         }
       ]}
-      theme={nivoTheme}
     />
   );
 }
 
-// Helper function to process sales by month.
-function processSalesByMonth(invoiceData) {
-  // Check if invoiceData is available
-  if (!invoiceData || invoiceData.length === 0) {
-    return [{ id: 'No Data', color: "hsl(240, 70%, 50%)", data: [] }];
+// Helper function to process purchases by month
+function processPurchasesByMonth(grnData) {
+  // Check if grnData is available
+  if (!grnData || grnData.length === 0) {
+    return [{ id: 'No Data', color: "hsl(180, 70%, 50%)", data: [] }];
   }
 
   // Get current year
@@ -94,33 +92,19 @@ function processSalesByMonth(invoiceData) {
     'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
   ];
 
-  // Initialize sales data for current year
-  const salesData = months.map(month => ({ x: month, y: 0 }));
+  // Initialize purchase data for current year
+  const purchaseData = months.map(month => ({ x: month, y: 0 }));
 
-  // Check if we have the old or new data structure
-  const hasNestedInvoice = invoiceData[0] && invoiceData[0].invoice;
-
-  // Process each invoice
-  invoiceData.forEach(invoice => {
-    let date;
-    let total;
-  
-    if (hasNestedInvoice) {
-      // Old structure
-      date = new Date(invoice.invoice.date);
-      total = invoice.invoice.total;
-    } else {
-      // New structure
-      date = new Date(invoice.updatedAt || invoice.createdAt);
-      total = invoice.total;
-    }
-  
-    // Only process invoices with valid dates
+  // Process each GRN
+  grnData.forEach(grn => {
+    const date = new Date(grn.createdAt || grn.updatedAt);
+    
+    // Only process GRNs with valid dates
     if (date && !isNaN(date.getTime())) {
-      // Only process invoices from current year
+      // Only process GRNs from current year
       if (date.getFullYear() === currentYear) {
         const month = date.getMonth();
-        salesData[month].y += total;
+        purchaseData[month].y += grn.total || 0;
       }
     }
   });
@@ -128,12 +112,11 @@ function processSalesByMonth(invoiceData) {
   // Return formatted data for the chart
   return [
     {
-      id: `Sales ${currentYear}`,
-      color: "hsl(240, 70%, 50%)",
-      data: salesData
+      id: `Purchases ${currentYear}`,
+      color: "hsl(180, 70%, 50%)",
+      data: purchaseData
     }
   ];
 }
 
-// Exporting the SalesTrendChart component.
-export default SalesTrendChart;
+export default PurchaseTrendChart;

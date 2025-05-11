@@ -1,66 +1,87 @@
 
-// Imports  : ( React , useState , useEffect ) , ( Calendar ) , ( 'react-calendar/dist/Calendar.css' - styling )
-import React, { useState, useEffect } from "react";
+// Imports  : ( useState , useEffect ) , ( Calendar ) , ( 'react-calendar/dist/Calendar.css' - styling )
+import { useState, useEffect } from "react";
+import { Menu } from "lucide-react";
 
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 
 // Function : ( Topbar )
-function Topbar ( ) {
+function Topbar ( { onMenuToggle } ) { // Add onMenuToggle prop
 
   // Using useState to store the current date n' time and to set to the current moment.
-  const  [ time , setTime ] = useState ( new Date ( ) );
+  const [ time, setTime ] = useState ( new Date ( ) );
   // Using the useState to track whether the calendar is visible or not.    
-  const [ showCalendar , setShowCalendar ] = useState ( false );
+  const [ showCalendar, setShowCalendar ] = useState ( false );
 
   useEffect ( ( ) => {
-    const interval = setInterval ( ( ) => setTime ( new Date ( ) ) , 1000 );
+    const interval = setInterval ( ( ) => setTime ( new Date ( ) ), 1000 );
     return ( ) => clearInterval ( interval );
-  } , [ ] );
+  }, [ ] );
 
-  const formattedTime = time.toLocaleTimeString ( [ ] , {
-    hour : "2-digit",
-    minute : "2-digit",
-    second : "2-digit",
+  const formattedTime = time.toLocaleTimeString ( [ ], {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
   } );
 
   return (
 
-    <header className = "h-16 bg-purple-900 shadow flex items-center justify-between px-6 text-sm text-gray-100">
-      
-      <div>Welcome, Admin</div>
+    <header className = "h-16 bg-purple-900 shadow grid grid-cols-3 items-center px-4 sm:px-6 text-sm text-gray-100">
 
-      <div className = "flex items-center gap-4 relative">
-        <span className = "font-mono tracking-widest">{ formattedTime }</span>
+      {/* Left section */}
+      <div className = "flex items-center">
+        {/* Hamburger menu button - only visible on mobile/tablet */}
         <button
-          // Using the onClick event to toggle the calendar visibility.
-          onClick = { ( ) => setShowCalendar ( !showCalendar ) }
-          className = "p-1 px-2 bg-purple-100 text-purple-900 rounded hover:bg-purple-200"
+          type = "button"
+          className = "text-white p-2 rounded-md lg:hidden focus:outline-none focus:ring-2 focus:ring-purple-400"
+          onClick = { onMenuToggle }
+          aria-label = "Toggle sidebar menu"
         >
-          📅
+          <Menu size = { 24 } />
         </button>
-        { showCalendar && (
-          <div className = "absolute top-12 left-1/2 transform -translate-x-1/2 bg-white text-purple-900 rounded-xl shadow-lg z-50 p-4">
-            <Calendar
-              value = { time }
-              onChange = { ( ) => { } }
-              selectRange = { false }
-              showNeighboringMonth = { true }
-              prev2Label = { null }
-              next2Label = { null }
-            />
-          </div>
-        )}
+        <div className = "ml-2 lg:ml-0">Welcome, Admin</div>
       </div>
 
-      <div className = "flex items-center gap-3">
+      {/* Center section - time and calendar */}
+      <div className = "flex justify-center items-center gap-2 sm:gap-4">
+        <span className = "font-mono tracking-widest text-xs sm:text-sm">{ formattedTime }</span>
+        <div className = "relative">
+          <button
+            onClick = { ( ) => setShowCalendar ( !showCalendar ) }
+            className = "p-1 px-2 bg-purple-100 text-purple-900 rounded hover:bg-purple-200"
+            aria-label = "Toggle calendar"
+          >
+            📅
+          </button>
+          { showCalendar && (
+            <div className = "absolute top-12 left-1/2 transform -translate-x-1/2 bg-white text-purple-900 rounded-xl shadow-lg z-50 p-2 sm:p-4">
+              <div className="max-w-[280px] sm:max-w-none overflow-x-auto">
+                <Calendar
+                  value = { time }
+                  onChange = { ( ) => { } }
+                  selectRange = { false }
+                  showNeighboringMonth = { true }
+                  prev2Label = { null }
+                  next2Label = { null }
+                  className="text-sm sm:text-base"
+                />
+              </div>
+            </div>
+          ) }
+        </div>
+      </div>
+
+      {/* Right section - logout button */}
+      <div className = "flex justify-end">
         <button
-          onClick = { ( ) => alert ( "Logging out !" ) } // To be implemented.
+          onClick = { ( ) => alert ( "Logging out !" ) }
           className = "p-1 px-3 bg-purple-700 text-white rounded-lg hover:bg-purple-800 border border-transparent hover:border-purple-400"
         >
           Logout
         </button>
       </div>
+
     </header>
 
   );

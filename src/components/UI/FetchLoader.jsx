@@ -123,6 +123,26 @@ const StyledWrapper = styled.div`
       width: 16px;
     }
   }
+
+  /* Responsive adjustments */
+  @media (max-width: 640px) {
+    padding: 1.5rem;
+    
+    .loader {
+      width: 70px;
+      height: 45px;
+    }
+    
+    .loader-text {
+      font-size: 0.7rem;
+    }
+    
+    .load {
+      height: 14px;
+      width: 14px;
+      transform: translateX(56px);
+    }
+  }
 `;
 
 export default FetchLoader;
