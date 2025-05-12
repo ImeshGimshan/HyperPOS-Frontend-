@@ -17,8 +17,10 @@ function TopBar({ toggleSidebar, toggleSliderOpen }) {
   }, []);
 
   const logout = async () => {
+    if (confirm("Are you sure you want to logout?")) {
     await APILogout();
     window.location.href = "/";
+    }
   };
 
   const formattedDate = currentDateTime.toLocaleDateString("en-US", {

@@ -59,7 +59,7 @@
 .cashier-invoice-table th,
 .cashier-invoice-table td {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 4px;
 }
 
 .cashier-invoice-total p {

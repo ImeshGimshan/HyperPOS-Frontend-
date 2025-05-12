@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import "./styles.css";
 import { FaWindowClose } from "react-icons/fa";
+import { billUrl } from "../../API/APILinks";
 
 const InvoicePreview = ({ invoice, productList, close }) => {
   const printRef = useRef();
@@ -39,9 +40,6 @@ const InvoicePreview = ({ invoice, productList, close }) => {
     win.document.close();
     win.print();
   };
-  const handleClose = () => {
-    setPrintInvoice(null);
-  };
 
   return (
     <div className="cashier-invoice-panel absolute">
@@ -60,13 +58,13 @@ const InvoicePreview = ({ invoice, productList, close }) => {
               <strong>Date:</strong>{" "}
               {new Date(
                 invoice.invoice.createdAt || invoice?.invoice?.updatedAt
-              ).toLocaleDateString()}
-            </p>
-            <p>
-              <strong>Time:</strong>{" "}
-              {new Date(
+              ).toLocaleDateString()} {new Date(
                 invoice.invoice.createdAt || invoice?.invoice?.updatedAt
               ).toLocaleTimeString()}
+            </p>
+            <p>
+              <strong>Payment Method</strong>{" "}
+              {invoice?.invoice?.paymentMethod}
             </p>
           </div>
           <div className="flex flex-row justify-between">
@@ -86,6 +84,7 @@ const InvoicePreview = ({ invoice, productList, close }) => {
                 <th>Qty</th>
                 <th>Unit</th>
                 <th>Price</th>
+                <th>Discount</th>
                 <th>Total</th>
               </tr>
             </thead>
@@ -104,6 +103,7 @@ const InvoicePreview = ({ invoice, productList, close }) => {
                       <td key={product.id}>{product.unit}</td>
                     ))}
                   <td>Rs.{item?.unitPrice.toFixed(2)}</td>
+                  <td>{item?.discount}%</td>
                   <td>Rs.{item?.amount.toFixed(2)}</td>
                 </tr>
               ))}
@@ -123,9 +123,9 @@ const InvoicePreview = ({ invoice, productList, close }) => {
           </p>
         </div>
 
-        <div className="hidden">
+        <div className="">
           <QRCodeSVG
-            value={`Invoice: ${invoice?.invoice?.id}, Total: Rs.${invoice?.invoice?.total}`}
+            value={`${billUrl}/bill.html?invoice=${invoice?.invoice?.id}&customer=${invoice?.invoice?.customerId}`}
           />
         </div>
       </div>

@@ -4,7 +4,7 @@ import { IoCalculator, IoPersonAdd } from "react-icons/io5";
 import { FaClipboardList, FaFileInvoiceDollar } from "react-icons/fa";
 import { HiChevronLeft, HiChevronRight, HiOutlineLogout } from "react-icons/hi";
 
-function SideBar({ isExpanded: propIsExpanded, toggleSidebar: propToggleSidebar, isSliderOpen }) {
+function SideBar({ isExpanded: propIsExpanded, toggleSidebar: propToggleSidebar, org}) {
   
   const [localIsExpanded, setLocalExpandState] = useState(true);
   const isExpanded = propIsExpanded !== undefined ? propIsExpanded : localIsExpanded;
@@ -58,7 +58,7 @@ function SideBar({ isExpanded: propIsExpanded, toggleSidebar: propToggleSidebar,
         </div>
         {isExpanded && (
           <div className="ml-3 flex items-center">
-            <h2 className="text-white font-bold text-lg">My Store</h2>
+            <h2 className="text-white font-bold text-lg">{org?.name}</h2>
           </div>
         )}
       </div>

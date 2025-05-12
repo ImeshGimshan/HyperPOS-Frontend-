@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { getProductStock } from "../../API/APIProducts";
 
 const ProductSearch = ({ onAdd, invoice,setProductList }) => {
@@ -25,23 +25,23 @@ const ProductSearch = ({ onAdd, invoice,setProductList }) => {
 
   useEffect(() => {
     if (barcode) {
-      const found = products.find((p) => p.barcode === barcode.trim());
+      const found = products?.find((p) => p?.barcode === barcode.trim());
       if (found) {
-        setSelectedProductId(found.id.toString());
-        setSearchTerm(found.name);
+        setSelectedProductId(found?.id.toString());
+        setSearchTerm(found?.name);
       }
     }
   }, [barcode]);
 
   useEffect(() => {
-    const filtered = products.filter((p) =>
-      p.name.toLowerCase().includes(searchTerm.toLowerCase())
+    const filtered = products?.filter((p) =>
+      p?.name.toLowerCase().includes(searchTerm?.toLowerCase())
     );
     setSuggestions(filtered);
   }, [searchTerm]);
 
-  const selectedProduct = products.find(
-    (p) => p.id === parseInt(selectedProductId)
+  const selectedProduct = products?.find(
+    (p) => p?.id === parseInt(selectedProductId)
   );
 
   const unit = selectedProduct?.unit || "";
@@ -54,14 +54,14 @@ const ProductSearch = ({ onAdd, invoice,setProductList }) => {
 
     if (selectedProduct && quantity > 0) {
       onAdd({
-        invoiceId: invoice.id,
-        productId: selectedProduct.id,
-        name: selectedProduct.name,
-        unitPrice: selectedProduct.price,
-        costPrice: selectedProduct.cost,
-        unit: selectedProduct.unit,
+        invoiceId: invoice?.id,
+        productId: selectedProduct?.id,
+        name: selectedProduct?.name,
+        unitPrice: selectedProduct?.price,
+        costPrice: selectedProduct?.cost,
+        unit: selectedProduct?.unit,
         quantity,
-        discount: selectedProduct.discount,
+        discount: selectedProduct?.discount,
         amount: parseFloat(amount),
       });
 
@@ -111,21 +111,19 @@ const ProductSearch = ({ onAdd, invoice,setProductList }) => {
         )}
 
         <div className="product-info mt-2 flex flex-col md:flex-row justify-between mt-10">
-          <div className="flex flex-row justify-between w-100">
+          <div className="flex flex-row justify-between w-full min-h-12">
             <p>Unit: {unit}</p>
-            <p>Price: Rs. {price.toFixed(2)}</p>
+            <p>Price: Rs. {price?.toFixed(2)}</p>
             <p>Discount: {discount}%</p>
-          </div>
-          <div className="flex flex-row">
             <p>Total: Rs. {amount}</p>
           </div>
         </div>
 
-        <div className="add-controls mt-4 flex gap-2 items-center">
+        <div className="add-controls mt-4 flex gap-2 items-center w-full">
           <select
             value={selectedProductId}
             onChange={(e) => setSelectedProductId(e.target.value)}
-            className="border p-2 rounded"
+            className="border p-2 rounded w-full"
           >
             <option value="">Select Item</option>
             {products.map((product) => (

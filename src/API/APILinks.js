@@ -1,15 +1,19 @@
 
 // const BaseUrl = "http://152.67.176.77:8080/api";
-const BaseUrl = "http://localhost:8080/api";
+const BaseUrl = "http://localhost:8080/api"
+const billUrl = "http://localhost:8080";
 
 
 const APILinks = {
 
   login: `${BaseUrl}/auth/login`,
   register: `${BaseUrl}/auth/register`,
+  forgotPassword: `${BaseUrl}/auth/forgetpassword`,
 
   getUser: `${BaseUrl}/user`,
   getUserById: (id) => `${BaseUrl}/user/${id}`,
+  setActive: (id,isActive) => `${BaseUrl}/user/status/${id}?isActive=${isActive}`,
+  setRole: (id,role) => `${BaseUrl}/user/role/${id}?role=${role}`,
 
   getCustomers: `${BaseUrl}/customer`,
   getCustomerById: (id) => `${BaseUrl}/customer/${id}`,
@@ -62,7 +66,10 @@ const APILinks = {
   saveSupplier: `${BaseUrl}/supplier`,
   updateSupplier: (id) => `${BaseUrl}/supplier/${id}`,
 
+  getOrg: `${BaseUrl}/org`,
+  updateOrg: `${BaseUrl}/org`,
+
 };
 
 export default APILinks;
-export { BaseUrl , APILinks };
+export { BaseUrl , APILinks, billUrl };

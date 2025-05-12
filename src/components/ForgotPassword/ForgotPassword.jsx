@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { AiOutlineEye , AiOutlineEyeInvisible } from "react-icons/ai";
+import { APIForgotPassword } from "../../API/APILogin"
 
 const ForgotPassword = ( ) => {
 
@@ -34,11 +35,19 @@ const ForgotPassword = ( ) => {
 
   };
 
-  const handleSubmit = ( ) => {
+  const handleSubmit = async( ) => {
 
     if ( validateForm ( ) ) {
-      
+      try {
+      const response = await APIForgotPassword ( email , newPassword )
+      console.log ( response );
+      alert ( response.message );
       navigate ( "/" );
+      }
+      catch ( error ) {
+        alert ( error.message );
+      }
+      
 
     }
 
