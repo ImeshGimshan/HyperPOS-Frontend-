@@ -27,6 +27,7 @@ import './index.css'
 import Customerregister from './components/customer/registercustomer.jsx';
 import SupplierRegistration from './components/register/register.jsx';
 import InvoiceReturn from './components/InvoiceRerurn/InvoiceReturn.jsx';
+import Category from './components/Category/Categoty.jsx';
 
 // Creating the router object.
 const router = createBrowserRouter ( [
@@ -50,6 +51,7 @@ const router = createBrowserRouter ( [
       { path: "customerregister" , element : <Customerregister /> },
       { path: "supplierregister", element: <SupplierRegistration/>},
       { path: "invoicereturn", element: <InvoiceReturn/>},
+      {path: "category", element: <Category/>},
       {
         path: "dashboard",
         element: <DashboardLayout />,

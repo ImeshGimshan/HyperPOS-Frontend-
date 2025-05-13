@@ -34,7 +34,6 @@ const Header = ({invoice,customers,setCustomer}) => {
         <Select
           options={customerOptions}
           value={selectedCustomer? customerOptions.find((c) => c.value === selectedCustomer) : 1}
-          // value={invoice?.customerId ? customerOptions.find((c) => c.value === invoice?.customerId) : null}
           onChange={handleCustomerChange}
           placeholder="Select Customer"
           isSearchable

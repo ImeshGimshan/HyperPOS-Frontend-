@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Viewer</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .invoice-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+        .detail-label {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 4px;
+        }
+        .detail-value {
+            font-size: 16px;
+            font-weight: 500;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th {
+            background-color: #f8f9fa;
+            text-align: left;
+            padding: 12px;
+            font-weight: 600;
+            border-bottom: 2px solid #eee;
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        .total-section {
+            margin-top: 30px;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .total-box {
+            width: 250px;
+            border-top: 2px solid #eee;
+            padding-top: 15px;
+        }
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .grand-total {
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+        .loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 18px;
+            color: #777;
+        }
+        .error {
+            background-color: #fff8f8;
+            color: #e74c3c;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #e74c3c;
+            margin-bottom: 20px;
+        }
+        .payment-method {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #e3f2fd;
+            color: #1565c0;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .badge-success {
+            background-color: #e3fcef;
+            color: #00a854;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="app">
+        <div id="loading" class="loading">Loading invoice data...</div>
+        <div id="error" class="error" style="display: none;"></div>
+        <div id="invoiceContent" style="display: none;">
+            <div class="header">
+                <div>
+                    <h1>Invoice #<span id="invoiceId"></span></h1>
+                    <div class="payment-method" id="paymentMethod"></div>
+                </div>
+                <div>
+                    <div class="badge badge-success">Paid</div>
+                </div>
+            </div>
+            
+            <div class="invoice-details">
+                <div class="detail-item">
+                    <span class="detail-label">Customer ID</span>
+                    <span class="detail-value" id="customerId"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Date</span>
+                    <span class="detail-value" id="createdAt"></span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Last Updated</span>
+                    <span class="detail-value" id="updatedAt"></span>
+                </div>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Unit Price</th>
+                        <th>Discount</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody id="itemsTable">
+                    <!-- Items will be dynamically inserted here -->
+                </tbody>
+            </table>
+            
+            <div class="total-section">
+                <div class="total-box">
+                    <div class="total-row">
+                        <span>Subtotal</span>
+                        <span id="subtotal"></span>
+                    </div>
+                    <div class="total-row">
+                        <span>Discount</span>
+                        <span id="totalDiscount"></span>
+                    </div>
+                    <div class="total-row grand-total">
+                        <span>Total</span>
+                        <span id="total"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Extract invoice ID from URL
+            const pathParts = window.location.pathname.split('/');
+            const invoiceId = pathParts[pathParts.length - 1];
+            
+            if (!invoiceId || isNaN(invoiceId)) {
+                showError('Invalid invoice ID in URL. Please use format /123 where 123 is the invoice ID.');
+                return;
+            }
+
+            try {
+                // Fetch invoice data
+                const invoiceData = await fetchInvoiceData(invoiceId);
+                
+                // Fetch product details for each item
+                await enrichItemsWithProductDetails(invoiceData.items);
+                
+                // Render the invoice
+                renderInvoice(invoiceData);
+                
+                // Hide loading indicator and show content
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('invoiceContent').style.display = 'block';
+            } catch (error) {
+                console.error('Error:', error);
+                showError('Failed to load invoice data. ' + error.message);
+            }
+        });
+
+        async function fetchInvoiceData(invoiceId) {
+            const url = `http://152.67.176.77:8080/api/sale/${invoiceId}`;
+            const response = await fetch(url);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error ${response.status}: ${response.statusText}`);
+            }
+            
+            return await response.json();
+        }
+
+        async function fetchProductDetails(productId) {
+            const url = `http://152.67.176.77:8080/api/product/${productId}`;
+            const response = await fetch(url);
+            
+            if (!response.ok) {
+                throw new Error(`Failed to fetch product ${productId}`);
+            }
+            
+            return await response.json();
+        }
+
+        async function enrichItemsWithProductDetails(items) {
+            // Create promises for all product fetches
+            const productPromises = items.map(item => 
+                fetchProductDetails(item.productId)
+                    .then(product => {
+                        item.product = product;
+                        return item;
+                    })
+            );
+            
+            // Wait for all product data to be fetched
+            return Promise.all(productPromises);
+        }
+
+        function renderInvoice(data) {
+            const { invoice, items } = data;
+
+            // Fill in invoice details
+            document.getElementById('invoiceId').textContent = invoice.id;
+            document.getElementById('customerId').textContent = invoice.customerId;
+            document.getElementById('paymentMethod').textContent = invoice.paymentMethod;
+            
+            // Format dates
+            document.getElementById('createdAt').textContent = formatDate(invoice.createdAt);
+            document.getElementById('updatedAt').textContent = formatDate(invoice.updatedAt);
+            
+            // Calculate totals
+            let subtotal = 0;
+            let totalDiscount = 0;
+            
+            // Render items table
+            const itemsTable = document.getElementById('itemsTable');
+            itemsTable.innerHTML = ''; // Clear any existing content
+            
+            items.forEach(item => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>${item.product ? item.product.name : 'Product #' + item.productId}</td>
+                    <td>${item.quantity}</td>
+                    <td>$${item.unitPrice.toFixed(2)}</td>
+                    <td>$${item.discount.toFixed(2)}</td>
+                    <td>$${item.amount.toFixed(2)}</td>
+                `;
+                
+                itemsTable.appendChild(row);
+                
+                subtotal += item.amount;
+                totalDiscount += item.discount * item.quantity;
+            });
+            
+            // Update totals
+            document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('totalDiscount').textContent = `$${totalDiscount.toFixed(2)}`;
+            document.getElementById('total').textContent = `$${invoice.total.toFixed(2)}`;
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function showError(message) {
+            const errorElement = document.getElementById('error');
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+            document.getElementById('loading').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

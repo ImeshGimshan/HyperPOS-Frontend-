@@ -27,7 +27,14 @@ const Login = () => {
   const handleLogin = async () => {
     try {
       const response = await APILogin(username, password);
-      console.log("Response:", response);
+      const role = response.roles[0];
+      if ("ROLE_ADMIN" === role) {
+        navigate("/dashboard");
+      } else if ("ROLE_USER" === role) {
+        navigate("/basescreen");
+      } else {
+        alert("Invalid credentials");
+      }      
     } catch (error) {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
@@ -35,21 +42,26 @@ const Login = () => {
       alert(errorMessage);
     }
   };
-
-  const handleSubmit = () => {
-    if (validateForm()) {
-      handleLogin();
+  const sendNavigate = (role) => {
+    setTimeout(() => {
       
-      setTimeout(() => {
-        if (localStorage.getItem("token")) {
-          // Redirect to the home page or any other page
+        if ("ROLE_ADMIN" == role) {
+          navigate("/dashboard");
+        } else if ("ROLE_USER" == role) {
           navigate("/basescreen");
         } else {
           alert("Invalid credentials");
         }
-      }, 1000);    }
+        navigate("/basescreen");
+      
+    }, 2000);
   };
 
+  const handleSubmit = () => {
+    if (validateForm()) {
+      handleLogin();
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#2a0036] to-[#000828] px-4">
@@ -93,7 +105,10 @@ const Login = () => {
         </div>
 
         <div className="text-right mt-2">
-          <button className="text-red-400 text-sm hover:underline">
+          <button
+            className="text-red-400 text-sm hover:underline"
+            onClick={() => navigate("/forgotpassword")}
+          >
             Forgot Password?
           </button>
         </div>

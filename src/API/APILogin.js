@@ -53,6 +53,18 @@ const registerUser = async (user) => {
   });
   return response.data;
 };
+const APIForgotPassword = async (username, password) => {
+  const token = localStorage.getItem("token");
+  const response = await axios.put(APILinks.forgotPassword,{username,password}, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+};
+
+
 const setCookie = (name, value, days) => {
   let expires = "";
   if (days) {
@@ -63,6 +75,7 @@ const setCookie = (name, value, days) => {
   document.cookie = name + "=" + (value || "") + expires + "; path=/";
 };
 
+
 export {
   APILogin,
   APILogout,
@@ -70,6 +83,7 @@ export {
   APIGetUserById,
   registerUser,
   setCookie,
+  APIForgotPassword,
 };
 
 export default APILogin;
