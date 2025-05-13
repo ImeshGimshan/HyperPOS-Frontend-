@@ -49,6 +49,7 @@ const APILinks = {
   updateGRN: (id) => `${BaseUrl}/grn/${id}`,
   getGRNItemById: (id) => `${BaseUrl}/grn/item/${id}`,
   saveGRNItem: `${BaseUrl}/grn/item`,
+  returnGRN: (id) => `${BaseUrl}/return/${id}`,
 
   getSales: `${BaseUrl}/sale`,
   saveSale: `${BaseUrl}/sale`,

@@ -30,6 +30,9 @@ import InvoiceReturn from './components/InvoiceRerurn/InvoiceReturn.jsx';
 import Category from './components/Category/Categoty.jsx';
 import Purchase from './components/Purchase/Purchase.jsx';
 import NotificationComponent from './components/Test/NotificationComponent.jsx'
+import GrnReturn from './components/ReturnPurchase/GrnReturn.jsx';
+
+
 // Creating the router object.
 const router = createBrowserRouter ( [
 
@@ -52,6 +55,7 @@ const router = createBrowserRouter ( [
       { path: "customerregister" , element : <Customerregister /> },
       { path: "supplierregister", element: <SupplierRegistration/>},
       { path: "invoicereturn", element: <InvoiceReturn/>},
+      { path: "grnreturn", element: <GrnReturn/>},
       {path: "category", element: <Category/>},
       {path: "purchase", element: <Purchase/>},
       { path: "notification", element: <NotificationComponent/>},

@@ -42,4 +42,15 @@ const updateGRN = async (id, grn) => {
   return response.data;
 };
 
-export { getGRNs, getGRNById, saveGRN, updateGRN };
+const returnGRN = async (id, grnData) => {
+  const token = localStorage.getItem("token");
+  const response = await axios.post(APILinks.returnGRN(id), grnData, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+};
+
+export { getGRNs, getGRNById, saveGRN, updateGRN, returnGRN };
