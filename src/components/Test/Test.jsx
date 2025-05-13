@@ -4,7 +4,6 @@ import {
   getSale,
   getSaleById,
 } from "../../API/APISale";
-
 import {
   getProducts,
   getProductById,
@@ -14,11 +13,11 @@ import {
   getProductStockById,
 } from "../../API/APIProducts";
 import { getCategoryById } from "../../API/APICategory";
-
 import { cart, updateCart, product, updatedProduct } from "./postData";
 import APILogin from "../../API/APILogin";
 
 function Test() {
+
   const btnStyle =
     "bg-amber-300 p-1 m-1 font-bold w-[30%] border-black border-2 rounded-lg pointer hover:bg-amber-400 hover:scale-105 transition-all duration-300 ease-in-out";
 
@@ -28,7 +27,7 @@ function Test() {
       const response = await submitSale(cart);
       console.log("Response:", response);
     } catch (error) {
-      const errorMessage = (error.response?.data?.message) || error?.message;
+      const errorMessage = error.response?.data?.message || error?.message;
       alert(errorMessage);
       console.error("Error:", errorMessage);
     }
@@ -39,7 +38,7 @@ function Test() {
       const response = await returnSale(updateCart.invoice.id, updateCart);
       console.log("Response:", response);
     } catch (error) {
-      const errorMessage = (error.response?.data?.message) || error?.message;
+      const errorMessage = error.response?.data?.message || error?.message;
       alert(errorMessage);
       console.error("Error:", errorMessage);
     }
@@ -50,7 +49,7 @@ function Test() {
       const response = await getSale();
       console.log("Response:", response);
     } catch (error) {
-      const errorMessage = (error.response?.data?.message) || error?.message;
+      const errorMessage = error.response?.data?.message || error?.message;
       alert(errorMessage);
       console.error("Error:", errorMessage);
     }
@@ -61,7 +60,7 @@ function Test() {
       const response = await getSaleById(1);
       console.log("Response:", response);
     } catch (error) {
-      const errorMessage = (error.response?.data?.message) || error?.message;
+      const errorMessage = error.response?.data?.message || error?.message;
       alert(errorMessage);
       console.error("Error:", errorMessage);
     }
@@ -73,7 +72,7 @@ function Test() {
       const response = await getProducts();
       console.log("Response:", response);
     } catch (error) {
-      const errorMessage = (error.response?.data?.message) || error?.message;
+      const errorMessage = error.response?.data?.message || error?.message;
       alert(errorMessage);
       console.error("Error:", errorMessage);
     }
@@ -84,7 +83,7 @@ function Test() {
       const response = await getProductById(9);
       console.log("Response:", response);
     } catch (error) {
-      const errorMessage = (error.response?.data?.message) || error?.message;
+      const errorMessage = error.response?.data?.message || error?.message;
       alert(errorMessage);
       console.error("Error:", errorMessage);
     }
@@ -95,7 +94,7 @@ function Test() {
       const response = await saveProduct(product);
       console.log("Response:", response);
     } catch (error) {
-      const errorMessage = (error.response?.data?.message) || error?.message;
+      const errorMessage = error.response?.data?.message || error?.message;
       alert(errorMessage);
       console.error("Error:", errorMessage);
     }
@@ -106,7 +105,7 @@ function Test() {
       const response = await updateProduct(updatedProduct.id, updatedProduct);
       console.log("Response:", response);
     } catch (error) {
-      const errorMessage = (error.response?.data?.message) || error?.message;
+      const errorMessage = error.response?.data?.message || error?.message;
       alert(errorMessage);
       console.error("Error:", errorMessage);
     }
@@ -117,7 +116,7 @@ function Test() {
       const response = await getProductStock();
       console.log("Response:", response);
     } catch (error) {
-      const errorMessage = (error.response?.data?.message) || error?.message;
+      const errorMessage = error.response?.data?.message || error?.message;
       alert(errorMessage);
       console.error("Error:", errorMessage);
     }
@@ -128,7 +127,7 @@ function Test() {
       const response = await getProductStockById(7);
       console.log("Response:", response);
     } catch (error) {
-      const errorMessage = (error.response?.data?.message) || error?.message;
+      const errorMessage = error.response?.data?.message || error?.message;
       alert(errorMessage);
       console.error("Error:", errorMessage);
     }
@@ -139,7 +138,7 @@ function Test() {
       const response = await APILogin("Admin", "admin");
       console.log("Response:", response);
     } catch (error) {
-      const errorMessage = (error.response?.data?.message) || error?.message;
+      const errorMessage = error.response?.data?.message || error?.message;
       alert(errorMessage);
       console.error("Error:", errorMessage);
     }
@@ -150,7 +149,7 @@ function Test() {
       const response = await getCategoryById(2);
       console.log("Response:", response);
     } catch (error) {
-      const errorMessage = (error.response?.data?.message) || error?.message;
+      const errorMessage = error.response?.data?.message || error?.message;
       alert(errorMessage);
       console.error("Error:", errorMessage);
     }
