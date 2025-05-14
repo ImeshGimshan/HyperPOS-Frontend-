@@ -57,6 +57,7 @@ const router = createBrowserRouter ( [
       { path: "grnreturn", element: <GrnReturn/>},
       {path: "category", element: <Category/>},
       {path: "purchase", element: <Purchase/>},
+      {path: "product", element: <AddProduct/>},
       {
         path: "dashboard",
         element: <DashboardLayout />,
