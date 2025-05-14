@@ -2,7 +2,7 @@ import React from 'react';
 
 const SummeryFooter = ({ cartItems, totalAmount}) => {
     const grandTotal = cartItems?.reduce((sum, item)=> {
-        const total = item?.unitPrice * item?.quantity * (1 - (item?.discount || 0) / 100);
+        const total = item?.unitCost * item?.quantity * (1 - (item?.discount || 0) / 100);
         return sum + ( total > 0 ? total : 0);
     }, 0);
 

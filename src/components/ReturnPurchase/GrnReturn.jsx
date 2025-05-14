@@ -3,7 +3,7 @@ import Header from './Header'
 import CartTable from './CartTable';
 import Controls from './Controls';
 import SummeryFooter from './SummeryFooter';
-import { returnGRN, getGRNById } from '../../API/APIGRN';
+import { getPurchases, getPurchaseById, savePurchase, returnPurchase } from '../../API/APIPurchase';
 import {getProducts} from '../../API/APIProducts';
 import GRNPreview from './GRNPreview';
 
@@ -38,8 +38,9 @@ function GrnReturn() {
     const selectGRN = async (id) => {
         console.log("GRN ID: ", id);
         try {
-            const response = await getGRNById(id);
+            const response = await getPurchaseById(id);
             setGRNData(response);
+            console.log("GRN Data: ", response);
         }
         catch (error) {
             const errorMessage = error.response?.data?.message || "An error occurred";
@@ -57,7 +58,7 @@ function GrnReturn() {
         try{
             const grnForSubmit = setGRNForSubmit(grnData?.grn, cartItems);
             console.log("GRN for submit: ", grnForSubmit);
-            const response = await returnGRN(grnForSubmit.grn.id, grnForSubmit);
+            const response = await returnPurchase(grnForSubmit.grn.id, grnForSubmit);
             setPrintGRN(response);
             alert("GRN return submitted successfully");
         }
@@ -71,9 +72,10 @@ function GrnReturn() {
     const handleQuantityChange = (id, quantity) => {
         setCartItems((prev) => 
             prev.map((item) =>
-                item.id === id ? { ...item,quantity: parseInt(quantity),
+                item.id === id ? { ...item,
+                    quantity: parseInt(quantity),
                     amount:
-                        parseInt(quantity) * (item.unitPrice * (1 - item.discount / 100))
+                        parseInt(quantity) * (item.unitCost * (1 - item.discount / 100))
                         || 0,
                  }
                  : item
@@ -108,7 +110,7 @@ function GrnReturn() {
                     onQuantityChange={handleQuantityChange}
                 />
                 <div className="w-full my-4">
-                    <label className="block m-2">Remarks:</label>
+                    <lable className="block m-2">Remarks:</lable>
                     <textarea
                         value={remarks}
                         onChange={(e) => setRemarks(e.target.value)}

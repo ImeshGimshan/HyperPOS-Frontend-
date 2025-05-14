@@ -49,7 +49,6 @@ const APILinks = {
   updateGRN: (id) => `${BaseUrl}/grn/${id}`,
   getGRNItemById: (id) => `${BaseUrl}/grn/item/${id}`,
   saveGRNItem: `${BaseUrl}/grn/item`,
-  returnGRN: (id) => `${BaseUrl}/return/${id}`,
 
   getSales: `${BaseUrl}/sale`,
   saveSale: `${BaseUrl}/sale`,
@@ -59,6 +58,7 @@ const APILinks = {
   getPurchases: `${BaseUrl}/purchase`,
   savePurchase: `${BaseUrl}/purchase`,
   returnPurchase: (id) => `${BaseUrl}/purchase/${id}`,
+  getPurchaseById: (id) => `${BaseUrl}/purchase/${id}`,
 
   saveProductImage: (id) => `${BaseUrl}/image/product/${id}`,
 

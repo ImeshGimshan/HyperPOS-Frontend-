@@ -8,15 +8,15 @@ const CartTable = ({ cartItems, onQuantityChange, productList }) => {
 
     return (
         <div className="w-full overflow-x-auto rounded-lg border border-gray-700 shadow-md max-h-[50vh]">
-            <table className="min-w-full text-sm text-left text-gray-800">
-                <thead className="bg-teal-700 text-white">
+            <table className="min-w-full text-sm text-center text-gray-800">
+                <thead className="bg-purple-700/70 text-white">
                     <tr>
                         <th className="px-4 py-2 text-center">#</th>
                         <th className="px-4 py-2 ">Product Name</th>
                         <th className="px-4 py-2 text-center">Unit</th>
                         <th className="px-4 py-2 text-center">Quantity</th>
                         <th className="px-4 py-2 text-center">Discount</th>
-                        <th className="px-4 py-2 text-center">Price</th>
+                        <th className="px-4 py-2 text-center">Cost</th>
                         <th className="px-4 py-2 text-center">Total</th>
                     </tr>
                 </thead>
@@ -24,10 +24,11 @@ const CartTable = ({ cartItems, onQuantityChange, productList }) => {
                     {cartItems?.length >0 ? 
                         cartItems.map((item, index)=> {
                             const itemTotall = calculateTotal(
-                                item?.unitPrice,
+                                item?.unitCost,
                                 item?.quantity,
                                 item?.discount
                             );
+                            const maxQuantity = item.quantity;
                             return (
                                 <tr key={index} className="hover:bg-teal-50">
                                     <td className="px-4 py-2 text-center">
@@ -38,24 +39,8 @@ const CartTable = ({ cartItems, onQuantityChange, productList }) => {
                                             productList?.find(
                                                 (product) => product.id === item?.productId
                                             )
-                                            ?.productName || "N/A"
+                                            ?.name || "N/A"
                                         }
-                                    </td>
-                                    <td className="px-4 py-2">
-                                        Rs. {Number(item?.unitPrice).toFixed(2)}
-                                    </td>
-                                    <td className="px-4 py-2">
-                                        <input
-                                            type="number"
-                                            value="{item?.quantity}"
-                                            onChange={(e) =>
-                                                onQuantityChange(
-                                                    item?.id,
-                                                    parseInt(e.target.value, 10) || 0
-                                                )
-                                            }
-                                            className="w-16 p-1 text-center bg-gray-100 border border-teal-300 rounded">
-                                        </input>
                                     </td>
                                     <td className="px-4 py-2">
                                         {
@@ -65,7 +50,25 @@ const CartTable = ({ cartItems, onQuantityChange, productList }) => {
                                         }
                                     </td>
                                     <td className="px-4 py-2">
+                                        <input
+                                            type="number"
+                                            value={item.quantity}
+                                            min = "0"
+                                            max={maxQuantity}
+                                            onChange={(e) =>
+                                                onQuantityChange(
+                                                    item?.id,
+                                                    parseInt(e.target.value, 10) || 0
+                                                )
+                                            }
+                                            className="w-16 p-1 border text-black border-purple-300 rounded bg-gray-100 text-center">
+                                        </input>
+                                    </td>
+                                    <td className="px-4 py-2">
                                         {item?.discount}%
+                                    </td>
+                                    <td className="px-4 py-2">
+                                        Rs. {Number(item?.unitCost).toFixed(2)}
                                     </td>
                                     <td className="px-4 py-2">
                                         Rs. {Number(itemTotall).toFixed(2)}

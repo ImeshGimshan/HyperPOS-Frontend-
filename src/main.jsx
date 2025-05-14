@@ -29,7 +29,6 @@ import SupplierRegistration from './components/register/register.jsx';
 import InvoiceReturn from './components/InvoiceRerurn/InvoiceReturn.jsx';
 import Category from './components/Category/Categoty.jsx';
 import Purchase from './components/Purchase/Purchase.jsx';
-import NotificationComponent from './components/Test/NotificationComponent.jsx'
 import GrnReturn from './components/ReturnPurchase/GrnReturn.jsx';
 
 
@@ -58,7 +57,6 @@ const router = createBrowserRouter ( [
       { path: "grnreturn", element: <GrnReturn/>},
       {path: "category", element: <Category/>},
       {path: "purchase", element: <Purchase/>},
-      { path: "notification", element: <NotificationComponent/>},
       {
         path: "dashboard",
         element: <DashboardLayout />,
