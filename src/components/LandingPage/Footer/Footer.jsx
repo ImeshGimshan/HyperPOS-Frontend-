@@ -67,7 +67,7 @@ const Footer = ( ) => {
 
         <div className="mb-2">
           <a href = "#">
-            <img src = "./HyperPOS - Logo.svg" alt = "logo" width = { 120 } className = "logo-glow" />
+            <img src = "./HyperPOS.svg" alt = "logo" width = { 120 } className = "logo-glow" />
           </a>
         </div>
 
