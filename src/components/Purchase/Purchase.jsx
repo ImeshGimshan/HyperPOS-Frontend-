@@ -56,7 +56,6 @@ const Purchase = () => {
       return;
     }
     const discountedPrice = product?.unitCost * (1 - product?.discount / 100);
-    console.log("discounted price: " + discountedPrice);
     setCartItems((prev) => [
       ...prev,
       {
@@ -67,7 +66,7 @@ const Purchase = () => {
   };
 
   const handleRemoveFromCart = (id) => {
-    setCartItems((prev) => prev.filter((item) => item?.id !== id));
+    setCartItems((prev) => prev.filter((item) => item?.productId !== id));
   };
 
   const handleQuantityChange = (id, quantity) => {
@@ -106,7 +105,6 @@ const Purchase = () => {
       items: cartItems,
     };
     const submitPurchaseData = async () => {
-        console.log("PurchaseData:", PurchaseData);
       if(cash < PurchaseData.grn.total) {
         alert("Cash is not enough to pay the invoice.");
         return;
@@ -114,12 +112,10 @@ const Purchase = () => {
       try {
         const response = await savePurchase(PurchaseData);
         handlePrintInvoice(response);
-        console.log("Sale submitted:", response);
         return response;
       } catch (error) {
         const errorMessage = error.response?.data?.message || error?.message;
         alert(errorMessage);
-        console.error("Error:", errorMessage);
       }
     };
     const response = submitPurchaseData();
