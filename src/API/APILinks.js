@@ -32,7 +32,7 @@ const APILinks = {
   updateProductWithImage: (id) => `${BaseUrl}/product/${id}`,
   getProductStock: `${BaseUrl}/product/stock`,
   getProductStockById: (id) => `${BaseUrl}/product/stock/${id}`,
-  getProductImage: (id) => `${BaseUrl}/image/${id}`,
+  getProductImage: (id) => `${BaseUrl}/image/product/${id}`,
 
   getInvoices: `${BaseUrl}/invoice`,
   getInvoiceById: (id) => `${BaseUrl}/invoice/${id}`,

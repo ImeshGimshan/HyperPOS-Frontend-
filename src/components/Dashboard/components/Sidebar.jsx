@@ -1,19 +1,19 @@
-
 // Imports : ( NavLink )
 import { Link , useLocation } from "react-router-dom";
 
 import React from "react";
 
 import { 
-
   Home, 
   FileText, 
   Users, 
   ShoppingCart, 
   Package, 
   BarChart2, 
-  Building
-
+  Building,
+  RotateCcw,
+  UserPlus,
+  Truck
 } from "lucide-react";
 
 import ParticleBackground from "../../ui/ParticleBackground";
@@ -76,6 +76,36 @@ function Sidebar ( { onCloseMobile } ) {
     },
 
     {
+      title : "GRN Return",
+      icon : <RotateCcw size = { 20 } />,
+      path : "/dashboard/grnreturn"
+    },
+
+    {
+      title : "Purchase",
+      icon : <Truck size = { 20 } />,
+      path : "/dashboard/purchase"
+    },
+
+    {
+      title : "Add Customer",
+      icon : <UserPlus size = { 20 } />,
+      path : "/dashboard/customerregister"
+    },
+
+    {
+      title : "Add Product",
+      icon : <Package size = { 20 } />,
+      path : "/dashboard/addproduct"
+    },
+
+    {
+      title : "Add Supplier",
+      icon : <Truck size = { 20 } />,
+      path : "/dashboard/supplierregister"
+    },
+
+    {
       title : "Organizations",
       icon : <Building size = { 20 } />,
       path : "/dashboard/organizations"
@@ -105,7 +135,7 @@ function Sidebar ( { onCloseMobile } ) {
             transform: translateY(100%);
           }
         }
-        
+      
         @keyframes flicker {
           0%, 100% { opacity: 1; }
           92% { opacity: 1; }
@@ -114,7 +144,7 @@ function Sidebar ( { onCloseMobile } ) {
           96% { opacity: 0.5; }
           97% { opacity: 1; }
         }
-        
+      
         .cyberpunk-scanline {
           position: absolute;
           top: 0;
@@ -129,13 +159,13 @@ function Sidebar ( { onCloseMobile } ) {
           pointer-events: none;
           z-index: 2;
         }
-        
+      
         .cyberpunk-menu-item {
           position: relative;
           overflow: hidden;
           transition: all 0.3s ease;
         }
-        
+      
         .cyberpunk-menu-item::before {
           content: '';
           position: absolute;
@@ -149,11 +179,11 @@ function Sidebar ( { onCloseMobile } ) {
             transparent);
           transition: all 0.5s ease;
         }
-        
+      
         .cyberpunk-menu-item:hover::before {
           left: 100%;
         }
-        
+      
         .cyberpunk-active {
           animation: flicker 4s infinite;
         }
@@ -165,14 +195,14 @@ function Sidebar ( { onCloseMobile } ) {
   return (
 
     <div className = "h-full flex flex-col relative overflow-hidden" 
-         style = { {
-           background : "linear-gradient(180deg, #0f0326 0%, #1a0a40 50%, #3b0764 100%)",
-         } }>
-      
+        style = { {
+          background : "linear-gradient(180deg, #0f0326 0%, #1a0a40 50%, #3b0764 100%)",
+        } }>
+    
       <div className = "cyberpunk-scanline"></div>
-      
+    
       <ParticleBackground count = { 20 } />
-      
+    
       <div className = "absolute inset-0 overflow-hidden opacity-20 z-0">
 
         { [ ...Array ( 15 ) ].map ( ( _ , i ) => (
@@ -192,7 +222,7 @@ function Sidebar ( { onCloseMobile } ) {
         ) ) }
 
       </div>
-      
+    
       <div className = "p-4 border-b border-purple-800/30 relative z-10">
 
         <div className = "flex items-center">
@@ -207,7 +237,7 @@ function Sidebar ( { onCloseMobile } ) {
               className = "logo-glow"
             />
           </div>
-        
+      
           <div className = "flex flex-col">
 
             <h1 className = "text-xl font-bold text-white"
@@ -218,10 +248,10 @@ function Sidebar ( { onCloseMobile } ) {
               HyperPOS
             </h1>
             <div className = "w-full h-[2px] mt-1"
-                 style = { {
-                   background : 'linear-gradient(90deg, #f472b6, transparent)',
-                   boxShadow : '0 0 10px #f472b6'
-                 } }>
+                style = { {
+                  background : 'linear-gradient(90deg, #f472b6, transparent)',
+                  boxShadow : '0 0 10px #f472b6'
+                } }>
             </div>
 
           </div>
@@ -255,9 +285,9 @@ function Sidebar ( { onCloseMobile } ) {
                 onClick = { onCloseMobile }
               >
                 <span className = {`mr-3 ${isActive ( item.path , item.exact ) ? "text-pink-300" : "text-purple-300"}`}
-                     style = { {
-                       filter : isActive ( item.path , item.exact ) ? "drop-shadow(0 0 3px rgba(244, 114, 182, 0.8))" : "none"
-                     } }>
+                    style = { {
+                      filter : isActive ( item.path , item.exact ) ? "drop-shadow(0 0 3px rgba(244, 114, 182, 0.8))" : "none"
+                    } }>
                   { item.icon }
                 </span>
                 <span style = { {
@@ -266,13 +296,13 @@ function Sidebar ( { onCloseMobile } ) {
                 } }>
                   { item.title }
                 </span>
-                
+              
                 { isActive ( item.path , item.exact ) && (
                   <div className = "absolute left-0 top-1/2 transform -translate-y-1/2 w-[3px] h-2/3"
-                       style = { {
-                         background : '#f472b6',
-                         boxShadow : '0 0 8px #f472b6, 0 0 15px #f472b6'
-                       } }>
+                      style = { {
+                        background : '#f472b6',
+                        boxShadow : '0 0 8px #f472b6, 0 0 15px #f472b6'
+                      } }>
                   </div>
                 ) }
               </Link>
@@ -280,12 +310,12 @@ function Sidebar ( { onCloseMobile } ) {
           ) ) }
         </ul>
       </nav>
-      
+    
       <div className = "absolute bottom-0 left-0 right-0 h-40 pointer-events-none"
-           style = { {
-             background : "radial-gradient(ellipse at bottom, rgba(192, 38, 211, 0.3) 0%, transparent 70%)",
-             filter : "blur(20px)"
-           } }>
+          style = { {
+            background : "radial-gradient(ellipse at bottom, rgba(192, 38, 211, 0.3) 0%, transparent 70%)",
+            filter : "blur(20px)"
+          } }>
       </div>
     </div>
 

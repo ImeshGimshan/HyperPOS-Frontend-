@@ -1,5 +1,4 @@
-
-import { getProducts } from "../../../API/APIProducts";
+  import { getProducts, getProductImage } from "../../../API/APIProducts";
 
 const getProductData = async ( ) => {
 
@@ -18,4 +17,15 @@ const getProductData = async ( ) => {
 
 };
 
-export { getProductData };
+const getProductImageUrl = async (productId) => {
+  try {
+    const imageUrl = await getProductImage(productId);
+    return imageUrl;
+  }
+  catch (error) {
+    console.error("Error fetching product image:", error);
+    return null;
+  }
+};
+
+export { getProductData, getProductImageUrl };

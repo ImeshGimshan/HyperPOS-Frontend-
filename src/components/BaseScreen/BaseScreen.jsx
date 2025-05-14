@@ -1,7 +1,8 @@
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { Outlet } from 'react-router-dom';
 import TopBar from './TopBar';
-import BottomContent from './BottomContent';
-import {getOrgInfo} from '../../API/APIOrg';
+import SideBar from './SideBar';
+import { getOrgInfo } from '../../API/APIOrg';
 
 const BaseScreen = () => {
   const [isSidebarExpanded, setSidebarExpanded] = useState(true);
@@ -23,6 +24,7 @@ const BaseScreen = () => {
   const toggleSidebar = () => {
     setSidebarExpanded(!isSidebarExpanded);
   };
+  
   const toggleSliderOpen = () => {
     setSliderOpen(!isSliderOpen);
   };
@@ -30,17 +32,25 @@ const BaseScreen = () => {
   return (
     <div className="w-screen h-screen flex flex-col bg-gray-50">
       <TopBar 
-      toggleSidebar={toggleSidebar} 
-      toggleSliderOpen={toggleSliderOpen}
-      org={org}
-      />
-      <BottomContent 
-        isSidebarExpanded={isSidebarExpanded} 
-        toggleSidebar={toggleSidebar}
-        isSliderOpen={isSliderOpen}
+        toggleSidebar={toggleSidebar} 
         toggleSliderOpen={toggleSliderOpen}
         org={org}
       />
+      <div className="flex w-full h-[calc(100vh-3.5rem)]">
+        {isSliderOpen && (
+          <SideBar 
+            isExpanded={isSidebarExpanded} 
+            toggleSidebar={toggleSidebar} 
+            org={org}
+          />
+        )}
+        
+        <div className="flex-1 overflow-auto">
+          <main className="flex-1 overflow-auto">
+            <Outlet />
+          </main>
+        </div>
+      </div>
     </div>
   );
 };
