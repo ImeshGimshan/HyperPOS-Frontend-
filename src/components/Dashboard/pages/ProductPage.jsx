@@ -1,4 +1,3 @@
-
 // Imports : ( useState , useEffect ) , ( Eye , SlidersHorizontal ) , ( productData )
 import { useState, useEffect } from "react";
 

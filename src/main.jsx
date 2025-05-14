@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-import { RouterProvider , createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import App from './App.jsx'
 import Login from './components/Login/Login';
@@ -33,55 +33,56 @@ import GrnReturn from './components/ReturnPurchase/GrnReturn.jsx';
 
 
 // Creating the router object.
-const router = createBrowserRouter ( [
-
+const router = createBrowserRouter([
   {
-
     path: "/",
     element: <App />,
     children: [
-      // index : true means that our default route is the login page.
-      // path : "" means the url to use along with localhost:port/""
-      { index: true , element : <Landing /> },
-      { path: "login" , element : <Login /> },
-      { path: "signup" , element : <Signup /> },
-      { path: "termsofuse" , element : <TermsOfU /> },
-      { path: "forgotpassword" , element : <ForgotPassword /> },
-      { path: "addproduct" , element : <AddProduct /> },
-      { path: "cashier" , element : <CashierScreen /> },
-      { path: "basescreen" , element : <BaseScreen /> },
-      { path: "test" , element : <Test /> },
-      { path: "customerregister" , element : <Customerregister /> },
-      { path: "supplierregister", element: <SupplierRegistration/>},
-      { path: "invoicereturn", element: <InvoiceReturn/>},
-      { path: "grnreturn", element: <GrnReturn/>},
-      {path: "category", element: <Category/>},
-      {path: "purchase", element: <Purchase/>},
-      {path: "product", element: <AddProduct/>},
+      { index: true, element: <Landing /> },
+      { path: "login", element: <Login /> },
+      { path: "signup", element: <Signup /> },
+      { path: "termsofuse", element: <TermsOfU /> },
+      { path: "forgotpassword", element: <ForgotPassword /> },
+      { path: "addproduct", element: <AddProduct /> },
+      { path: "cashier", element: <CashierScreen /> },
+      { 
+        path: "basescreen", 
+        element: <BaseScreen />,
+        children: [
+          { path: "cashier", element: <CashierScreen /> },
+          { path: "invoice-return", element: <InvoiceReturn /> },
+          { path: "customer-registration", element: <Customerregister /> },
+          { index: true, element: <CashierScreen /> }
+        ]
+      },
+      { path: "test", element: <Test /> },
+      { path: "customerregister", element: <Customerregister /> },
+      { path: "supplierregister", element: <SupplierRegistration /> },
+      { path: "invoicereturn", element: <InvoiceReturn /> },
+      { path: "grnreturn", element: <GrnReturn /> },
+      { path: "category", element: <Category /> },
+      { path: "purchase", element: <Purchase /> },
+      { path: "product", element: <AddProduct /> },
       {
         path: "dashboard",
         element: <DashboardLayout />,
         children: [
-          { index: true , element : <DashboardHome /> },
-          { path: "grn" , element : <GRNPage /> },
-          { path: "invoices" , element : <InvoicePage /> },
-          { path: "users" , element : <UserPage /> },
-          { path: "customers" , element : <CustomerPage /> },
-          { path: "products" , element : <ProductPage /> },
-          { path: "sales" , element : <SalePage /> },
-          { path: "purchases" , element : <PurchasePage /> },
+          { index: true, element: <DashboardHome /> },
+          { path: "grn", element: <GRNPage /> },
+          { path: "invoices", element: <InvoicePage /> },
+          { path: "users", element: <UserPage /> },
+          { path: "customers", element: <CustomerPage /> },
+          { path: "products", element: <ProductPage /> },
+          { path: "sales", element: <SalePage /> },
+          { path: "purchases", element: <PurchasePage /> },
         ],
       },
     ],
-
   },
+]);
 
-] );
-
-ReactDOM.createRoot ( document.getElementById ( 'root' ) ).render (
-
+ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router = { router } />
+    <RouterProvider router={router} />
   </React.StrictMode>
-  
 );

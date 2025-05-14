@@ -120,6 +120,25 @@ const saveProductImage = async (id, image) => {
   return response.data;
 };
 
+const getProductImage = async (id) => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.get(APILinks.getProductImage(id), {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      responseType: 'blob',
+    });
+    return URL.createObjectURL(response.data);
+  } catch (error) {
+    console.error(
+      "Error fetching product image:",
+      error.response?.data || error.message
+    );
+    return null;
+  }
+};
+
 export {
   getProducts,
   getProductById,
@@ -128,4 +147,5 @@ export {
   getProductStock,
   getProductStockById,
   saveProductImage,
+  getProductImage,
 };

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { MdDashboard, MdStorefront } from "react-icons/md";
+import { Link, useLocation } from 'react-router-dom';
+import { MdStorefront } from "react-icons/md";
 import { IoCalculator, IoPersonAdd } from "react-icons/io5";
-import { FaClipboardList, FaFileInvoiceDollar } from "react-icons/fa";
+import { FaExchangeAlt } from "react-icons/fa";
 import { HiChevronLeft, HiChevronRight, HiOutlineLogout } from "react-icons/hi";
+import { APILogout } from "../../API/APILogin";
 
 function SideBar({ isExpanded: propIsExpanded, toggleSidebar: propToggleSidebar, org}) {
-  
+  const location = useLocation();
   const [localIsExpanded, setLocalExpandState] = useState(true);
   const isExpanded = propIsExpanded !== undefined ? propIsExpanded : localIsExpanded;
   
@@ -16,38 +18,42 @@ function SideBar({ isExpanded: propIsExpanded, toggleSidebar: propToggleSidebar,
       setLocalExpandState(!localIsExpanded);
     }
   };
+
+  const handleLogout = async () => {
+    if (confirm("Are you sure you want to logout?")) {
+      await APILogout();
+      window.location.href = "/";
+    }
+  };
   
   const menuItems = [
     {
-      title: 'Dashboard',
-      icon: <MdDashboard />,
-    },
-    {
-      title: 'Calculator',
+      title: 'Cashier',
       icon: <IoCalculator />,
+      path: '/basescreen/cashier'
     },
     {
-      title: 'Sales',
-      icon: <FaClipboardList />,
+      title: 'Invoice Return',
+      icon: <FaExchangeAlt />,
+      path: '/basescreen/invoice-return'
     },
     {
-      title: 'Customers',
+      title: 'Customer Registration',
       icon: <IoPersonAdd />,
+      path: '/basescreen/customer-registration'
     },
-    {
-      title: 'Invoices',
-      icon: <FaFileInvoiceDollar />,
-    },
-    
     {
       title: 'Logout',
       icon: <HiOutlineLogout />,
-      className: 'mt-auto text-red-300 hover:text-red-100' 
+      className: 'mt-auto text-red-300 hover:text-red-100',
+      action: handleLogout
     }
   ];
 
+  const isActive = (path) => location.pathname === path;
+
   return (
-    <div className={`bg-[#81679e] h-full flex flex-col ${isExpanded ? 'w-56' : 'w-20'} transition-all duration-300 md:absolute `}>
+    <div className={`bg-[#81679e] h-full flex flex-col ${isExpanded ? 'w-56' : 'w-20'} transition-all duration-300 md:relative`}>
       {/*extra top padding between topbar and store section */}
       <div className="pt-4"></div>
       
@@ -76,20 +82,39 @@ function SideBar({ isExpanded: propIsExpanded, toggleSidebar: propToggleSidebar,
       {/* Menu Items */}
       <div className="p-3 flex-1 flex flex-col">
         {menuItems.map((item, index) => (
-          <div
-            key={index}
-            className={`flex items-center text-white p-3 hover:bg-[#70317d] rounded-md mb-2 cursor-pointer group relative ${item.className || ''}`}
-          >
-            <div className="text-xl">{item.icon}</div>
-            {isExpanded ? (
-              <span className="ml-3">{item.title}</span>
-            ) : (
-              
-              <div className="absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-sm rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity whitespace-nowrap z-10">
-                {item.title}
-              </div>
-            )}
-          </div>
+          item.action ? (
+            <div
+              key={index}
+              className={`flex items-center text-white p-3 hover:bg-[#70317d] rounded-md mb-2 cursor-pointer group relative ${item.className || ''}`}
+              onClick={item.action}
+            >
+              <div className="text-xl">{item.icon}</div>
+              {isExpanded ? (
+                <span className="ml-3">{item.title}</span>
+              ) : (
+                <div className="absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-sm rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity whitespace-nowrap z-10">
+                  {item.title}
+                </div>
+              )}
+            </div>
+          ) : (
+            <Link
+              key={index}
+              to={item.path}
+              className={`flex items-center text-white p-3 rounded-md mb-2 cursor-pointer group relative ${item.className || ''} ${
+                isActive(item.path) ? 'bg-[#70317d]' : 'hover:bg-[#70317d]'
+              }`}
+            >
+              <div className="text-xl">{item.icon}</div>
+              {isExpanded ? (
+                <span className="ml-3">{item.title}</span>
+              ) : (
+                <div className="absolute left-full ml-2 px-2 py-1 bg-gray-800 text-white text-sm rounded opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity whitespace-nowrap z-10">
+                  {item.title}
+                </div>
+              )}
+            </Link>
+          )
         ))}
       </div>
     </div>
