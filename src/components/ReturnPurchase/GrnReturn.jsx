@@ -109,6 +109,7 @@ function GrnReturn() {
                     productList={productList}
                     onQuantityChange={handleQuantityChange}
                 />
+
                 <div className="w-full my-4">
                     <lable className="block m-2">Remarks:</lable>
                     <textarea
