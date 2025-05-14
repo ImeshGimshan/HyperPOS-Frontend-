@@ -58,7 +58,7 @@ const CartTable = ({ cartItems, onRemove, onQuantityChange }) => {
                   </td>
                   <td className="px-4 py-2">
                     <button
-                      onClick={() => onRemove(item.id)}
+                      onClick={() => onRemove(item.productId)}
                       className="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700"
                     >
                       Remove
