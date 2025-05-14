@@ -16,12 +16,12 @@ import { getCategoryById } from "../../API/APICategory";
 import { cart, updateCart, product, updatedProduct } from "./postData";
 import APILogin from "../../API/APILogin";
 
+
+
 function Test() {
 
   const btnStyle =
     "bg-amber-300 p-1 m-1 font-bold w-[30%] border-black border-2 rounded-lg pointer hover:bg-amber-400 hover:scale-105 transition-all duration-300 ease-in-out";
-
-  // Sale API calls
   const handleSubmit = async () => {
     try {
       const response = await submitSale(cart);

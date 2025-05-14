@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, UseRef, useRef } from "react";
 
 import { useNavigate } from "react-router-dom";
 
@@ -6,12 +6,18 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import APILogin from "../../API/APILogin";
 
 const Login = () => {
+  useEffect(() => {
+    usernameRef.current.focus();
+  }, []);
+
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const usernameRef = useRef();
+  const passwordRef = useRef();
 
   const validateForm = () => {
     const newErrors = {};
@@ -34,27 +40,13 @@ const Login = () => {
         navigate("/basescreen");
       } else {
         alert("Invalid credentials");
-      }      
+      }
     } catch (error) {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
       const errorMessage = error.response?.data?.message || error?.message;
       alert(errorMessage);
     }
-  };
-  const sendNavigate = (role) => {
-    setTimeout(() => {
-      
-        if ("ROLE_ADMIN" == role) {
-          navigate("/dashboard");
-        } else if ("ROLE_USER" == role) {
-          navigate("/basescreen");
-        } else {
-          alert("Invalid credentials");
-        }
-        navigate("/basescreen");
-      
-    }, 2000);
   };
 
   const handleSubmit = () => {
@@ -77,6 +69,12 @@ const Login = () => {
               placeholder="Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  passwordRef.current.focus();
+                }
+              }}
+              ref={usernameRef}
               className="w-full px-4 py-3 rounded-full bg-purple-100 placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
             {errors.username && (
@@ -86,10 +84,16 @@ const Login = () => {
 
           <div className="relative">
             <input
+              ref={passwordRef}
               type={showPassword ? "text" : "password"}
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSubmit();
+                }
+              }}
               className="w-full px-4 py-3 rounded-full bg-purple-100 placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
             <span
