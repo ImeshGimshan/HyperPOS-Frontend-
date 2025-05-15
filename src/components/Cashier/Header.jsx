@@ -20,9 +20,8 @@ const Header = ({invoice,customers,setCustomer}) => {
   };
 
   return (
-    <div className="flex justify-between items-center py-2">
-      <h1 className="text-2xl font-bold">HYPER POS</h1>
-      <div className="flex gap-2 items-center md:flex-row flex-col">
+    <div className="flex justify-between items-center py-2 h-full">
+      <div className="flex gap-2 items-center md:flex-row flex-row ">
         <label>Invoice ID:</label>
         <input
           type="text"
