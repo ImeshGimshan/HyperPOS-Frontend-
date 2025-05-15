@@ -5,7 +5,7 @@ import { Eye, SlidersHorizontal } from "lucide-react";
 
 import { getProductData } from "../data/productData";
 
-import FetchLoader from "../../ui/FetchLoader";
+// import FetchLoader from "../../ui/FetchLoader";
 import  { billUrl} from "../../../API/APILinks"
 
 // Function : ( ViewModal )

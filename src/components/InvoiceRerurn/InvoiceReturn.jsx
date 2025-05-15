@@ -128,7 +128,7 @@ function InvoiceReturn() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-4 w-full cashier-app">
+    <div className="h-[calc(100vh-3.5rem)] bg-gray-900 text-white p-4 w-full cashier-app">
       <div className="max-w-screen-xl mx-auto cashier-container">
         
         <Header invoice={invoiceData?.invoice} selectInvoice={selectInvoice} />

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { getProductStock } from "../../API/APIProducts";
 
-const ProductSearch = ({ onAdd, grn,setProductList }) => {
+const ProductSearch = ({ onAdd, grn, setProductList }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [barcode, setBarcode] = useState("");
   const [selectedProductId, setSelectedProductId] = useState("");
@@ -80,7 +80,7 @@ const ProductSearch = ({ onAdd, grn,setProductList }) => {
           placeholder="Search Item by Name..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="border p-2 rounded w-full"
+          className="border p-1 rounded w-full"
         />
 
         <input
@@ -88,7 +88,7 @@ const ProductSearch = ({ onAdd, grn,setProductList }) => {
           placeholder="Scan or Enter Barcode..."
           value={barcode}
           onChange={(e) => setBarcode(e.target.value)}
-          className="border p-2 rounded w-full "
+          className="border p-1 rounded w-full "
         />
 
         {suggestions.length > 0 && searchTerm && (
@@ -112,7 +112,7 @@ const ProductSearch = ({ onAdd, grn,setProductList }) => {
         )}
 
         <div className="product-info mt-2 flex flex-col md:flex-row justify-between mt-10">
-          <div className="flex flex-row justify-between w-full min-h-12">
+          <div className="flex flex-row justify-between w-full">
             <p>Unit: {unit}</p>
             <p>Cost: Rs. {unitCost?.toFixed(2)}</p>
             <p>Discount: {discount}%</p>
@@ -120,49 +120,67 @@ const ProductSearch = ({ onAdd, grn,setProductList }) => {
           </div>
         </div>
 
-        <div className="add-controls mt-4 flex gap-2 items-center w-full">
-          <select
-            value={selectedProductId}
-            onChange={(e) => {setSelectedProductId(e.target.value); setUnitCost(products.find(p => p.id === parseInt(e.target.value))?.cost || 0);}}
-            className="border p-2 rounded w-full"
-          >
-            <option value="">Select Item</option>
-            {products.map((product) => (
-              <option key={product?.id} value={product?.id}>
-                {product?.name} |  ( {product?.stock} )
-              </option>
-            ))}
-          </select>
+        <div className="add-controls mt-4 flex gap-2 items-center w-full flex-col">
+          <div className="flex items-center gap-2 w-full">
+            <select
+              value={selectedProductId}
+              onChange={(e) => {
+                setSelectedProductId(e.target.value);
+                setUnitCost(
+                  products.find((p) => p.id === parseInt(e.target.value))
+                    ?.cost || 0
+                );
+              }}
+              className="border p-1 rounded w-full"
+            >
+              <option value="">Select Item</option>
+              {products.map((product) => (
+                <option key={product?.id} value={product?.id}>
+                  {product?.name} | ( {product?.stock} )
+                </option>
+              ))}
+            </select>
+            <div className="gap-2 flex items-center">
+              Qty
+              <input
+                type="number"
+                min="1"
+                value={quantity}
+                onChange={(e) => setQuantity(parseInt(e.target.value))}
+                className="border p-2 w-20 rounded"
+              />
+            </div>
+          </div>
+          <div className="flex flex-row justify-between w-full">
+            <div className="gap-2 flex items-center">
+              Cost Rs.
+              <input
+                type="number"
+                min="1"
+                value={unitCost}
+                onChange={(e) => setUnitCost(parseInt(e.target.value))}
+                className="border p-2 w-20 rounded"
+              />
+            </div>
+            <div className="gap-2 flex items-center">
+              <input
+                type="number"
+                min="0"
+                max="100"
+                value={discount}
+                onChange={(e) => setDiscount(parseInt(e.target.value))}
+                className="border p-2 w-20 rounded"
+              />{" "}
+              %
+            </div>
 
-          <input
-            type="number"
-            min="1"
-            value={quantity}
-            onChange={(e) => setQuantity(parseInt(e.target.value))}
-            className="border p-2 w-20 rounded"
-          />Rs.
-          <input
-            type="number"
-            min="1"
-            value={unitCost}
-            onChange={(e) => setUnitCost(parseInt(e.target.value))}
-            className="border p-2 w-20 rounded"
-          />
-          <input
-            type="number"
-            min="0"
-            max="100"
-            value={discount}
-            onChange={(e) => setDiscount(parseInt(e.target.value))}
-            className="border p-2 w-20 rounded"
-          />%
-
-          <button
-            className="bg-blue-600 text-white px-3 py-2 rounded"
-            onClick={handleAdd}
-          >
-            Add
-          </button>
+            <button
+              className="bg-blue-600 text-white px-3 py-2 rounded"
+              onClick={handleAdd}
+            >
+              Add
+            </button>
+          </div>
         </div>
       </div>
     </div>

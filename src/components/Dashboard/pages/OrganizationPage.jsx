@@ -1,7 +1,7 @@
   import { useState, useEffect } from "react";
   import { Eye, SlidersHorizontal, Edit, Save, X } from "lucide-react";
   import { getOrgData , updateOrgData } from "../data/orgData";
-  import FetchLoader from "../../ui/FetchLoader";
+  // import FetchLoader from "../../ui/FetchLoader";
 
   // Function: (ViewEditModal)
   // Passing: (organization - The data props, onClose - To close the modal, onUpdate - To update the organization data)
