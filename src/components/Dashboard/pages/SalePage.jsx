@@ -5,7 +5,7 @@ import { useState , useEffect } from "react";
 import { Eye , SlidersHorizontal } from "lucide-react";
 
 import { getSaleData } from "../data/salesData";
-import FetchLoader from "../../ui/FetchLoader";
+import FetchLoader from './FetchLoader';
 
 // Function : ( ViewModal )
 // Passing : ( sale - The data props. , onClose - To close the filter modal. )
