@@ -5,7 +5,8 @@ import { Eye, SlidersHorizontal } from "lucide-react";
 
 import { getUserData } from "../data/userData";
 
-// import FetchLoader from "../../ui/FetchLoader";
+import FetchLoader from './FetchLoader';
+
 import { setActive, setRole as setRoleMethod } from "../../../API/APIUser";
 
 // Function : ( ViewModal )

@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import { Eye, SlidersHorizontal } from "lucide-react";
 
 import { getProductData } from "../data/productData";
+import FetchLoader from './FetchLoader';
 
-// import FetchLoader from "../../ui/FetchLoader";
 import  { billUrl} from "../../../API/APILinks"
 
 // Function : ( ViewModal )
