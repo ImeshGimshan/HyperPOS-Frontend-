@@ -6,7 +6,7 @@ import { Eye , SlidersHorizontal } from "lucide-react";
 
 import { getCustomerData } from "../data/customerData";
 
-import FetchLoader from "../../ui/FetchLoader";
+// import FetchLoader from "../../ui/FetchLoader";
 
 // Function : ( ViewModal )
 // Passing : ( customer - The data props. , onClose - To close the filter modal. )
