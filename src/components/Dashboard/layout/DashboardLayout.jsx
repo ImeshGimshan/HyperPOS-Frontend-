@@ -4,8 +4,7 @@ import { Outlet } from "react-router-dom";
 
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
-import Loader from "../../ui/Loader";
-import { useNavigate } from "react-router-dom";
+import Loader from "../../../components/ui/Loader";
 // Function : ( DashboardLayout )
 function DashboardLayout() {
   const [loading, setLoading] = useState(true);
@@ -74,5 +73,6 @@ function DashboardLayout() {
     </div>
   );
 }
+
 
 export default DashboardLayout;

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import {
   getSuppliers,
-  getSupplierById,
   saveSupplier,
   updateSupplier,
 } from "../../API/APISupplier";
