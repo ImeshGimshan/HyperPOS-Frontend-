@@ -202,17 +202,17 @@ const AddProduct = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#2a0036] to-[#000828] px-4">
+    <div className=" flex items-center justify-center px-4">
       <form
         onSubmit={handleSubmit}
-        className="bg-[#1c1233] text-white p-8 rounded-3xl w-full max-w-xl shadow-lg"
+        className="bg-[#1c1233] text-white p-4 rounded-3xl w-full max-w-xl shadow-lg"
       >
-        <h2 className="text-2xl font-semibold text-center mb-6 border-b border-gray-600 pb-2">
+        <h2 className="text-2xl font-semibold text-center mb-2 border-b border-gray-600 pb-2">
           Add / Update Product
         </h2>
 
         {/* products */}
-        <div className="mb-4">
+        <div className="mb-2">
           <label className="block mb-1 text-sm">
             Select Product for update
           </label>
@@ -235,7 +235,7 @@ const AddProduct = () => {
           </select>
         </div>
         {/* Barcode */}
-        <div className="mb-4">
+        <div className="mb-2">
           <label className="block mb-1 text-sm">Barcode</label>
           <div className="relative">
             <input
@@ -270,9 +270,10 @@ const AddProduct = () => {
             <p className="text-red-400 text-sm mt-1">{errors.barcode}</p>
           )}
         </div>
+        <div className="flex items-center justify-between gap-2">
 
         {/* Product Name */}
-        <div className="mb-4">
+        <div className="mb-2 w-full">
           <label className="block mb-1 text-sm">Product Name</label>
           <input
             type="text"
@@ -289,7 +290,7 @@ const AddProduct = () => {
         </div>
 
         {/* unit */}
-        <div className="mb-4">
+        <div className="mb-2 w-3/6">
           <label className="block mb-1 text-sm">unit</label>
           <select
             name="unit"
@@ -308,10 +309,10 @@ const AddProduct = () => {
           {errors.unit && (
             <p className="text-red-400 text-sm mt-1">{errors.unit}</p>
           )}
-        </div>
-        <div className="flex gap-1 justify-between">
+        </div></div>
+        <div className="flex gap-2 justify-between">
           {/* Price */}
-          <div className="mb-4">
+          <div className="mb-2 w-full">
             <label className="block mb-1 text-sm">Price</label>
             <input
               type="number"
@@ -328,7 +329,7 @@ const AddProduct = () => {
           </div>
 
           {/* discount */}
-          <div className="mb-4">
+          <div className="mb-2 w-3/6">
             <label className="block mb-1 text-sm">Discount</label>
             <input
               type="number"
@@ -346,7 +347,7 @@ const AddProduct = () => {
         </div>
 
         {/* CategoryId */}
-        <div className="mb-4">
+        <div className="mb-2">
           <label className="block mb-1 text-sm">Category</label>
           <select
             name="categoryId"
@@ -368,7 +369,7 @@ const AddProduct = () => {
         </div>
 
         {/* Description */}
-        <div className="mb-4">
+        <div className="mb-2">
           <label className="block mb-1 text-sm">Description</label>
           <textarea
             name="description"
@@ -385,7 +386,7 @@ const AddProduct = () => {
         </div>
         <div className="flex gap-2 justify-evenly">
           {/* Add Photo */}
-          <div className="mb-6">
+          <div className="mb-4">
             <label
               htmlFor="photo-upload"
               className="flex items-center justify-center gap-3 px-4 py-3 bg-[#3a2a55] text-gray-300 rounded-lg cursor-pointer hover:bg-[#4b3b6e] transition"

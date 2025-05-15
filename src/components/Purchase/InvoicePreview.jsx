@@ -11,11 +11,11 @@ const InvoicePreview = ({ invoice, productList, close }) => {
 
   useEffect(() => {
     const sumTotal = invoice.items.reduce(
-      (sum, item) => sum + item?.unitPrice * item?.quantity,
+      (sum, item) => sum + item?.unitCost * item?.quantity,
       0
     );
     setSubtotal(sumTotal);
-    setTotal(invoice?.invoice?.total);
+    setTotal(invoice?.grn?.total);
   }, [invoice]);
   const handlePrint = () => {
     const printContents = printRef.current.innerHTML;
@@ -50,29 +50,26 @@ const InvoicePreview = ({ invoice, productList, close }) => {
         >
           <FaWindowClose className="text-red-500 scale-200" />
         </button>
-        <h2 className="cashier-invoice-title w-full">INVOICE</h2>
+        <h2 className="cashier-invoice-title w-full">GRN</h2>
 
         <div className="cashier-invoice-meta">
           <div className="flex flex-row justify-between">
             <p>
               <strong>Date:</strong>{" "}
               {new Date(
-                invoice.invoice.createdAt || invoice?.invoice?.updatedAt
+                invoice?.grn?.createdAt || invoice?.grn?.updatedAt
               ).toLocaleDateString()} {new Date(
-                invoice.invoice.createdAt || invoice?.invoice?.updatedAt
+                invoice?.grn?.createdAt || invoice?.grn?.updatedAt
               ).toLocaleTimeString()}
             </p>
-            <p>
-              <strong>Payment Method</strong>{" "}
-              {invoice?.invoice?.paymentMethod}
-            </p>
+         
           </div>
           <div className="flex flex-row justify-between">
             <p>
-              <strong>Invoice No:</strong> {invoice?.invoice?.id}
+              <strong>Invoice No:</strong> {invoice?.grn?.id}
             </p>
             <p>
-              <strong>Customer:</strong> {invoice?.invoice?.customerId}
+              <strong>Supplier:</strong> {invoice?.grn?.supplierId}
             </p>
           </div>
         </div>
@@ -83,7 +80,7 @@ const InvoicePreview = ({ invoice, productList, close }) => {
                 <th>Item</th>
                 <th>Qty</th>
                 <th>Unit</th>
-                <th>Price</th>
+                <th>Cost</th>
                 <th>Discount</th>
                 <th>Total</th>
               </tr>
@@ -102,7 +99,7 @@ const InvoicePreview = ({ invoice, productList, close }) => {
                     .map((product) => (
                       <td key={product.id}>{product.unit}</td>
                     ))}
-                  <td>Rs.{item?.unitPrice.toFixed(2)}</td>
+                  <td>Rs.{item?.unitCost.toFixed(2)}</td>
                   <td>{item?.discount}%</td>
                   <td>Rs.{item?.amount.toFixed(2)}</td>
                 </tr>
@@ -123,16 +120,11 @@ const InvoicePreview = ({ invoice, productList, close }) => {
           </p>
         </div>
 
-        <div className="">
-          <QRCodeSVG
-            value={`${billUrl}/bill.html?invoice=${invoice?.invoice?.id}&customer=${invoice?.invoice?.customerId}`}
-          />
-        </div>
       </div>
 
       <div style={{ textAlign: "center", marginTop: "16px" }}>
         <button className="cashier-print-btn" onClick={handlePrint}>
-          Print Invoice
+          Print GRN
         </button>
       </div>
     </div>

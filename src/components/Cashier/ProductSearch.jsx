@@ -9,6 +9,8 @@ const ProductSearch = ({ onAdd, invoice,setProductList }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [products, setProducts] = useState([]);
 
+
+  //length
   useEffect(() => {
     getProducts();
   }, []);
@@ -17,7 +19,6 @@ const ProductSearch = ({ onAdd, invoice,setProductList }) => {
       const response = await getProductStock();
       setProducts(response);
       setProductList(response);
-      console.log(response);
     } catch (error) {
       console.error("Error fetching product stock:", error);
     }
@@ -50,7 +51,6 @@ const ProductSearch = ({ onAdd, invoice,setProductList }) => {
   const amount = (price * quantity * (1 - discount / 100)).toFixed(2);
 
   const handleAdd = () => {
-    console.log("Selected Product:", selectedProduct);
 
     if (selectedProduct && quantity > 0) {
       onAdd({
@@ -74,7 +74,8 @@ const ProductSearch = ({ onAdd, invoice,setProductList }) => {
 
   return (
     <div className="w-full mb-6">
-      <div className="search-section space-y-2">
+      <div className="search-section space-y-2 ">
+        <div className="flex flex-col md:flex-row justify-between gap-2">
         <input
           type="text"
           placeholder="Search Item by Name..."
@@ -89,11 +90,11 @@ const ProductSearch = ({ onAdd, invoice,setProductList }) => {
           value={barcode}
           onChange={(e) => setBarcode(e.target.value)}
           className="border p-2 rounded w-full "
-        />
+        /></div>
 
-        {suggestions.length > 0 && searchTerm && (
+        {suggestions?.length > 0 && searchTerm && (
           <ul className="suggestions-list border border-gray-300 bg-purple-900 max-h-40 overflow-y-auto rounded shadow-md mt-1 absolute">
-            {suggestions.map((product) => (
+            {suggestions?.map((product) => (
               <li
                 key={product?.id}
                 className="cursor-pointer hover:bg-purple-500 px-2 py-1 flex justify-between"
@@ -126,7 +127,7 @@ const ProductSearch = ({ onAdd, invoice,setProductList }) => {
             className="border p-2 rounded w-full"
           >
             <option value="">Select Item</option>
-            {products.map((product) => (
+            {products?.map((product) => (
               <option key={product?.id} value={product?.id}>
                 {product?.name} |  ( {product?.stock} )
               </option>

@@ -24,7 +24,7 @@ const CashierScreen = () => {
 
   useEffect(() => {
     if (!invoice?.id) {
-      getNewInvoice();
+      alert("create new invoice");
     }
     if (!customerList?.length) {
       getCustomersList();
@@ -147,7 +147,7 @@ const CashierScreen = () => {
   };
 
   return (
-    <div className="max-h-screen bg-gray-900 text-white w-full cashier-app">
+    <div className="h-[calc(100vh-3.5rem)] bg-gray-900 text-white w-full cashier-app">
       <div className="max-w-screen-xl mx-auto cashier-container">
         <Header
           customers={customerList}
@@ -190,6 +190,7 @@ const CashierScreen = () => {
         <Controls
           onNewInvoice={handleNewInvoice}
           onSubmitInvoice={handleSubmitInvoice}
+          invoice={invoice}
         />
       </div>
     </div>

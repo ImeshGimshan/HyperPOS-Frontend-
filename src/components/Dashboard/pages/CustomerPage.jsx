@@ -8,6 +8,8 @@ import { getCustomerData } from "../data/customerData";
 
 import FetchLoader from './FetchLoader';
 
+
+
 // Function : ( ViewModal )
 // Passing : ( customer - The data props. , onClose - To close the filter modal. )
 function ViewModal ( { customer , onClose } ) {
