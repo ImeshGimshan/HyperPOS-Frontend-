@@ -23,7 +23,7 @@ const Purchase = () => {
 
   useEffect(() => {
     if (!grn?.id) {
-      getNewGrn();
+      alert("create new GRN");
     }
     if (!supplierList?.length) {
       getSupplierList();
@@ -111,27 +111,27 @@ const Purchase = () => {
       }
       try {
         const response = await savePurchase(PurchaseData);
-        handlePrintInvoice(response);
+        handlePrintGRN(response);
         return response;
       } catch (error) {
         const errorMessage = error.response?.data?.message || error?.message;
         alert(errorMessage);
       }
     };
-    const response = submitPurchaseData();
+     submitPurchaseData();
   };
-  const handlePrintInvoice = (PurchaseData) => {
-    setPrintInvoice(PurchaseData);
+  const handlePrintGRN = (PurchaseData) => {
+    setPrintGrn(PurchaseData);
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-4 w-full cashier-app">
-      <div className="max-w-screen-xl mx-auto cashier-container">
+    <div className="h-[calc(100vh-7.5rem)] bg-gray-900 text-white w-full cashier-app shadow-2xl shadow-indigo-950" >
+      <div className="max-w-screen-xl cashier-container">
         <Header suppliers={supplierList} grn={grn} setSupplier={setSupplier}/>
 
         {printGrn && 
         (<div className="w-full flex justify-center ">
-          <InvoicePreview grn={printGrn} productList={ProductList} setPrintGrn={setPrintGrn} close={handleNewGrn}/>
+          <InvoicePreview invoice={printGrn} productList={ProductList} setPrintGrn={setPrintGrn} close={handleNewGrn}/>
           </div>)}
 
         <ProductSearch 
@@ -144,6 +144,7 @@ const Purchase = () => {
           onRemove={handleRemoveFromCart}
           onQuantityChange={handleQuantityChange}
         />
+        
         <SummaryFooter
           cartItems={cartItems}
           cash={cash}
@@ -154,6 +155,7 @@ const Purchase = () => {
         <Controls
           onNewGrn={handleNewGrn}
           onSubmitGrn={handleSubmitGrn}
+          grn={grn}
         />
       </div>
     </div>

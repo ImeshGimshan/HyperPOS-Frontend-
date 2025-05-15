@@ -5,6 +5,8 @@ import { IoCalculator, IoPersonAdd } from "react-icons/io5";
 import { FaExchangeAlt } from "react-icons/fa";
 import { HiChevronLeft, HiChevronRight, HiOutlineLogout } from "react-icons/hi";
 import { APILogout } from "../../API/APILogin";
+import { BsArrowLeftSquareFill } from "react-icons/bs";
+import { BsArrowRightSquareFill } from "react-icons/bs";
 
 function SideBar({ isExpanded: propIsExpanded, toggleSidebar: propToggleSidebar, org}) {
   const location = useLocation();
@@ -53,7 +55,7 @@ function SideBar({ isExpanded: propIsExpanded, toggleSidebar: propToggleSidebar,
   const isActive = (path) => location.pathname === path;
 
   return (
-    <div className={`bg-[#81679e] h-full flex flex-col ${isExpanded ? 'w-56' : 'w-20'} transition-all duration-300 md:relative`}>
+    <div className={`bg-[#81679e] h-[calc(100vh-3.5rem)] flex flex-col ${isExpanded ? 'w-56' : 'w-20'} transition-all duration-300 md:relative`}>
       {/*extra top padding between topbar and store section */}
       <div className="pt-4"></div>
       
@@ -70,12 +72,12 @@ function SideBar({ isExpanded: propIsExpanded, toggleSidebar: propToggleSidebar,
       </div>
       
       {/* Toggle Button */}
-      <div className="p-3 flex justify-end">
+      <div className="p-3 flex justify-end items-center">
         <button
-          className="text-white p-1 rounded hover:bg-[#70317d]"
+          className="text-white rounded hover:bg-[#70317d] items-center flex"
           onClick={toggleSidebar}
         >
-          {isExpanded ? <HiChevronLeft /> : <HiChevronRight />}
+          {isExpanded ? <BsArrowLeftSquareFill size={24}/> : <BsArrowRightSquareFill size={24}/>}
         </button>
       </div>
       
@@ -85,10 +87,10 @@ function SideBar({ isExpanded: propIsExpanded, toggleSidebar: propToggleSidebar,
           item.action ? (
             <div
               key={index}
-              className={`flex items-center text-white p-3 hover:bg-[#70317d] rounded-md mb-2 cursor-pointer group relative ${item.className || ''}`}
+              className={`flex items-center text-white border-2   p-3 hover:bg-[#70317d] rounded-md mb-2 cursor-pointer group relative ${item.className || ''}`}
               onClick={item.action}
             >
-              <div className="text-xl">{item.icon}</div>
+              <div className="text-xl border-2 ">{item.icon}</div>
               {isExpanded ? (
                 <span className="ml-3">{item.title}</span>
               ) : (

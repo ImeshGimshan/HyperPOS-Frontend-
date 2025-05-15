@@ -42,7 +42,7 @@ const InvoicePreview = ({ invoice, productList, close }) => {
   };
 
   return (
-    <div className="cashier-invoice-panel absolute">
+    <div className="cashier-invoice-panel">
       <div ref={printRef}>
         <button
           onClick={() => close()}

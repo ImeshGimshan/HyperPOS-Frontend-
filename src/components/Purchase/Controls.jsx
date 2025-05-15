@@ -1,7 +1,7 @@
-const Controls = ({ onNewGrn,onSubmitGrn }) => (
+const Controls = ({ onNewGrn,onSubmitGrn,grn }) => (
   <div className="flex justify-between items-center mt-4">
     <button
-      className="bg-blue-600 px-4 py-2 rounded"
+      className={`bg-blue-600 px-4 py-2 rounded ${grn?.id ? "" : " animate-pulse "}`}
       onClick={onNewGrn}
     >
       New GRN

@@ -7,7 +7,7 @@ const CartTable = ({ cartItems, onRemove, onQuantityChange }) => {
   };
 
   return (
-    <div className="w-full my-6 overflow-x-auto rounded-lg border border-purple-300 shadow-md">
+    <div className="w-full my-6 overflow-x-auto rounded-lg border border-purple-300 bg-gray-50 shadow-md max-h-50 min-h-40 overflow-scroll">
       <table className="min-w-full text-sm text-left text-gray-800">
         <thead className="bg-purple-700 text-white">
           <tr>

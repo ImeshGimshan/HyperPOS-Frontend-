@@ -30,13 +30,13 @@ const BaseScreen = () => {
   };
 
   return (
-    <div className="w-screen h-screen flex flex-col bg-gray-50">
+    <div className="w-screen h-screen flex flex-col bg-gray-50 fixed top-0">
       <TopBar 
         toggleSidebar={toggleSidebar} 
         toggleSliderOpen={toggleSliderOpen}
         org={org}
       />
-      <div className="flex w-full h-[calc(100vh-3.5rem)]">
+      <div className="flex w-full h-[calc(100vh-3.5rem)] bg-gray-900 fixed top-[3.5rem]">
         {isSliderOpen && (
           <SideBar 
             isExpanded={isSidebarExpanded} 

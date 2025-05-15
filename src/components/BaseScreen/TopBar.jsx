@@ -53,7 +53,7 @@ function TopBar({ toggleSidebar, toggleSliderOpen }) {
   }, [showProfileMenu]);
 
   return (
-    <div className="w-full bg-[#70317d] py-1 px-4 shadow-md h-14">
+    <div className="w-full bg-[#70317d] py-1 px-4 shadow-md h-14 fixed top-0 left-0 z-50">
       <div className="flex items-center justify-between h-full">
         {/* Logo, Brand Name,Menu Toggle */}
         <div className="flex items-center space-x-3">

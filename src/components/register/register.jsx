@@ -89,7 +89,7 @@ const SupplierRegistration = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="  py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md mx-auto bg-[#1C0E41] rounded-xl shadow-2xl overflow-hidden">
         <div className="p-8">
           <div className="text-center mb-8">

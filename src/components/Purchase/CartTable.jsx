@@ -8,7 +8,7 @@ const CartTable = ({ cartItems, onRemove, onQuantityChange }) => {
 
   return (
     <div className="w-full my-6 overflow-x-auto rounded-lg border border-purple-300 shadow-md">
-      <table className="min-w-full text-sm text-left text-gray-800">
+      <table className="min-w-full text-sm text-left text-gray-800 min-h-[15vh] max-h-[20vh]">
         <thead className="bg-purple-700 text-white">
           <tr>
             <th className="px-4 py-2 text-center">#</th>

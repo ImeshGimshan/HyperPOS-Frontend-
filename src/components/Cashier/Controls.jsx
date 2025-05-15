@@ -1,7 +1,7 @@
-const Controls = ({ onNewInvoice,onSubmitInvoice }) => (
+const Controls = ({ onNewInvoice,onSubmitInvoice,invoice }) => (
   <div className="flex justify-between items-center mt-4">
     <button
-      className="bg-blue-600 px-4 py-2 rounded"
+      className={`bg-blue-600 px-4 cursor-pointer py-2 rounded ${invoice?.id ? "" : " animate-pulse shadow-blue-400 shadow-lg "}`}
       onClick={onNewInvoice}
     >
       New Invoice
