@@ -50,7 +50,7 @@ const CashierScreen = () => {
     } catch (error) {
       console.error("Error fetching customers:", error);
     }
-  }
+  };
   const handleAddToCart = (product) => {
     if (invoice == null) {
       alert("Please create an invoice first!");
@@ -68,7 +68,7 @@ const CashierScreen = () => {
   };
 
   const handleRemoveFromCart = (id) => {
-    setCartItems((prev) => prev.filter((item) => item?.id !== id));
+    setCartItems((prev) => prev.filter((item) => item?.productId !== id));
   };
 
   const handleQuantityChange = (id, quantity) => {
@@ -125,7 +125,7 @@ const CashierScreen = () => {
         ),
     };
     const submitSaleData = async () => {
-      if(cash < salesData.invoice.total) {
+      if (cash < salesData.invoice.total) {
         alert("Cash is not enough to pay the invoice.");
         return;
       }
@@ -147,19 +147,29 @@ const CashierScreen = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-4 w-full cashier-app">
+    <div className="max-h-screen bg-gray-900 text-white w-full cashier-app">
       <div className="max-w-screen-xl mx-auto cashier-container">
-        <Header customers={customerList} invoice={invoice} setCustomer={setCustomer}/>
+        <Header
+          customers={customerList}
+          invoice={invoice}
+          setCustomer={setCustomer}
+        />
 
-        {printInvoice && 
-        (<div className="w-full flex justify-center ">
-          <InvoicePreview invoice={printInvoice} productList={ProductList} setPrintInvoice={setPrintInvoice} close={handleNewInvoice}/>
-          </div>)}
+        {printInvoice && (
+          <div className="w-full flex justify-center ">
+            <InvoicePreview
+              invoice={printInvoice}
+              productList={ProductList}
+              setPrintInvoice={setPrintInvoice}
+              close={handleNewInvoice}
+            />
+          </div>
+        )}
 
-        <ProductSearch 
-        onAdd={handleAddToCart} 
-        invoice={invoice} 
-        setProductList={setProductList} 
+        <ProductSearch
+          onAdd={handleAddToCart}
+          invoice={invoice}
+          setProductList={setProductList}
         />
         <CartTable
           cartItems={cartItems}

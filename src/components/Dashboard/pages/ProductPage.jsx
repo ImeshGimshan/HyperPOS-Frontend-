@@ -6,6 +6,7 @@ import { Eye, SlidersHorizontal } from "lucide-react";
 import { getProductData } from "../data/productData";
 
 import FetchLoader from "../../ui/FetchLoader";
+import  { billUrl} from "../../../API/APILinks"
 
 // Function : ( ViewModal )
 // Passing : ( product - The data props. , onClose - To close the filter modal. )
@@ -106,7 +107,7 @@ function ViewModal ( { product, onClose } ) {
                   <h3 className = "text-md font-semibold text-green-800 mb-2 sm:mb-3 text-center">Product Image</h3>
                   <div className = "flex justify-center">
                     <img 
-                      src = { product.image } 
+                      src = {`${billUrl}/${product.image} `}
                       alt = { product.name } 
                       className = "max-h-48 rounded-lg shadow-sm" 
                     />
