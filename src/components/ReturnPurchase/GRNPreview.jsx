@@ -58,13 +58,13 @@ const GRNPreview = ({ grn, productList, close }) => {
                   (p) => p.id === item.productId
                 );
                 const itemTotal =
-                  item.unitPrice * item.quantity * (1 - item.discount / 100);
+                  item.unitCost * item.quantity * (1 - item.discount / 100);
 
                 return (
                   <tr key={index}>
                     <td className="py-2">{product?.name || "Unknown Product"}</td>
                     <td className="py-2">{product?.unit || "N/A"}</td>
-                    <td className="py-2">Rs. {Number(item.unitPrice).toFixed(2)}</td>
+                    <td className="py-2">Rs. {Number(item.unitCost).toFixed(2)}</td>
                     <td className="py-2">{item.quantity}</td>
                     <td className="py-2">{item.discount}%</td>
                     <td className="py-2 text-right">
@@ -86,7 +86,7 @@ const GRNPreview = ({ grn, productList, close }) => {
                 ?.reduce(
                   (sum, item) =>
                     sum +
-                    item.unitPrice * item.quantity * (1 - item.discount / 100),
+                    item.unitCost * item.quantity * (1 - item.discount / 100),
                   0
                 )
                 .toFixed(2)}

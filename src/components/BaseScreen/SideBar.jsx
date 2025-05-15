@@ -55,12 +55,12 @@ function SideBar({ isExpanded: propIsExpanded, toggleSidebar: propToggleSidebar,
   const isActive = (path) => location.pathname === path;
 
   return (
-    <div className={`bg-[#81679e] h-[calc(100vh-3.5rem)] flex flex-col ${isExpanded ? 'w-56' : 'w-20'} transition-all duration-300 md:relative`}>
+    <div className={`bg-gradient-to-b from-violet-950 to-purple-800 h-full flex flex-col ${isExpanded ? 'w-56' : 'w-20'} transition-all duration-300 md:relative`}>
       {/*extra top padding between topbar and store section */}
       <div className="pt-4"></div>
       
       {/* Store Logo and Name*/}
-      <div className={`px-4 py-5 border-b border-[#70317d] ${isExpanded ? 'flex items-center' : 'flex flex-col items-center'}`}>
+      <div className={`px-4 py-5 border-b border-[#f5c2ff] ${isExpanded ? 'flex items-center' : 'flex flex-col items-center'}`}>
         <div className="h-10 w-10 flex-shrink-0 bg-white rounded-full flex items-center justify-center">
           <MdStorefront className="text-[#70317d] text-2xl" />
         </div>

@@ -5,6 +5,7 @@ import { Eye, SlidersHorizontal } from "lucide-react";
 
 import { getProductData } from "../data/productData";
 import FetchLoader from './FetchLoader';
+import { getCategories } from "../../../API/APICategory";
 
 import  { billUrl} from "../../../API/APILinks"
 
@@ -341,6 +342,7 @@ function ProductPage ( ) {
   const [ error, setError ] = useState ( null );
   // Add isFetching state
   const [ isFetching, setIsFetching ] = useState ( true );
+  const [ categories, setCategories ] = useState ( [] );
 
   // Fetch product data from API when component mounts
   useEffect ( ( ) => {
@@ -352,6 +354,7 @@ function ProductPage ( ) {
         setLoading ( true );
         setIsFetching ( true ); // Set isFetching to true
         const data = await getProductData ( );
+        const categoryData = await getCategories ( );
 
         if ( data ) {
 
@@ -363,6 +366,14 @@ function ProductPage ( ) {
 
         }
 
+        if ( categoryData ) {
+          setCategories ( categoryData );
+
+        }
+        else {
+          setError ( "No data returned from API" );
+
+        }
       } catch ( err ) {
 
         setError ( "Failed to fetch product data" );
@@ -385,10 +396,11 @@ function ProductPage ( ) {
   }, [] );
 
   // Get unique categories and units from product data
-  const categories = Array.isArray(productData) 
-    ? [ ...new Set ( productData.map ( product => product.categoryId ) ) ]
-        .map ( id => ({ id, name: `Category ${id}` }) ) 
-    : [];
+  // const categories = Array.isArray(productData) 
+  //   ? [ ...new Set ( productData.map ( product => product.categoryId ) ) ]
+  //       .map ( id => ({ id, name: `Category ${id}` }) ) 
+    // : [];
+    
 
   const units = Array.isArray(productData) 
     ? [ ...new Set ( productData.map ( product => product.unit ) ) ] 
