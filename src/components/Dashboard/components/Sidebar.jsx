@@ -16,7 +16,7 @@ import {
   ChevronRight
 } from "lucide-react";
 
-import ParticleBackground from "../../ui/ParticleBackground";
+import ParticleBackground from "../../UI/ParticleBackground";
 
 function Sidebar ( { onCloseMobile , isMobileOpen } ) {
 
