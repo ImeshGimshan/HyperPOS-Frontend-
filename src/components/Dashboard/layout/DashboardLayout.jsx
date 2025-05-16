@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
-// import Loader from "../../../components/ui/Loader";
+import Loader from "../../../components/ui/Loader";
 // Function : ( DashboardLayout )
 function DashboardLayout() {
   const [loading, setLoading] = useState(true);

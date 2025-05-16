@@ -22,6 +22,7 @@ import SalePage from "./components/Dashboard/pages/SalePage.jsx";
 import Test from './components/Test/Test';
 import BaseScreen from './components/BaseScreen/BaseScreen';
 import PurchasePage from "./components/Dashboard/pages/PurchasePage";
+import Organization from '././components/Organization/Organization.jsx';
 
 import './index.css'
 import Customerregister from './components/customer/registercustomer.jsx';
@@ -45,6 +46,7 @@ const router = createBrowserRouter([
       { path: "forgotpassword", element: <ForgotPassword /> },
       { path: "addproduct", element: <AddProduct /> },
       { path: "cashier", element: <CashierScreen /> },
+      { path: "organization", element: <Organization /> },
       { 
         path: "basescreen", 
         element: <BaseScreen />,
