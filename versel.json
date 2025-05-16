@@ -1,5 +1,8 @@
 {
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" }
+  ],
   "redirects": [
-    { "source": "/((?!dashboard).*)", "destination": "/dashboard", "permanent": false }
+    { "source": "/404", "destination": "/", "permanent": false }
   ]
 }
