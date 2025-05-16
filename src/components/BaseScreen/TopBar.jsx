@@ -4,7 +4,9 @@ import { HiMenuAlt2 } from "react-icons/hi";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { APILogout } from "../../API/APILogin";
 
-function TopBar({ toggleSidebar, toggleSliderOpen }) {
+import GlowingLogo from "../UI/GlowingLogo";
+
+function TopBar({ toggleSliderOpen }) {
   const [currentDateTime, setCurrentDateTime] = useState(new Date());
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const user = JSON.parse(localStorage?.getItem("user")) || null;
@@ -53,7 +55,7 @@ function TopBar({ toggleSidebar, toggleSliderOpen }) {
   }, [showProfileMenu]);
 
   return (
-    <div className="w-full bg-gradient-to-r from-violet-950 to-purple-800 py-1 px-4 shadow-md h-14">
+    <div className="w-full bg-gradient-to-r from-violet-950 to-purple-800 py-1 px-4 shadow-md h-14 z-1000">
       <div className="flex items-center justify-between h-full">
         {/* Logo, Brand Name,Menu Toggle */}
         <div className="flex items-center space-x-3">
@@ -66,11 +68,14 @@ function TopBar({ toggleSidebar, toggleSliderOpen }) {
             <HiMenuAlt2 size={22} />
           </button>
 
-          <div className="h-10 w-10">
-            <img
-              src="hyprps 1.png"
-              alt="HyperPOS Logo"
-              className="h-full w-auto object-contain"
+              <div className = "relative mr-2 sm:mr-3">
+            <GlowingLogo 
+              src = "./HyperPOS.svg" 
+              alt = "HyperPOS Logo" 
+              width = { 32 } 
+              glowColor = "rgba( 192 , 38 , 211 , 0.8 )"
+              hoverGlowColor = "rgba( 244 , 114 , 182 , 0.9 )"
+              className = "logo-glow"
             />
           </div>
           <h1 className="text-white text-lg font-bold">HyperPOS</h1>

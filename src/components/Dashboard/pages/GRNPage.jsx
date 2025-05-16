@@ -50,11 +50,11 @@ function ViewModal ( { grn, onClose } ) {
 
             <h3 className = "text-md font-semibold text-purple-800 mb-2 text-center">Basic Information</h3>
 
-            <div className = "grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+            <div className = "grid grid-cols-1 sm:grid-cols-2 gap-3 text-black text-sm">
 
               <div className = "flex flex-col">
                 <span className = "font-medium text-gray-600">GRN ID</span>
-                <span className = "p-2 bg-white rounded-md">{ grn.id }</span>
+                <span className = "p-2  bg-white rounded-md">{ grn.id }</span>
               </div>
 
               <div className = "flex flex-col">
@@ -85,7 +85,7 @@ function ViewModal ( { grn, onClose } ) {
           </div>
 
           {/* Date Information */}
-          <div className = "bg-amber-50 p-3 rounded-lg">
+          <div className = "bg-amber-50 p-3 rounded-lg text-black">
 
             <h3 className = "text-md font-semibold text-amber-800 mb-2 text-center">Date Information</h3>
 
@@ -196,7 +196,7 @@ function FilterModal ( { onClose, onApply, supplierList, currentFilters } ) {
               <select
                 value = { supplierId }
                 onChange = { ( e ) => setSupplierId ( e.target.value ) }
-                className = "p-2 rounded-lg border border-gray-300 focus:outline-none"
+                className = "p-2 rounded-lg border text-black border-gray-300 focus:outline-none"
               >
                 <option value = "">All</option>
                 { supplierList.map ( ( id ) => (
@@ -222,7 +222,7 @@ function FilterModal ( { onClose, onApply, supplierList, currentFilters } ) {
               <label className = "text-gray-600 mb-1">Min Total</label>
               <input 
                 type = "number" 
-                className = "p-2 rounded-lg border border-gray-300" 
+                className = "p-2 rounded-lg border text-black border-gray-300" 
                 value = { minTotal } 
                 onChange = { ( e ) => setMinTotal ( e.target.value ) } 
               />
@@ -234,7 +234,7 @@ function FilterModal ( { onClose, onApply, supplierList, currentFilters } ) {
               <label className = "text-gray-600 mb-1">Max Total</label>
               <input 
                 type = "number" 
-                className = "p-2 rounded-lg border border-gray-300" 
+                className = "p-2 rounded-lg border text-black border-gray-300" 
                 value = { maxTotal } 
                 onChange = { ( e ) => setMaxTotal ( e.target.value ) } 
               />
@@ -256,7 +256,7 @@ function FilterModal ( { onClose, onApply, supplierList, currentFilters } ) {
               <label className = "text-gray-600 mb-1">Start Date</label>
               <input 
                 type = "date" 
-                className = "p-2 rounded-lg border border-gray-300" 
+                className = "p-2 rounded-lg border text-black border-gray-300" 
                 value = { startDate } 
                 onChange = { ( e ) => setStartDate ( e.target.value ) } 
               />
@@ -266,7 +266,7 @@ function FilterModal ( { onClose, onApply, supplierList, currentFilters } ) {
               <label className = "text-gray-600 mb-1">End Date</label>
               <input 
                 type = "date" 
-                className = "p-2 rounded-lg border border-gray-300" 
+                className = "p-2 rounded-lg border text-black border-gray-300" 
                 value = { endDate } 
                 onChange = { ( e ) => setEndDate ( e.target.value ) } 
               />
@@ -447,11 +447,11 @@ function GRNPage ( ) {
                     <th className = "p-3 whitespace-nowrap hidden lg:table-cell">Updated At</th>
                     <th className = "p-3 text-center whitespace-nowrap rounded-tr-lg">View</th>
                   </tr>
-                </thead>
+                </thead> {/*Apply*/}
                 <tbody>
                   {filteredData.length > 0 ? (
                     filteredData.map ( ( grn ) => (
-                      <tr key = { grn.id } className = "border-t hover:bg-gray-50 transition duration-200 ease-in-out">
+                      <tr key = { grn.id } className = "border-t text-black hover:bg-gray-50 transition duration-200 ease-in-out">
                         <td className = "p-3 font-medium">{ grn.id }</td>
                         <td className = "p-3">{ grn.supplierId || "—" }</td>
                         <td className = "p-3 font-semibold text-green-700">Rs { grn.total?.toLocaleString() || "—" }</td>

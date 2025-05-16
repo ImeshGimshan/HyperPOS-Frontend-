@@ -1,0 +1,809 @@
+
+/* Base. */
+.hyper-bg {
+
+  background : linear-gradient( 180deg , #0f0326 0% , #1a0a40 50% , #3b0764 100% );
+
+}
+
+.hyper-bg-horizontal {
+
+  background : linear-gradient( 90deg , #0f0326 0% , #1a0a40 50% , #3b0764 100% );
+
+}
+
+/* Particles. */
+.particles-container {
+
+  position : absolute;
+  width : 100%;
+  height : 100%;
+  top : 0;
+  left : 0;
+  overflow : hidden;
+  z-index : 0;
+
+}
+
+.particle {
+
+  position : absolute;
+  background : rgba( 255 , 255 , 255 , 0.3 );
+  border-radius : 50%;
+  animation : float 15s infinite linear;
+
+}
+
+/* Scanline. */
+.hyper-scanline {
+
+  position : absolute;
+  top : 0;
+  left : 0;
+  width : 100%;
+  height : 100%;
+  background : linear-gradient( 
+    to bottom, 
+    transparent 0%, 
+    rgba( 255 , 255 , 255 , 0.05 ) 50%, 
+    transparent 100%
+    );
+  animation : scanline 8s linear infinite;
+  pointer-events : none;
+  z-index : 2;
+
+}
+
+.hyper-scanlines {
+
+  background : linear-gradient( transparent 50% , rgba( 15 , 3 , 38 , 0.5 ) 50% );
+  background-size : 100% 4px;
+  position : absolute;
+  top : 0;
+  left : 0;
+  width : 100%;
+  height : 100%;
+  opacity : 0.3;
+  pointer-events : none;
+
+}
+
+/* Neon Lines. */
+.hyper-line {
+
+  position : absolute;
+  height : 1px;
+  width : 100%;
+  background : #f472b6;
+  box-shadow : 0 0 8px #f472b6 , 0 0 15px #f472b6;
+
+}
+
+.hyper-line-bottom {
+
+  position : absolute;
+  bottom : 0;
+  left : 0;
+  right : 0;
+  height : 1px;
+  background : linear-gradient( 90deg , #f472b6 , transparent , #f472b6 );
+  box-shadow : 0 0 8px #f472b6;
+
+}
+
+.hyper-line-accent {
+
+  width : 100%;
+  height : 2px;
+  background : linear-gradient( 90deg , #f472b6 , transparent );
+  box-shadow : 0 0 10px #f472b6;
+
+}
+
+.hyper-line-vertical {
+
+  position : absolute;
+  left : 0;
+  top : 50%;
+  transform : translateY( -50% );
+  width : 3px;
+  height : 66%;
+  background : #f472b6;
+  box-shadow : 0 0 8px #f472b6 , 0 0 15px #f472b6;
+
+}
+
+/* Buttons. */
+.hyper-button {
+
+  position : relative;
+  overflow : hidden;
+  transition : all 0.3s ease;
+  animation : pulse-border 2s infinite;
+  background : rgba( 192 , 38 , 211 , 0.2 );
+  border : 1px solid rgba( 244 , 114 , 182 , 0.5 );
+  box-shadow : 0 0 5px rgba( 244 , 114 , 182 , 0.8 ) , 0 0 10px rgba( 192 , 38 , 211 , 0.5 );
+
+}
+
+.hyper-button:hover {
+
+  background : rgba( 192 , 38 , 211 , 0.3 );
+
+}
+
+.hyper-button::before {
+
+  content : '';
+  position : absolute;
+  top : 0;
+  left : -100%;
+  width : 100%;
+  height : 100%;
+  background : linear-gradient(
+    90deg , 
+    transparent , 
+    rgba( 255 , 255 , 255 , 0.2 ), 
+    transparent
+    );
+  transition : all 0.5s ease;
+
+}
+
+.hyper-button:hover::before {
+
+  left : 100%;
+
+}
+
+/* Menu Items. */
+.hyper-menu-item {
+
+  position : relative;
+  overflow : hidden;
+  transition : all 0.3s ease;
+
+}
+
+.hyper-menu-item::before {
+
+  content : '';
+  position : absolute;
+  top : 0;
+  left : -100%;
+  width : 100%;
+  height : 100%;
+  background : linear-gradient(
+    90deg, 
+    transparent, 
+    rgba( 255 , 255 , 255 , 0.2 ), 
+    transparent
+    );
+  transition : all 0.5s ease;
+
+}
+
+.hyper-menu-item:hover::before {
+
+  left : 100%;
+
+}
+
+.hyper-menu-active {
+
+  background : rgba( 192 , 38 , 211 , 0.3 );
+  border : 1px solid rgba( 244 , 114 , 182 , 0.5 );
+  box-shadow : 0 0 10px rgba( 192 , 38 , 211 , 0.5 ) , inset 0 0 5px rgba( 244 , 114 , 182 , 0.3 );
+  animation : flicker 4s infinite;
+
+}
+
+/* Text Effects. */
+.hyper-text {
+
+  text-shadow : 0 0 5px rgba( 244 , 114 , 182 , 0.5 );
+  letter-spacing : 0.5px;
+
+}
+
+.hyper-text-glow {
+
+  text-shadow : 0 0 5px rgba( 244 , 114 , 182 , 0.8 );
+  letter-spacing : 1px;
+
+}
+
+.hyper-time {
+
+  text-shadow : 0 0 5px rgba( 244 , 114 , 182 , 0.8 );
+  letter-spacing : 2px;
+  background : rgba( 15 , 3 , 38 , 0.5 );
+  padding : 4px 8px;
+  border-radius : 4px;
+  border : 1px solid rgba( 244 , 114 , 182 , 0.3 );
+
+}
+
+/* Icons. */
+.hyper-icon {
+
+  filter : drop-shadow( 0 0 3px rgba( 244 , 114 , 182 , 0.8 ) );
+
+}
+
+/* Glow Effects. */
+.hyper-glow-bottom {
+
+  position : absolute;
+  bottom : 0;
+  left : 0;
+  right : 0;
+  height : 40px;
+  background : radial-gradient( ellipse at bottom , rgba( 192 , 38 , 211 , 0.3 ) 0% , transparent 70% );
+  filter : blur( 20px );
+  pointer-events : none;
+
+}
+
+/* Logo Glow. */
+.logo-glow {
+
+  filter : drop-shadow( 0 0 8px rgba( 152 , 84 , 248 , 0.6 ) );
+  animation : logo-pulse 3s infinite ease-in-out;
+
+}
+
+@keyframes logo-pulse {
+
+  0%, 100% {
+    filter : drop-shadow( 0 0 8px rgba( 152 , 84 , 248 , 0.6 ) );
+  }
+  50% {
+    filter : drop-shadow( 0 0 15px rgba( 255 , 68 , 204 , 0.8 ) );
+  }
+
+}
+
+/* Calendar. */
+.hyperpos-calendar {
+
+  border : 1px solid rgba( 244 , 114 , 182 , 0.5 ) !important;
+  border-radius : 8px !important;
+  overflow : hidden !important;
+  background-color : rgba( 15 , 3 , 38 , 0.95 ) !important;
+  box-shadow : 0 0 20px rgba( 192 , 38 , 211 , 0.5 ) , 0 0 40px rgba( 244 , 114 , 182 , 0.3 ) !important;
+
+}
+
+.hyperpos-calendar .react-calendar__tile--now {
+
+  background : rgba( 244 , 114 , 182 , 0.3 ) !important;
+  color : white !important;
+
+}
+
+.hyperpos-calendar .react-calendar__tile--active {
+
+  background : rgba( 192 , 38 , 211 , 0.7 ) !important;
+  color : white !important;
+
+}
+
+.hyperpos-calendar .react-calendar__tile:enabled:hover {
+
+  background : rgba( 244 , 114 , 182 , 0.2 ) !important;
+
+}
+
+.hyperpos-calendar .react-calendar__navigation button:enabled:hover,
+.hyperpos-calendar .react-calendar__navigation button:enabled:focus {
+
+  background : rgba( 244 , 114 , 182 , 0.2 ) !important;
+
+}
+
+.hyperpos-calendar .react-calendar__month-view__days__day--weekend {
+
+  color : #f472b6 !important;
+
+}
+
+.hyperpos-calendar .react-calendar__navigation {
+
+  background : rgba( 15 , 3 , 38 , 0.8 ) !important;
+  border-bottom : 1px solid rgba( 244 , 114 , 182 , 0.3 ) !important;
+
+}
+
+.hyperpos-calendar .react-calendar__navigation button,
+.hyperpos-calendar .react-calendar__month-view__weekdays__weekday,
+.hyperpos-calendar .react-calendar__tile {
+
+  color : white !important;
+
+}
+
+.hyperpos-calendar .react-calendar__month-view__weekdays__weekday abbr {
+
+  text-decoration : none !important;
+  color : #c026d3 !important;
+  font-weight : bold !important;
+
+}
+
+@keyframes scanline {
+
+  0% {
+    transform : translateY( -100% );
+  }
+  100% {
+    transform : translateY( 100% );
+  }
+
+}
+
+@keyframes flicker {
+
+  0%, 100% { opacity : 1; }
+  92% { opacity : 1; }
+  93% { opacity : 0.3; }
+  94% { opacity : 1; }
+  96% { opacity : 0.5; }
+  97% { opacity : 1; }
+
+}
+
+@keyframes pulse-border {
+
+  0%, 100% {
+    box-shadow : 0 0 5px rgba( 244 , 114 , 182 , 0.8 ) , 0 0 10px rgba( 192 , 38 , 211 , 0.5 );
+  }
+  50% {
+    box-shadow : 0 0 10px rgba( 244 , 114 , 182 , 0.8 ) , 0 0 20px rgba( 192 , 38 , 211 , 0.5 );
+  }
+
+}
+
+@keyframes float {
+
+  0% {
+    transform : translateY( 0 ) rotate( 0deg );
+    opacity : 0;
+  }
+  10% {
+    opacity : 1;
+  }
+  90% {
+    opacity : 1;
+  }
+  100% {
+    transform : translateY( -100vh ) rotate( 720deg );
+    opacity : 0;
+  }
+
+}
+
+/* Scrollbar. */
+::-webkit-scrollbar {
+
+  width : 8px;
+  height : 8px;
+
+}
+
+::-webkit-scrollbar-track {
+
+  background : rgba( 15 , 3 , 38 , 0.8 );
+  border-radius : 4px;
+
+}
+
+::-webkit-scrollbar-thumb {
+
+  background : linear-gradient( 180deg , #c026d3 , #f472b6 );
+  border-radius : 4px;
+  box-shadow : 0 0 5px rgba( 244 , 114 , 182 , 0.5 );
+
+}
+
+::-webkit-scrollbar-thumb:hover {
+
+  background : linear-gradient( 180deg , #d946ef , #f87171 );
+  box-shadow : 0 0 8px rgba( 244 , 114 , 182 , 0.8 );
+
+}
+
+/* Scrollbar with scanline.*/
+.hyper-scrollbar::-webkit-scrollbar-thumb {
+
+  background-image : linear-gradient( 180deg , #c026d3 , #f472b6 );
+  background-size : 100% 100%;
+  box-shadow : 0 0 8px rgba( 244 , 114 , 182 , 0.5 );
+  position : relative;
+
+}
+
+.hyper-scrollbar::-webkit-scrollbar-thumb::after {
+
+  content : '';
+  position : absolute;
+  top : 0;
+  left : 0;
+  right : 0;
+  bottom : 0;
+  background : repeating-linear-gradient(
+    0deg,
+    transparent,
+    rgba( 255 , 255 , 255 , 0.1 ) 1px,
+    transparent 2px
+  );
+  background-size : 100% 4px;
+  pointer-events : none;
+
+}
+
+/* Firefox scrollbar styling. */
+* {
+
+  scrollbar-width : thin;
+  scrollbar-color : #c026d3 rgba( 15 , 3 , 38 , 0.8 );
+
+}
+
+@keyframes scrollGlow {
+
+  0%, 100% { box-shadow : 0 0 5px rgba( 244 , 114 , 182 , 0.5 ); }
+  50% { box-shadow : 0 0 10px rgba( 244 , 114 , 182 , 0.8 ); }
+
+}
+
+.hyper-scrollbar-animated::-webkit-scrollbar-thumb {
+
+  animation : scrollGlow 2s infinite;
+
+}
+
+/* Chart. */
+.hyper-chart-container {
+
+  position : relative;
+  overflow : hidden;
+  border-radius : 8px;
+  background : rgba( 15 , 3 , 38 , 0.7 );
+  border : 1px solid rgba( 244 , 114 , 182 , 0.3 );
+  box-shadow : 0 0 15px rgba( 192 , 38 , 211 , 0.3 );
+
+}
+
+.hyper-chart-grid line {
+
+  stroke : rgba( 244 , 114 , 182 , 0.15 );
+  stroke-width : 1;
+  stroke-dasharray : 4 4;
+
+}
+
+.hyper-chart-tooltip {
+
+  background : rgba( 15 , 3 , 38 , 0.9 ) !important;
+  color : #fff !important;
+  border : 1px solid rgba( 244 , 114 , 182 , 0.3 ) !important;
+  box-shadow : 0 0 10px rgba( 244 , 114 , 182 , 0.5 ) !important;
+  border-radius : 4px !important;
+  padding : 8px !important;
+
+}
+
+.hyper-chart-axis text {
+
+  fill : rgba( 255 , 255 , 255 , 0.8 ) !important;
+  font-size : 12px !important;
+
+}
+
+.hyper-chart-axis line {
+
+  stroke : rgba( 244 , 114 , 182 , 0.3 ) !important;
+
+}
+
+.hyper-chart-axis path {
+
+  stroke : rgba( 244 , 114 , 182 , 0.3 ) !important;
+
+}
+
+.hyper-chart-legend text {
+
+  fill : rgba( 255 , 255 , 255 , 0.8 ) !important;
+  font-size : 12px !important;
+
+}
+
+.hyper-chart-point {
+
+  animation : pulse-point 2s infinite;
+
+}
+
+@keyframes pulse-point {
+
+  0%, 100% {
+    filter : drop-shadow( 0 0 3px rgba( 244 , 114 , 182 , 0.8 ) );
+  }
+  50% {
+    filter : drop-shadow( 0 0 6px rgba( 244 , 114 , 182 , 1 ) );
+  }
+
+}
+
+@keyframes direction-reverse {
+
+  to { transform : rotate( -360deg ); }
+
+}
+
+.direction-reverse {
+
+  animation-direction : reverse;
+
+}
+
+@keyframes blink {
+
+  0%, 100% { opacity : 1; }
+  50% { opacity : 0; }
+
+}
+
+.animate-blink {
+
+  animation : blink 1s infinite;
+
+}
+
+/* Progress bar. */
+@keyframes progress-indeterminate {
+
+  0% {
+    width : 0%;
+    margin-left : 0%;
+  }
+
+  50% {
+    width : 70%;
+    margin-left : 0%;
+  }
+
+  100% {
+    width : 0%;
+    margin-left : 100%;
+  }
+
+}
+
+.animate-progress-indeterminate {
+
+  animation : progress-indeterminate 2s ease-in-out infinite;
+
+}
+
+/* Rotating elements. */
+.duration-3000 {
+
+  animation-duration : 3000ms;
+
+}
+
+.duration-5000 {
+
+  animation-duration : 5000ms;
+
+}
+
+/* Modal animation. */
+@keyframes modal-appear {
+
+  0% {
+    transform : scale( 0.9 );
+    opacity : 0;
+  }
+  70% {
+    transform : scale( 1.05 );
+  }
+  100% {
+    transform : scale( 1 );
+    opacity : 1;
+  }
+
+}
+
+.hyper-modal-appear {
+
+  animation : modal-appear 0.3s ease-out forwards;
+
+}
+
+/* Typing effect animations. */
+@keyframes typing {
+
+  from { width : 0 }
+  to { width : 100% }
+
+}
+
+@keyframes fade-in {
+
+  to { opacity : 1; }
+
+}
+
+.hyper-typing-effect {
+
+  overflow : hidden;
+  white-space : nowrap;
+  animation : typing 1.5s steps( 40 , end );
+
+}
+
+.hyper-typing-effect-2 {
+
+  overflow : hidden;
+  white-space : nowrap;
+  opacity : 0;
+  animation : typing 1.5s steps( 40 , end ) 1s forwards , fade-in 0.1s 1s forwards;
+
+}
+
+/* Logout modal styles. */
+.hyper-modal-backdrop {
+
+  background : rgba( 0 , 0 , 0 , 0.7 );
+  backdrop-filter : blur( 4px );
+
+}
+
+.hyper-modal-container {
+
+  background : linear-gradient( 180deg , rgba( 15 , 3 , 38 , 0.95 ) 0% , rgba( 26 , 10 , 64 , 0.95 ) 100% );
+  border : 2px solid rgba( 192 , 38 , 211 , 0.5 );
+  box-shadow : 0 0 20px rgba( 192 , 38 , 211 , 0.3 ) , 0 0 40px rgba( 244 , 114 , 182 , 0.2 );
+
+}
+
+.hyper-modal-header {
+
+  background : linear-gradient( 90deg , rgba( 88 , 28 , 135 , 0.8 ) 0% , rgba( 157 , 23 , 77 , 0.8 ) 100% );
+  border-bottom : 1px solid rgba( 244 , 114 , 182 , 0.3 );
+
+}
+
+.hyper-modal-terminal {
+
+  background : rgba( 0 , 0 , 0 , 0.5 );
+  border : 1px solid rgba( 34 , 197 , 94 , 0.3 );
+  box-shadow : 0 0 10px rgba( 34 , 197 , 94 , 0.2 ) inset;
+
+}
+
+.hyper-modal-corner {
+
+  width : 3px;
+  height : 3px;
+  border-width : 2px;
+  border-color : rgba( 244 , 114 , 182 , 0.8 );
+  position : absolute;
+
+}
+
+.hyper-modal-corner-tl {
+
+  top : 0;
+  left : 0;
+  border-top-style : solid;
+  border-left-style : solid;
+
+}
+
+.hyper-modal-corner-tr {
+
+  top : 0;
+  right : 0;
+  border-top-style : solid;
+  border-right-style : solid;
+
+}
+
+.hyper-modal-corner-bl {
+
+  bottom : 0;
+  left : 0;
+  border-bottom-style : solid;
+  border-left-style : solid;
+
+}
+
+.hyper-modal-corner-br {
+
+  bottom : 0;
+  right : 0;
+  border-bottom-style : solid;
+  border-right-style : solid;
+
+}
+
+/* Warning text. */
+.hyper-warning-text {
+
+  color : #f472b6;
+  text-shadow : 0 0 5px rgba( 244 , 114 , 182 , 0.8 );
+  font-weight : bold;
+
+}
+
+/* Terminal text. */
+.hyper-terminal-text {
+
+  color : #22c55e;
+  text-shadow : 0 0 3px rgba( 34 , 197 , 94 , 0.5 );
+  font-family : monospace;
+  letter-spacing : 0.5px;
+
+}
+
+/* Blinking cursor effect. */
+.hyper-cursor::after {
+
+  content : '|';
+  animation : blink 1s step-end infinite;
+
+}
+
+@keyframes blink {
+
+  0%, 100% { opacity : 1; }
+  50% { opacity : 0; }
+
+}
+
+/* Danger button for logout. */
+.hyper-button-danger {
+
+  background : rgba( 220 , 38 , 38 , 0.2 );
+  border : 1px solid rgba( 248 , 113 , 113 , 0.5 );
+  box-shadow : 0 0 5px rgba( 248 , 113 , 113 , 0.5 ) , 0 0 10px rgba( 220 , 38 , 38 , 0.3 );
+  color : white;
+  transition : all 0.3s ease;
+
+}
+
+.hyper-button-danger:hover {
+
+  background : rgba( 220 , 38 , 38 , 0.3 );
+  box-shadow : 0 0 8px rgba( 248 , 113 , 113 , 0.7 ) , 0 0 15px rgba( 220 , 38 , 38 , 0.4 );
+
+}
+
+.hyper-button-danger::before {
+
+  content : '';
+  position : absolute;
+  top : 0;
+  left : -100%;
+  width : 100%;
+  height : 100%;
+  background : linear-gradient(
+    90deg , 
+    transparent , 
+    rgba( 255 , 255 , 255 , 0.2 ), 
+    transparent
+    );
+  transition : all 0.5s ease;
+
+}
+
+.hyper-button-danger:hover::before {
+
+  left : 100%;
+
+}

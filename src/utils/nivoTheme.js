@@ -1,5 +1,4 @@
 
-// Nivo theme configuration.
 export const nivoTheme = {
 
   background : 'transparent',

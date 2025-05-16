@@ -498,7 +498,7 @@ function ProductPage ( ) {
                 <tbody>
                   { filteredData.length > 0 ? (
                     filteredData.map ( ( product ) => (
-                      <tr key = { product.id } className = "border-t hover:bg-gray-50 transition duration-200 ease-in-out">
+                      <tr key = { product.id } className = "border-t text-black hover:bg-gray-50 transition duration-200 ease-in-out">
                         <td className = "p-3 font-medium">{ product.id }</td>
                         <td className = "p-3 font-semibold text-purple-900">{ product.name }</td>
                         <td className = "p-3 text-gray-700 hidden md:table-cell">{ product.barcode || "—" }</td>

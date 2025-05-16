@@ -101,7 +101,7 @@ const Section = ( ) => {
                 <span className = "card-circle circle3"></span>
                 <span className = "card-circle circle4"></span>
                 <span className = "card-circle circle5">
-                  <img src = "./HyperPOS - Logo.svg" alt = "HyperPOS Logo" className = "circle-logo" />
+                  <img src = "./HyperPOS.svg" alt = "HyperPOS Logo" className = "circle-logo" />
                 </span>
               </div>
               
@@ -140,7 +140,7 @@ const Section = ( ) => {
                 <span className = "card-circle circle3"></span>
                 <span className = "card-circle circle4"></span>
                 <span className = "card-circle circle5">
-                  <img src = "./HyperPOS - Logo.svg" alt = "HyperPOS Logo" className = "circle-logo" />
+                  <img src = "./HyperPOS.svg" alt = "HyperPOS Logo" className = "circle-logo" />
                 </span>
               </div>
               
@@ -179,7 +179,7 @@ const Section = ( ) => {
                 <span className = "card-circle circle3"></span>
                 <span className = "card-circle circle4"></span>
                 <span className = "card-circle circle5">
-                  <img src = "./HyperPOS - Logo.svg" alt = "HyperPOS Logo" className = "circle-logo" />
+                  <img src = "./HyperPOS.svg" alt = "HyperPOS Logo" className = "circle-logo" />
                 </span>
               </div>
               

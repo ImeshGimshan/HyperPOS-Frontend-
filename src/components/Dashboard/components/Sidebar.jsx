@@ -1,326 +1,266 @@
-// Imports : ( NavLink )
-import { Link, useLocation } from "react-router-dom";
 
-import React from "react";
+import { useState , useEffect , useCallback } from "react";
 
-import {
-  Home,
-  FileText,
-  Users,
-  ShoppingCart,
-  Package,
-  BarChart2,
+import { Link , useLocation , useNavigate } from "react-router-dom";
+
+import { 
+  Home, 
+  FileText, 
+  Users, 
+  ShoppingCart, 
+  Package, 
+  BarChart2, 
   Building,
-  RotateCcw,
   UserPlus,
   Truck,
+  ChevronRight
 } from "lucide-react";
 
-import ParticleBackground from "../../UI/ParticleBackground";
-import GlowingLogo from "../../UI/GlowingLogo";
+import ParticleBackground from "../../ui/ParticleBackground";
 
-// Function : ( Sidebar )
-function Sidebar({ onCloseMobile }) {
-  const location = useLocation();
+function Sidebar ( { onCloseMobile , isMobileOpen } ) {
 
-  const menuItems = [
-    {
-      title: "Dashboard",
-      icon: <Home size={20} />,
-      path: "/dashboard",
-      exact: true,
-    },
+  const location = useLocation ( );
+  const navigate = useNavigate ( );
+  const user = JSON.parse ( localStorage?.getItem ( "user" ) ) || { username : "Admin" };
+  
+  const [ expandedCategory , setExpandedCategory ] = useState ( null );
 
-    ,
-    {
-      title: "Users List",
-      icon: <Users size={20} />,
-      path: "/dashboard/users",
-    },
-
-    {
-      title: "Customers List",
-      icon: <Users size={20} />,
-      path: "/dashboard/customers",
-    },
-
-    {
-      title: "Products List",
-      icon: <Package size={20} />,
-      path: "/dashboard/products",
-    },
-
-    {
-      title: "Sales List",
-      icon: <BarChart2 size={20} />,
-      path: "/dashboard/sales",
-    },
-
-    {
-      title: "Purchases List",
-      icon: <ShoppingCart size={20} />,
-      path: "/dashboard/purchases",
-    },
-
-    {
-      title: "Purchase",
-      icon: <Truck size={20} />,
-      path: "/dashboard/purchase",
-    },
-
-    {
-      title: "Purchase Return",
-      icon: <RotateCcw size={20} />,
-      path: "/dashboard/grnreturn",
-    },
-
-    {
-      title: "Customer Management",
-      icon: <UserPlus size={20} />,
-      path: "/dashboard/customerregister",
-    },
-
-    {
-      title: "Product Management",
-      icon: <Package size={20} />,
-      path: "/dashboard/addproduct",
-    },
-    {
-      title: "Category Management",
-      icon: <Package size={20} />,
-      path: "/dashboard/category",
-    },
-
-    {
-      title: "Supplier Management",
-      icon: <Truck size={20} />,
-      path: "/dashboard/supplierregister",
-    },
-
-    {
-      title: "Organizations Management",
-      icon: <Building size={20} />,
-      path: "/dashboard/organizations",
-    },
-  ];
-
-  const isActive = (path, exact = false) => {
-    if (exact) {
-      return location.pathname === path;
-    }
-    return location.pathname.startsWith(path);
+  const dashboardItem = {
+    title : "Dashboard",
+    icon : <Home size = { 20 } />,
+    path : "/dashboard",
+    exact : true
   };
 
-  React.useEffect(() => {
-    if (!document.getElementById("cyberpunk-sidebar-style")) {
-      const styleEl = document.createElement("style");
-      styleEl.id = "cyberpunk-sidebar-style";
-      styleEl.textContent = `
-        @keyframes scanline {
-          0% {
-            transform: translateY(-100%);
-          }
-          100% {
-            transform: translateY(100%);
-          }
-        }
-      
-        @keyframes flicker {
-          0%, 100% { opacity: 1; }
-          92% { opacity: 1; }
-          93% { opacity: 0.3; }
-          94% { opacity: 1; }
-          96% { opacity: 0.5; }
-          97% { opacity: 1; }
-        }
-      
-        .cyberpunk-scanline {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(to bottom, 
-            transparent 0%, 
-            rgba(255, 255, 255, 0.05) 50%, 
-            transparent 100%);
-          animation: scanline 8s linear infinite;
-          pointer-events: none;
-          z-index: 2;
-        }
-      
-        .cyberpunk-menu-item {
-          position: relative;
-          overflow: hidden;
-          transition: all 0.3s ease;
-        }
-      
-        .cyberpunk-menu-item::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: -100%;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(90deg, 
-            transparent, 
-            rgba(255, 255, 255, 0.2), 
-            transparent);
-          transition: all 0.5s ease;
-        }
-      
-        .cyberpunk-menu-item:hover::before {
-          left: 100%;
-        }
-      
-        .cyberpunk-active {
-          animation: flicker 4s infinite;
-        }
-      `;
-      document.head.appendChild(styleEl);
+  // Group menu items by category.
+  const menuCategories = useCallback ( () => ( {
+    "Documents" : [
+      {
+        title : "GRNs",
+        icon : <FileText size = { 20 } />,
+        path : "/dashboard/grn"
+      },
+      {
+        title : "Invoices",
+        icon : <FileText size = { 20 } />,
+        path : "/dashboard/invoices"
+      },
+      {
+        title : "GRN Return",
+        icon : <FileText size = { 20 } />,
+        path : "/dashboard/grnreturn"
+      }
+    ],
+    "People" : [
+      {
+        title : "Users",
+        icon : <Users size = { 20 } />,
+        path : "/dashboard/users"
+      },
+      {
+        title : "Customers",
+        icon : <Users size = { 20 } />,
+        path : "/dashboard/customers"
+      },
+      {
+        title : "Add Customer",
+        icon : <UserPlus size = { 20 } />,
+        path : "/dashboard/customerregister"
+      }
+    ],
+    "Inventory" : [
+      {
+        title : "Products",
+        icon : <Package size = { 20 } />,
+        path : "/dashboard/products"
+      },
+      {
+        title : "Add Product",
+        icon : <Package size = { 20 } />,
+        path : "/dashboard/addproduct"
+      }
+    ],
+    "Transactions" : [
+      {
+        title : "Sales",
+        icon : <BarChart2 size = { 20 } />,
+        path : "/dashboard/sales"
+      },
+      {
+        title : "Purchase",
+        icon : <ShoppingCart size = { 20 } />,
+        path : "/dashboard/purchase"
+      },
+      {
+        title : "Invoice Return",
+        icon : <FileText size = { 20 } />,
+        path : "/dashboard/invoicereturn"
+      }
+    ],
+    "Business" : [
+      {
+        title : "Add Supplier",
+        icon : <Truck size = { 20 } />,
+        path : "/dashboard/supplierregister"
+      },
+      {
+        title : "Organizations",
+        icon : <Building size = { 20 } />,
+        path : "/dashboard/organization"
+      }
+    ]
+  } ) , [] );
+
+  // Toggle category expansion.
+  const toggleCategory = ( category ) => {
+    if ( expandedCategory === category ) {
+      setExpandedCategory ( null );
+    } else {
+      setExpandedCategory ( category );
     }
-  }, []);
+  };
+
+  // Defining isActive as a memoized function to avoid recreating it on every render.
+  const isActive = useCallback ( ( path , exact = false ) => {
+    if ( exact ) {
+      return location.pathname === path;
+    }
+    return location.pathname.startsWith ( path );
+  } , [ location.pathname ] );
+
+  // Check if any menu item in a category is active.
+  const isCategoryActive = useCallback ( ( categoryItems ) => {
+    return categoryItems.some ( item => isActive ( item.path , item.exact ) );
+  } , [ isActive ] );
+
+  // Handle navigation with proper timing.
+  const handleNavigation = ( path , e ) => {
+    e.preventDefault ( );
+    
+    navigate ( path );
+    
+    setTimeout ( () => {
+      onCloseMobile ( );
+    } , 150 );
+  };
+
+  useEffect ( () => {
+    
+    const categories = menuCategories ( );
+    for ( const [ category , items ] of Object.entries ( categories ) ) {
+      if ( isCategoryActive ( items ) ) {
+        setExpandedCategory ( category );
+        break;
+      }
+    }
+    
+  } , [ isCategoryActive , menuCategories ] );
 
   return (
-    <div
-      className="h-full flex flex-col relative overflow-hidden"
-      style={{
-        background:
-          "linear-gradient(180deg, #0f0326 0%, #1a0a40 50%, #3b0764 100%)",
-      }}
-    >
-      <div className="cyberpunk-scanline"></div>
-
-      <ParticleBackground count={20} />
-
-      <div className="absolute inset-0 overflow-hidden opacity-20 z-0">
-        {[...Array(15)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute h-[1px] w-full"
-            style={{
-              top: `${i * 7}%`,
-              left: 0,
-              background: i % 2 === 0 ? "#f0abfc" : "#c026d3",
-              boxShadow:
-                i % 2 === 0
-                  ? "0 0 10px 1px #f0abfc, 0 0 20px 1px #f0abfc"
-                  : "0 0 10px 1px #c026d3, 0 0 20px 1px #c026d3",
-              opacity: 0.6,
-            }}
-          ></div>
-        ))}
-      </div>
-
-      <div className="p-4 border-b border-purple-800/30 relative z-10">
-        <div className="flex items-center">
-          <div className="relative mr-3">
-            <GlowingLogo
-              src="./HyperPOS.svg"
-              alt="HyperPOS Logo"
-              width={40}
-              glowColor="rgba(192, 38, 211, 0.8)"
-              hoverGlowColor="rgba(244, 114, 182, 0.9)"
-              className="logo-glow"
-            />
-          </div>
-
-          <div className="flex flex-col">
-            <h1
-              className="text-xl font-bold text-white"
-              style={{
-                textShadow: "0 0 5px rgba(244, 114, 182, 0.8)",
-                letterSpacing: "1px",
-              }}
+    <div className = { `fixed lg:relative h-screen inset-y-0 left-0 flex flex-col overflow-hidden hyper-bg z-30
+      ${ isMobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0' }
+      transition-all duration-300 w-64 sm:w-72` } 
+         style = { {
+           background : "linear-gradient( 180deg , #0f0326 0% , #1a0a40 50% , #3b0764 100% )",
+         } }>
+      
+      {/* Particle background */}
+      <ParticleBackground count = { 20 } />
+      
+      {/* Scanline effect */}
+      <div className = "hyper-scanline"></div>
+      
+      {/* Navigation menu */}
+      <nav className = "flex-1 overflow-y-auto py-4 relative z-10 hyper-scrollbar">
+        <ul className = "space-y-2 px-3">
+          
+          {/* Dashboard item. */}
+          <li className = "hyper-menu-item mb-2">
+            <Link
+              to = { dashboardItem.path }
+              className = { `flex items-center px-4 py-3 rounded-md transition-all duration-300 ${
+                isActive ( dashboardItem.path , dashboardItem.exact )
+                  ? "text-white hyper-menu-active"
+                  : "text-purple-200 hover:text-white"
+              }` }
+              onClick = { ( e ) => handleNavigation ( dashboardItem.path , e ) }
             >
-              HyperPOS
-            </h1>
-            <div
-              className="w-full h-[2px] mt-1"
-              style={{
-                background: "linear-gradient(90deg, #f472b6, transparent)",
-                boxShadow: "0 0 10px #f472b6",
-              }}
-            ></div>
-          </div>
-        </div>
-      </div>
-
-      <nav className="flex-1 overflow-y-auto py-4 relative z-10">
-        <ul className="space-y-2 px-3">
-          {menuItems.map((item, index) => (
-            <li key={index} className="cyberpunk-menu-item">
-              <Link
-                to={item.path}
-                className={`flex items-center px-4 py-3 rounded-md transition-all duration-300 ${
-                  isActive(item.path, item.exact)
-                    ? "text-white cyberpunk-active"
-                    : "text-purple-200 hover:text-white"
-                }`}
-                style={{
-                  background: isActive(item.path, item.exact)
-                    ? "rgba(192, 38, 211, 0.3)"
-                    : "transparent",
-                  border: isActive(item.path, item.exact)
-                    ? "1px solid rgba(244, 114, 182, 0.5)"
-                    : "1px solid transparent",
-                  boxShadow: isActive(item.path, item.exact)
-                    ? "0 0 10px rgba(192, 38, 211, 0.5), inset 0 0 5px rgba(244, 114, 182, 0.3)"
-                    : "none",
-                }}
-                onClick={onCloseMobile}
+              <span className = { `mr-3 ${ isActive ( dashboardItem.path , dashboardItem.exact ) ? "text-pink-300 hyper-icon" : "text-purple-300" }` }>
+                { dashboardItem.icon }
+              </span>
+              <span className = { isActive ( dashboardItem.path , dashboardItem.exact ) ? "hyper-text" : "" }>
+                { dashboardItem.title }
+              </span>
+            </Link>
+          </li>
+          
+          {/* Divider. */}
+          <li className = "border-t border-purple-800/30 my-2"></li>
+          
+          {/* Collapsible categories. */}
+          { Object.entries ( menuCategories ( ) ).map ( ( [ category , items ] ) => (
+            <li key = { category } className = "mb-2">
+              
+              {/* Category headers.*/}
+              <div 
+                className = { `flex items-center justify-between px-3 py-2 text-xs uppercase font-semibold tracking-wider cursor-pointer ${
+                  isCategoryActive ( items ) ? 'text-pink-300' : 'text-gray-400'
+                } hover:text-pink-300 transition-colors` }
+                onClick = { ( ) => toggleCategory ( category ) }
               >
-                <span
-                  className={`mr-3 ${
-                    isActive(item.path, item.exact)
-                      ? "text-pink-300"
-                      : "text-purple-300"
-                  }`}
-                  style={{
-                    filter: isActive(item.path, item.exact)
-                      ? "drop-shadow(0 0 3px rgba(244, 114, 182, 0.8))"
-                      : "none",
-                  }}
-                >
-                  {item.icon}
-                </span>
-                <span
-                  style={{
-                    textShadow: isActive(item.path, item.exact)
-                      ? "0 0 5px rgba(244, 114, 182, 0.8)"
-                      : "none",
-                    letterSpacing: "0.5px",
-                  }}
-                >
-                  {item.title}
-                </span>
-
-                {isActive(item.path, item.exact) && (
-                  <div
-                    className="absolute left-0 top-1/2 transform -translate-y-1/2 w-[3px] h-2/3"
-                    style={{
-                      background: "#f472b6",
-                      boxShadow: "0 0 8px #f472b6, 0 0 15px #f472b6",
-                    }}
-                  ></div>
-                )}
-              </Link>
+                <span>{ category }</span>
+                <ChevronRight 
+                  size = { 14 } 
+                  className = { `transform transition-transform duration-200 ${
+                    expandedCategory === category ? 'rotate-90' : ''
+                  }` } 
+                />
+              </div>
+              
+              {/* Menu items. */}
+              <ul className = { `mt-1 space-y-1 overflow-hidden transition-all duration-300 ${
+                expandedCategory === category ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+              }` }>
+                { items.map ( ( item , idx ) => (
+                  <li key = { idx } className = "hyper-menu-item pl-2">
+                    <Link
+                      to = { item.path }
+                      className = { `flex items-center px-4 py-3 rounded-md transition-all duration-300 ${
+                        isActive ( item.path , item.exact )
+                          ? "text-white hyper-menu-active"
+                          : "text-purple-200 hover:text-white"
+                      }` }
+                      onClick = { ( e ) => handleNavigation ( item.path , e ) }
+                    >
+                      <span className = { `mr-3 ${ isActive ( item.path , item.exact ) ? "text-pink-300 hyper-icon" : "text-purple-300" }` }>
+                        { item.icon }
+                      </span>
+                      <span className = { isActive ( item.path , item.exact ) ? "hyper-text" : "" }>
+                        { item.title }
+                      </span>
+                    </Link>
+                  </li>
+                ) ) }
+              </ul>
+              
             </li>
-          ))}
+          ) ) }
+          
         </ul>
       </nav>
-
-      <div
-        className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse at bottom, rgba(192, 38, 211, 0.3) 0%, transparent 70%)",
-          filter: "blur(20px)",
-        }}
-      ></div>
+      
+      {/* Welcome Message. */}
+      <div className = "p-4 mt-auto border-t border-purple-800/30 relative z-10">
+        <div className = "text-center hyper-text">
+          Welcome, <span className = "text-pink-300">{ user.username }</span>
+        </div>
+      </div>
+      
+      <div className = "hyper-glow-bottom"></div>
+      
     </div>
   );
 }
 
-// Exporting the component.
 export default Sidebar;

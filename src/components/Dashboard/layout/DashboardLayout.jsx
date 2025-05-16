@@ -1,84 +1,85 @@
-// Imports : ( Outlet ) , ( Sidebar , Topbar )
-import { useState, useEffect } from "react";
+
+import { useState , useEffect } from "react";
+
 import { Outlet } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
-import Loader from "../../../components/UI/Loader";
-// Function : ( DashboardLayout )
-function DashboardLayout() {
-  const [loading, setLoading] = useState(true);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const navigator = useNavigate();
+import Loader from "../../ui/Loader";
 
-  useEffect(() => {
-    if (localStorage.getItem("user") === null) {
-      navigator("/");
-      return;
-    }
-    else {
-      const userRole = JSON.parse(localStorage.getItem("user")).roles || null;
-      if(userRole === "ROLE_USER"){
-      navigator("/basescreen");
-      }
-      if(userRole != "ROLE_ADMIN"){
-        navigator("/");
-      }
-    }
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2950);
+function DashboardLayout ( ) {
 
-    return () => clearTimeout(timer);
-  }, []);
+  const [ loading , setLoading ] = useState ( true );
+  const [ sidebarOpen , setSidebarOpen ] = useState ( false );
 
-  // Function to toggle sidebar visibility
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
+  useEffect ( ( ) => {
+    
+    const timer = setTimeout ( () => {
+      setLoading ( false );
+    } , 2950 ); // Change loading time here.
+
+    return () => clearTimeout ( timer );
+    
+  } , [] );
+
+  // Toggle Sidebar.
+  const toggleSidebar = ( ) => {
+    setSidebarOpen ( !sidebarOpen );
   };
 
-  // Function to close sidebar (for when clicking on backdrop or menu item on mobile)
-  const closeSidebar = () => {
-    setSidebarOpen(false);
+  // Close Sidebar.
+  const closeSidebar = ( ) => {
+    setSidebarOpen ( false );
   };
 
-  if (loading) {
+  if ( loading ) {
     return <Loader />;
   }
 
   return (
-    <div className="flex h-screen bg-gray-50 overflow-hidden">
-      {/* Mobile sidebar backdrop - only visible when sidebar is open on mobile */}
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-20 lg:hidden"
-          onClick={closeSidebar}
-          aria-hidden="true"
-        />
-      )}
+    
+    <div className = "flex flex-col h-screen overflow-hidden relative">
+      
+      {/* Background gradient. */}
+      <div className = "absolute inset-0 z-0" style = { { 
+        background : "linear-gradient( 135deg , rgba( 126 , 34 , 206 , 0.8 ) 0% , rgba( 236 , 72 , 153 , 0.8 ) 100% )",
+        opacity : 0.2
+      } }></div>
+      
+      {/* Base background. */}
+      <div className = "absolute inset-0 z-0 hyper-bg" style = { { opacity : 0.95 } }></div>
+      
+      {/* Scanline effect. */}
+      <div className = "hyper-scanline"></div>
+      
+      {/* Topbar. */}
+      <Topbar onMenuToggle = { toggleSidebar } />
+      
+      {/* Main content. */}
+      <div className = "flex flex-1 overflow-hidden">
+        
+        {/* Mobile sidebar. */}
+        { sidebarOpen && (
+          <div
+            className = "fixed inset-0 bg-black/70 z-20 lg:hidden backdrop-blur-sm"
+            onClick = { closeSidebar }
+            aria-hidden = "true"
+          />
+        ) }
 
-      {/* Sidebar - transforms off-screen on mobile when closed */}
-      <div
-        className={`fixed inset-y-0 left-0 z-30 w-64 transform transition-transform duration-300 ease-in-out bg-purple-900 
-                  lg:static lg:translate-x-0 lg:z-auto ${
-                    sidebarOpen ? "translate-x-0" : "-translate-x-full"
-                  }`}
-      >
-        <Sidebar onCloseMobile={closeSidebar} />
-      </div>
+        {/* Sidebar. */}
+        <Sidebar onCloseMobile = { closeSidebar } isMobileOpen = { sidebarOpen } />
 
-      {/* Main content area */}
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <Topbar onMenuToggle={toggleSidebar} />
-
-        <main className="flex-1 overflow-auto p-4">
-          {/*Using the Outlet component to render the nested routes.*/}
+        {/* Content */}
+        <main className = "flex-1 overflow-auto p-2 sm:p-4 md:p-6 text-white relative z-10">
           <Outlet />
         </main>
+        
       </div>
+      
     </div>
+    
   );
 }
-
 
 export default DashboardLayout;
