@@ -11,7 +11,7 @@ import TopSuppliersChart from "../components/TopSuppliersChart";
 import SalesPurchasesComparisonChart from "../components/SalesPurchasesComparisonChart";
 import UserActivity from "../components/UserActivity";
 import RecentPurchases from "../components/RecentPurchases";
-import ParticleBackground from "../../ui/ParticleBackground";
+import ParticleBackground from "../../UI/ParticleBackground";
 import RevenueGrowthChart from "../components/RevenueGrowthChart";
 
 import { getInvoiceData } from "../data/invoiceData";

@@ -12,7 +12,7 @@ const getOrgInfo = async () => {
 };
 
 const updateOrgInfo = async (data) => {
-    const response = await axios.post(APILinks.updateOrg, data, {
+    const response = await axios.put(APILinks.updateOrg, data, {
         headers:{
             'Authorization': `Bearer ${localStorage.getItem('token')}`
         }

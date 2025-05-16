@@ -1,4 +1,5 @@
-import {useState} from 'react';
+import {use, useEffect, useState} from 'react';
+import {getOrgInfo, updateOrgInfo} from '../../API/APIOrg';
 
 
 function Organization() {
@@ -19,6 +20,13 @@ function Organization() {
     const [errors, setErrors] = useState({});
     const [submitSuccess, setSubmitSucceses] = useState(false);
     const [logoPreview, setLogoPreview] = useState(null);
+
+    useEffect(() => {
+      handleLoadData();
+    }, []);
+
+
+
 
     const validate = () => {
         const newErrors = {};
@@ -43,10 +51,6 @@ function Organization() {
         }
         else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(orgData.email)) {
             newErrors.email = 'Please enter a valid email address';
-        }
-
-        if (!orgData.website) {
-            newErrors.website = 'Website is required';
         }
         if (!orgData.employeeCount === ''){
             newErrors.employeeCount = 'Employee Count is required';
@@ -83,8 +87,48 @@ function Organization() {
         }
     };
 
-    const handleSubmit = async () => {};
-    const handleReset = () => {};
+    const handleSubmit = async () => {
+      try {
+        setIsSubmitting(true);
+        setErrors({});
+
+        if (validate()) {
+          const response = await updateOrgInfo(orgData);
+          console.log('Response:', response);
+        }
+        alert('Organization data submitted successfully');
+      }
+      catch (error) {
+        console.error('Error submitting form:', error);
+        setErrors({submit: 'Failed to submit organization data'});
+      }
+      finally {
+        setIsSubmitting(false);
+      }
+    };
+
+
+    const handleLoadData = async () => {
+      try{
+        const response = await getOrgInfo();
+        console.log('Response:', response);
+        setOrgData({
+            name: response.name,
+            address: response.address,
+            phone: response.phone,
+            email: response.email,
+            logo: null,
+            website: response.website,
+            employeeCount: response.employeeCount,
+            isActive: response.isActive
+        });
+        setLogoPreview(null);
+      }
+      catch (error) {
+        console.error('Error loading data:', error);
+        setErrors({submit: 'Failed to load organization data'});
+      } 
+    };
 
 
 
@@ -261,10 +305,10 @@ function Organization() {
           <div className="flex justify-end space-x-4">
             <button
               type="button"
-              onClick={handleReset}
+              onClick={handleLoadData}
               className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors"
             >
-              Clear
+              Reset
             </button>
             <button
               type="button"
