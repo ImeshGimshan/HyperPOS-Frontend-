@@ -16,8 +16,8 @@ import {
   Truck,
 } from "lucide-react";
 
-import ParticleBackground from "../../ui/ParticleBackground";
-import GlowingLogo from "../../ui/GlowingLogo";
+import ParticleBackground from "../../UI/ParticleBackground";
+import GlowingLogo from "../../UI/GlowingLogo";
 
 // Function : ( Sidebar )
 function Sidebar({ onCloseMobile }) {
