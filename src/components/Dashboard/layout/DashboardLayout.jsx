@@ -1,7 +1,7 @@
 // Imports : ( Outlet ) , ( Sidebar , Topbar )
 import { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
 import Loader from "../../../components/UI/Loader";
@@ -9,15 +9,21 @@ import Loader from "../../../components/UI/Loader";
 function DashboardLayout() {
   const [loading, setLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const navigator = useNavigate();
 
   useEffect(() => {
-    const userRole = JSON.parse(localStorage.getItem("user")).roles;
-
-    if(userRole === "ROLE_USER"){
-      navigator("/basescreen");
-    }
-    if(userRole != "ROLE_ADMIN"){
+    if (localStorage.getItem("user") === null) {
       navigator("/");
+      return;
+    }
+    else {
+      const userRole = JSON.parse(localStorage.getItem("user")).roles || null;
+      if(userRole === "ROLE_USER"){
+      navigator("/basescreen");
+      }
+      if(userRole != "ROLE_ADMIN"){
+        navigator("/");
+      }
     }
     const timer = setTimeout(() => {
       setLoading(false);
