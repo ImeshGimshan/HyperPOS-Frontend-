@@ -443,7 +443,7 @@ function SalePage ( ) {
                 <tbody>
                   { filteredData.length > 0 ? (
                     filteredData.map ( ( sale ) => (
-                      <tr key = { sale.invoice.id } className = "border-t hover:bg-gray-50 transition duration-200 ease-in-out">
+                      <tr key = { sale.invoice.id } className = "border-t text-black hover:bg-gray-50 transition duration-200 ease-in-out">
                         <td className = "p-3 font-medium">{ sale.invoice.id }</td>
                         <td className = "p-3">{ sale.invoice.customerId }</td>
                         <td className = "p-3 font-semibold text-green-700">Rs { sale.invoice.total.toLocaleString() }</td>

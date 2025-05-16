@@ -1,5 +1,5 @@
 // Imports : ( useEffect , useState ) , ( Eye , SlidersHorizontal ) , ( userData )
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 
 import { Eye, SlidersHorizontal } from "lucide-react";
 
@@ -18,7 +18,7 @@ function ViewModal({ user, onClose, refreshData }) {
   useEffect(() => {
     setActive(user.isActive);
     setRole(user.role);
-  }, []);
+  }, [user.isActive, user.role]);
 
   // Function to format date strings
   const formatDate = (dateString) => {
@@ -489,7 +489,7 @@ const fetchData = async () => {
                     filteredData.map((user) => (
                       <tr
                         key={user.id}
-                        className="border-t hover:bg-gray-50 transition duration-200 ease-in-out"
+                        className="border-t text-black hover:bg-gray-50 transition duration-200 ease-in-out"
                       >
                         <td className="p-3 font-medium">{user.id}</td>
                         <td className="p-3 font-semibold text-purple-900">

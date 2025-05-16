@@ -1,5 +1,5 @@
 
-import React , { useState , useRef , useEffect } from 'react';
+import { useState , useRef , useEffect } from 'react';
 
 import { useNavProvider } from '../../Navigation/NavProvider';
 
@@ -56,7 +56,7 @@ const Header = ( ) => {
         <div className = "flex items-center">
 
           <a href = "#">
-            <img src = "./HyperPOS - Logo.svg" alt = "logo" className = "logo-glow h-[70px] w-[70px]"/>
+            <img src = "./HyperPOS.svg" alt = "logo" className = "logo-glow h-[70px] w-[70px]"/>
           </a>
           
           {/* Mobile menu button. */}

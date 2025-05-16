@@ -391,7 +391,7 @@ function CustomerPage ( ) {
                 <tbody>
                   { filteredData.length > 0 ? (
                     filteredData.map ( ( customer ) => (
-                      <tr key = { customer.id } className = "border-t hover:bg-gray-50 transition duration-200 ease-in-out">
+                      <tr key = { customer.id } className = "border-t text-black hover:bg-gray-50 transition duration-200 ease-in-out">
                         <td className = "p-3 font-medium">{ customer.id }</td>
                         <td className = "p-3 font-semibold text-purple-900">{ customer.name }</td>
                         <td className = "p-3 text-gray-700 hidden md:table-cell">{ customer.email || "—" }</td>

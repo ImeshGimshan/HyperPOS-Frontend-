@@ -1,230 +1,254 @@
 
-// Imports : ( React , useState , useEffect ).
-import React , { useState , useEffect } from "react";
+import { useState , useEffect } from "react";
 
-// Function : ( DateRangeSelector )
+import { Calendar } from "lucide-react";
+
 function DateRangeSelector ( { onRangeChange , initialStartDate , initialEndDate } ) {
 
-  // Create state variables for start and end dates.
   const [ startDate , setStartDate ] = useState ( initialStartDate || "" );
   const [ endDate , setEndDate ] = useState ( initialEndDate || "" );
   const [ activePreset , setActivePreset ] = useState ( null );
 
-  useEffect ( ( ) => {
-
-    // Reset active preset when dates are changed manually.
+  useEffect ( () => {
+    
     if ( initialStartDate !== startDate || initialEndDate !== endDate ) {
       setActivePreset ( null );
     }
-
+    
   } , [ initialStartDate , initialEndDate , startDate , endDate ] );
 
   // Function to handle date range change.
-  const handleApply = ( ) => {
-
+  const handleApply = () => {
+    
     if ( startDate && endDate ) {
-      onRangeChange ( { startDate , endDate } );
-    }
 
+      const start = new Date ( startDate );
+      const end = new Date ( endDate );
+      
+      if ( start > end ) {
+        
+        const temp = startDate;
+        setStartDate ( endDate );
+        setEndDate ( temp );
+        onRangeChange ( { startDate : endDate , endDate : temp } );
+        
+      } else {
+        
+        onRangeChange ( { startDate , endDate } );
+        
+      }
+      
+    }
+    
   };
 
   // Function to handle reset.
-  const handleReset = ( ) => {
-
+  const handleReset = () => {
+    
     setStartDate ( "" );
     setEndDate ( "" );
     setActivePreset ( null );
-    onRangeChange ( { startDate: "" , endDate: "" } );
-
+    onRangeChange ( { startDate : "" , endDate : "" } );
+    
   };
 
   // Function to set preset range.
   const setPresetRange = ( days , presetName ) => {
-
-    const end = new Date ( );
-    const start = new Date ( );
-    start.setDate ( end.getDate ( ) - days );
+    
+    const end = new Date ();
+    const start = new Date ();
+    start.setDate ( end.getDate () - days );
   
-    const formattedEndDate = end.toISOString ( ).split ( 'T' ) [ 0 ];
-    const formattedStartDate = start.toISOString ( ).split ( 'T' ) [ 0 ];
+    const formattedEndDate = end.toISOString ().split ( 'T' )[ 0 ];
+    const formattedStartDate = start.toISOString ().split ( 'T' )[ 0 ];
   
     setStartDate ( formattedStartDate );
     setEndDate ( formattedEndDate );
     setActivePreset ( presetName );
-    onRangeChange ( { startDate: formattedStartDate , endDate: formattedEndDate } );
-
+    onRangeChange ( { startDate : formattedStartDate , endDate : formattedEndDate } );
+    
   };
 
-  // Function to set today's date.
-  const setThisMonth = ( ) => {
-
-    const today = new Date ( );
-    const start = new Date ( today.getFullYear ( ) , today.getMonth ( ) , 1 );
+  const setThisMonth = () => {
+    
+    const today = new Date ();
+    const start = new Date ( today.getFullYear () , today.getMonth () , 1 );
   
-    const formattedEndDate = today.toISOString ( ).split ( 'T' ) [ 0 ];
-    const formattedStartDate = start.toISOString ( ).split ( 'T' ) [ 0 ];
+    const formattedEndDate = today.toISOString ().split ( 'T' )[ 0 ];
+    const formattedStartDate = start.toISOString ().split ( 'T' )[ 0 ];
   
     setStartDate ( formattedStartDate );
     setEndDate ( formattedEndDate );
     setActivePreset ( 'thisMonth' );
-    onRangeChange ( { startDate: formattedStartDate , endDate: formattedEndDate } );
-
+    onRangeChange ( { startDate : formattedStartDate , endDate : formattedEndDate } );
+    
   };
 
-  // Function to set last month's date.
-  const setLastMonth = ( ) => {
-
-    const today = new Date ( );
-    const lastMonth = today.getMonth ( ) - 1;
-    const year = lastMonth < 0 ? today.getFullYear ( ) - 1 : today.getFullYear ( );
+  const setLastMonth = () => {
+    
+    const today = new Date ();
+    const lastMonth = today.getMonth () - 1;
+    const year = lastMonth < 0 ? today.getFullYear () - 1 : today.getFullYear ();
     const month = lastMonth < 0 ? 11 : lastMonth;
   
     const start = new Date ( year , month , 1 );
     const end = new Date ( year , month + 1 , 0 );
   
-    const formattedEndDate = end.toISOString ( ).split ( 'T' ) [ 0 ];
-    const formattedStartDate = start.toISOString ( ).split ( 'T' ) [ 0 ];
+    const formattedEndDate = end.toISOString ().split ( 'T' )[ 0 ];
+    const formattedStartDate = start.toISOString ().split ( 'T' )[ 0 ];
   
     setStartDate ( formattedStartDate );
     setEndDate ( formattedEndDate );
     setActivePreset ( 'lastMonth' );
-    onRangeChange ( { startDate: formattedStartDate , endDate: formattedEndDate } );
-
+    onRangeChange ( { startDate : formattedStartDate , endDate : formattedEndDate } );
+    
   };
 
   return (
 
-    <div className = "bg-white rounded-xl shadow-md p-4 sm:p-6 mb-4 sm:mb-6 text-center">
-      <h3 className = "text-lg sm:text-xl font-semibold text-purple-900 mb-3 sm:mb-4">Sales Period Analysis</h3>
+    <div className = "bg-white/10 backdrop-blur-sm rounded-xl shadow-md p-3 sm:p-4 md:p-6 mb-3 sm:mb-4 md:mb-6 text-center border border-purple-500/20 relative overflow-hidden">
+
+      <div className = "absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-purple-600 via-transparent to-pink-500 opacity-70"></div>
+      
+      <h3 className = "text-base sm:text-lg md:text-xl font-semibold text-white mb-2 sm:mb-3 md:mb-4 hyper-text-glow">Sales Period Analysis</h3>
     
-      { /*Input field to set the start date.*/ }
-      <div className = "flex flex-col sm:flex-row flex-wrap justify-center items-center sm:items-end gap-3 sm:gap-4 mb-4">
+      <div className = "flex flex-col sm:flex-row flex-wrap justify-center items-center gap-2 sm:gap-4 mb-3 sm:mb-4">
+        
+        {/* From date input. */}
         <div className = "w-full sm:w-auto">
-          <label className = "block text-sm text-gray-600 mb-1">From</label>
-          <input 
-            type = "date" 
-            className = "w-full sm:w-auto p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400" 
-            value = { startDate }
-            onChange = { ( e ) => {
-
-              setStartDate ( e.target.value );
-              setActivePreset ( null );
-
-            } }
-          />
+          <label className = "block text-xs sm:text-sm text-gray-300 mb-1 text-left">From</label>
+          <div className = "relative">
+            <input 
+              type = "date" 
+              className = "w-full sm:w-auto p-1.5 sm:p-2 pl-7 sm:pl-9 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 bg-gray-800/70 text-white border-purple-500/30 text-xs sm:text-sm" 
+              value = { startDate }
+              onChange = { ( e ) => {
+                setStartDate ( e.target.value );
+                setActivePreset ( null );
+              } }
+              max = { endDate || undefined }
+            />
+            <Calendar size = { 14 } className = "absolute left-2 sm:left-3 top-1/2 transform -translate-y-1/2 text-purple-400" />
+          </div>
         </div>
       
-        { /*Input field to set the end date.*/ }
+        {/* To date input. */}
         <div className = "w-full sm:w-auto">
-          <label className = "block text-sm text-gray-600 mb-1">To</label>
-          <input 
-            type = "date" 
-            className = "w-full sm:w-auto p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-400" 
-            value = { endDate }
-            onChange = { ( e ) => {
-
-              setEndDate ( e.target.value );
-              setActivePreset ( null );
-
-            } }
-          />
+          <label className = "block text-xs sm:text-sm text-gray-300 mb-1 text-left">To</label>
+          <div className = "relative">
+            <input 
+              type = "date" 
+              className = "w-full sm:w-auto p-1.5 sm:p-2 pl-7 sm:pl-9 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 bg-gray-800/70 text-white border-purple-500/30 text-xs sm:text-sm" 
+              value = { endDate }
+              onChange = { ( e ) => {
+                setEndDate ( e.target.value );
+                setActivePreset ( null );
+              } }
+              min = { startDate || undefined }
+            />
+            <Calendar size = { 14 } className = "absolute left-2 sm:left-3 top-1/2 transform -translate-y-1/2 text-purple-400" />
+          </div>
         </div>
       
-        { /*Button to apply the selected date range.*/ }
-        <button 
-          onClick = { handleApply }
-          className = "w-full sm:w-auto px-4 py-2 bg-purple-700 text-white rounded-lg hover:bg-purple-800 transition"
-        >
-          Apply
-        </button>
-      
-        { /*Button to reset the date range.*/ }
-        <button 
-          onClick = { handleReset }
-          className = "w-full sm:w-auto px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition"
-        >
-          Reset
-        </button>
+        {/* Action buttons. */}
+        <div className = "flex gap-2 mt-2 sm:mt-0 w-full sm:w-auto">
+          <button 
+            onClick = { handleApply }
+            disabled = { !startDate || !endDate }
+            className = { `flex-1 sm:flex-none px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg transition flex items-center justify-center gap-2 text-xs sm:text-sm
+              ${ ( !startDate || !endDate ) 
+                ? 'bg-gray-700/50 text-gray-400 cursor-not-allowed' 
+                : 'hyper-button hover:bg-purple-800/30' }` }
+          >
+            <span>Apply</span>
+          </button>
+        
+          <button 
+            onClick = { handleReset }
+            className = "flex-1 sm:flex-none px-3 sm:px-4 py-1.5 sm:py-2 hyper-button rounded-lg hover:bg-purple-800/30 transition flex items-center justify-center gap-2 text-xs sm:text-sm"
+          >
+            Reset
+          </button>
+        </div>
+        
       </div>
-    
-      { /*Button to set today's date.*/ }
-      <div className = "flex flex-wrap justify-center gap-2 sm:gap-3 mt-2 overflow-x-auto">
+
+      <div className = "flex flex-wrap justify-center gap-1.5 sm:gap-2 md:gap-3 mt-2">
+        
         <button 
-          onClick = { ( ) => setPresetRange ( 7 , 'last7Days' ) }
-          className = { `px-3 sm:px-4 py-2 rounded-lg transition text-xs sm:text-sm ${
+          onClick = { () => setPresetRange ( 7 , 'last7Days' ) }
+          className = { `px-2 sm:px-3 py-1 rounded-lg transition text-xs ${
             activePreset === 'last7Days' 
-              ? 'bg-purple-100 text-purple-800 border border-purple-300' 
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              ? 'bg-purple-500/30 text-white border border-purple-400/50 shadow-[0_0_10px_rgba(192,38,211,0.3)]' 
+              : 'bg-gray-800/50 text-gray-300 border border-gray-700/50 hover:bg-gray-700/50'
           }` }
         >
           Last 7 Days
         </button>
       
-        { /*Button to set last month's date.*/ }
         <button 
-          onClick = { ( ) => setPresetRange ( 30 , 'last30Days' ) }
-          className = { `px-3 sm:px-4 py-2 rounded-lg transition text-xs sm:text-sm ${
+          onClick = { () => setPresetRange ( 30 , 'last30Days' ) }
+          className = { `px-2 sm:px-3 py-1 rounded-lg transition text-xs ${
             activePreset === 'last30Days' 
-              ? 'bg-purple-100 text-purple-800 border border-purple-300' 
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              ? 'bg-purple-500/30 text-white border border-purple-400/50 shadow-[0_0_10px_rgba(192,38,211,0.3)]' 
+              : 'bg-gray-800/50 text-gray-300 border border-gray-700/50 hover:bg-gray-700/50'
           }` }
         >
           Last 30 Days
         </button>
       
-        { /*Button to set this month's date.*/ }
         <button 
           onClick = { setThisMonth }
-          className = { `px-3 sm:px-4 py-2 rounded-lg transition text-xs sm:text-sm ${
+          className = { `px-2 sm:px-3 py-1 rounded-lg transition text-xs ${
             activePreset === 'thisMonth' 
-              ? 'bg-purple-100 text-purple-800 border border-purple-300' 
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              ? 'bg-purple-500/30 text-white border border-purple-400/50 shadow-[0_0_10px_rgba(192,38,211,0.3)]' 
+              : 'bg-gray-800/50 text-gray-300 border border-gray-700/50 hover:bg-gray-700/50'
           }` }
         >
           This Month
         </button>
       
-        { /*Button to set last month's date.*/ }
         <button 
           onClick = { setLastMonth }
-          className = { `px-3 sm:px-4 py-2 rounded-lg transition text-xs sm:text-sm ${
+          className = { `px-2 sm:px-3 py-1 rounded-lg transition text-xs ${
             activePreset === 'lastMonth' 
-              ? 'bg-purple-100 text-purple-800 border border-purple-300' 
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              ? 'bg-purple-500/30 text-white border border-purple-400/50 shadow-[0_0_10px_rgba(192,38,211,0.3)]' 
+              : 'bg-gray-800/50 text-gray-300 border border-gray-700/50 hover:bg-gray-700/50'
           }` }
         >
           Last Month
         </button>
       
-        { /*Button to set last 90 days' date.*/ }
         <button 
-          onClick = { ( ) => setPresetRange ( 90 , 'last90Days' ) }
-          className = { `px-3 sm:px-4 py-2 rounded-lg transition text-xs sm:text-sm ${
+          onClick = { () => setPresetRange ( 90 , 'last90Days' ) }
+          className = { `px-2 sm:px-3 py-1 rounded-lg transition text-xs ${
             activePreset === 'last90Days' 
-              ? 'bg-purple-100 text-purple-800 border border-purple-300' 
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              ? 'bg-purple-500/30 text-white border border-purple-400/50 shadow-[0_0_10px_rgba(192,38,211,0.3)]' 
+              : 'bg-gray-800/50 text-gray-300 border border-gray-700/50 hover:bg-gray-700/50'
           }` }
         >
           Last 90 Days
         </button>
       
-        { /*Button to set last year's date.*/ }
         <button 
-          onClick = { ( ) => setPresetRange ( 365 , 'lastYear' ) }
-          className = { `px-3 sm:px-4 py-2 rounded-lg transition text-xs sm:text-sm ${
+          onClick = { () => setPresetRange ( 365 , 'lastYear' ) }
+          className = { `px-2 sm:px-3 py-1 rounded-lg transition text-xs ${
             activePreset === 'lastYear' 
-              ? 'bg-purple-100 text-purple-800 border border-purple-300' 
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              ? 'bg-purple-500/30 text-white border border-purple-400/50 shadow-[0_0_10px_rgba(192,38,211,0.3)]' 
+              : 'bg-gray-800/50 text-gray-300 border border-gray-700/50 hover:bg-gray-700/50'
           }` }
         >
           Last Year
         </button>
+        
       </div>
+
+      <div className = "absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-pink-500 via-transparent to-purple-600 opacity-70"></div>
+      
     </div>
 
   );
 
 }
 
-// Exporting the DateRangeSelector component.
 export default DateRangeSelector;

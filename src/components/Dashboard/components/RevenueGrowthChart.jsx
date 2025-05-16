@@ -1,11 +1,15 @@
 
+import { useMemo } from "react";
+
 import { ResponsiveLine } from "@nivo/line";
 import { nivoTheme } from "../../../utils/nivoTheme";
 
-function SalesTrendChart ( { invoiceData } ) {
+function RevenueGrowthChart ( { invoiceData } ) {
 
-  // Process data to get sales by month.
-  const salesByMonth = processSalesByMonth ( invoiceData );
+  // Process data for revenue growth.
+  const revenueGrowthData = useMemo ( () => {
+    return processRevenueGrowth ( invoiceData );
+  } , [ invoiceData ] );
 
   const enhancedTheme = {
     ...nivoTheme,
@@ -60,11 +64,12 @@ function SalesTrendChart ( { invoiceData } ) {
 
   return (
     <div className = "relative w-full h-full overflow-hidden">
-
-      <div className = "w-full h-full">
+      <h3 className = "text-white text-lg font-semibold mb-2">Revenue Growth</h3>
+    
+      <div className = "w-full h-[calc(100%-2rem)]">
         <ResponsiveLine
-          data = { salesByMonth }
-          margin = { { top : 20 , right : 20 , bottom : 40 , left : 50 } }
+          data = { revenueGrowthData }
+          margin = { { top : 20 , right : 20 , bottom : 40 , left : 65 } }
           xScale = { { type : 'point' } }
           yScale = { { 
             type : 'linear', 
@@ -81,18 +86,25 @@ function SalesTrendChart ( { invoiceData } ) {
             tickSize : 5,
             tickPadding : 5,
             tickRotation : 0,
-            legend : 'Month',
+            legend : 'Week',
             legendOffset : 30,
             legendPosition : 'middle'
           } }
           axisLeft = { {
             orient : 'left',
             tickSize : 5,
-            tickPadding : 5,
+            tickPadding : 8,
             tickRotation : 0,
-            legend : 'Sales ( Rs )',
-            legendOffset : -40,
-            legendPosition : 'middle'
+            legend : 'Revenue ( Rs )',
+            legendOffset : -45,
+            legendPosition : 'middle',
+            format : value => 
+              Math.abs ( value ) >= 1000000
+                ? `${ ( value / 1000000 ).toFixed ( 1 ) }M`
+                : Math.abs ( value ) >= 1000
+                ? `${ ( value / 1000 ).toFixed ( 1 ) }K`
+                : value,
+            tickValues : 5
           } }
           pointSize = { 8 }
           pointColor = { { theme : 'background' } }
@@ -117,102 +129,96 @@ function SalesTrendChart ( { invoiceData } ) {
             }
           ] }
           fill = { [ { match : '*' , id : 'gradientA' } ] }
-          legends = { [
-            {
-              anchor : 'bottom-right',
-              direction : 'column',
-              justify : false,
-              translateX : 0,
-              translateY : 0,
-              itemsSpacing : 0,
-              itemDirection : 'left-to-right',
-              itemWidth : 80,
-              itemHeight : 20,
-              itemOpacity : 0.75,
-              symbolSize : 12,
-              symbolShape : 'circle',
-              symbolBorderColor : 'rgba( 0 , 0 , 0 , .5 )',
-              itemTextColor : '#ffffff',
-              effects : [
-                {
-                  on : 'hover',
-                  style : {
-                    itemBackground : 'rgba( 0 , 0 , 0 , .03 )',
-                    itemOpacity : 1
-                  }
-                }
-              ]
-            }
-          ] }
           theme = { enhancedTheme }
           animate = { true }
           motionConfig = "gentle"
         />
       </div>
-      
+    
       <div className = "absolute inset-0 pointer-events-none bg-gradient-to-t from-purple-900/10 to-transparent"></div>
       <div className = "absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,rgba(244,114,182,0.05)_0%,transparent_70%)]"></div>
-      
     </div>
   );
 }
 
-// Helper function to process sales by month.
-function processSalesByMonth ( invoiceData ) {
+// Helper function to process revenue growth data.
+function processRevenueGrowth ( invoiceData ) {
 
-  if ( !invoiceData || invoiceData.length === 0 ) {
+  if ( !invoiceData || !Array.isArray ( invoiceData ) || invoiceData.length === 0 ) {
     return [ { id : 'No Data' , color : "#f472b6" , data : [] } ];
   }
 
-  const currentYear = new Date ().getFullYear ();
-
-  const months = [
-    'Jan' , 'Feb' , 'Mar' , 'Apr' , 'May' , 'Jun', 
-    'Jul' , 'Aug' , 'Sep' , 'Oct' , 'Nov' , 'Dec'
-  ];
-
-  // Initialize sales data for current year.
-  const salesData = months.map ( month => ( { x : month , y : 0 } ) );
-
-  invoiceData.forEach ( invoice => {
+  try {
+  
+    const currentDate = new Date ();
+  
+    // Calculate date 8 weeks ago.
+    const startDate = new Date ();
+    startDate.setDate ( currentDate.getDate () - ( 8 * 7 ) );
+  
+    // Initialize weekly data.
+    const weeklyData = Array ( 8 ).fill ().map ( ( _ , i ) => {
+      const weekStart = new Date ( startDate );
+      weekStart.setDate ( startDate.getDate () + ( i * 7 ) );
     
-    try {
+      const weekEnd = new Date ( weekStart );
+      weekEnd.setDate ( weekStart.getDate () + 6 );
+    
+      return {
+        week : `W${ i + 1 }`,
+        start : weekStart,
+        end : weekEnd,
+        revenue : 0
+      };
+    } );
+  
+    invoiceData.forEach ( invoice => {
+    
+      try {
+
+        const dateString = invoice.updatedAt || invoice.createdAt;
+        const total = Number ( invoice.total ) || 0;
       
-      // Extract date and total from the invoice.
-      const dateString = invoice.updatedAt || invoice.createdAt;
-      const total = Number ( invoice.total ) || 0;
+        const date = new Date ( dateString );
       
-      const date = new Date ( dateString );
-      
-      // Only process invoices with valid dates and totals.
-      if ( date && !isNaN ( date.getTime () ) && !isNaN ( total ) ) {
+        if ( date && !isNaN ( date.getTime () ) && !isNaN ( total ) ) {
         
-        if ( date.getFullYear () === currentYear ) {
-          const month = date.getMonth ();
-          salesData [ month ].y += total;
+          for ( let i = 0 ; i < weeklyData.length ; i++ ) {
+            if ( date >= weeklyData [ i ].start && date <= weeklyData [ i ].end ) {
+              weeklyData [ i ].revenue += total;
+              break;
+            }
+          }
+        
         }
-        
+      
+      } catch ( error ) {
+      
+        console.error ( "Error processing invoice for revenue growth:" , error );
+      
       }
-      
-    } catch ( error ) {
-      
-      console.error ( "Error processing invoice:" , error , invoice );
-      
-    }
     
-  } );
+    } );
 
-  salesData.forEach ( data => {
-    data.y = Number ( data.y.toFixed ( 2 ) );
-  } );
-
-  return [
-    {
-      id : `Sales ${ currentYear }`,
-      color : "#f472b6",
-      data : salesData
-    }
-  ];
+    const chartData = [
+      {
+        id : "Weekly Revenue",
+        color : "#f472b6",
+        data : weeklyData.map ( week => ( {
+          x : week.week,
+          y : Number ( week.revenue.toFixed ( 2 ) )
+        } ) )
+      }
+    ];
+  
+    return chartData;
+  
+  } catch ( error ) {
+  
+    console.error ( "Error processing revenue growth data:" , error );
+    return [ { id : 'Error' , color : "#f472b6" , data : [] } ];
+  
+  }
 }
 
-export default SalesTrendChart;
+export default RevenueGrowthChart;

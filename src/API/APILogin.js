@@ -19,7 +19,7 @@ const APILogin = async (username, password) => {
 const APILogout = async () => {
   localStorage.removeItem("token");
   localStorage.removeItem("user");
-  alert("Logout successful");
+  //alert("Logout successful");
   return true;
 };
 

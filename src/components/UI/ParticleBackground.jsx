@@ -1,20 +1,24 @@
+
 import React from 'react';
 
 /**
- * A reusable component that creates a background with floating particles
- * Exactly matching the implementation in Footer.jsx and Footer.css
  * @param {Object} props
- * @param {number} props.count - Number of particles to display (default: 15)
- * @param {string} props.className - Additional classes to apply
+ * @param {number} props.count - Number of particles to display.
+ * @param {string} props.className - Additional classes to apply.
  */
-const ParticleBackground = ({ 
+
+const ParticleBackground = ( {
+   
   count = 15, 
   className = ''
-}) => {
-  // Create CSS for the float animation if it doesn't exist
-  React.useEffect(() => {
-    if (!document.getElementById('particle-animation-style')) {
-      const styleEl = document.createElement('style');
+
+} ) => {
+
+  React.useEffect ( ( ) => {
+
+    if ( !document.getElementById ( 'particle-animation-style' ) ) {
+
+      const styleEl = document.createElement ( 'style' );
       styleEl.id = 'particle-animation-style';
       styleEl.textContent = `
         .particles-container {
@@ -51,27 +55,37 @@ const ParticleBackground = ({
           }
         }
       `;
-      document.head.appendChild(styleEl);
+      document.head.appendChild ( styleEl );
+
     }
-  }, []);
+  } , [ ] );
 
   return (
-    <div className={`particles-container ${className}`}>
-      {[...Array(count)].map((_, i) => (
+
+    <div className = { `particles-container ${ className }` }>
+      
+      { [ ...Array ( count ) ].map ( ( _, i ) => (
+
         <div 
-          key={i} 
-          className="particle"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            animationDelay: `${Math.random() * 5}s`,
-            width: `${Math.random() * 8 + 2}px`,
-            height: `${Math.random() * 8 + 2}px`,
-          }}
-        ></div>
-      ))}
+          key = { i } 
+          className = "particle"
+          style = { {
+
+            left : `${ Math.random ( ) * 100 }%`,
+            top : `${ Math.random ( ) * 100 }%`,
+            animationDelay : `${ Math.random ( ) * 5 }s`,
+            width : `${ Math.random ( ) * 8 + 2 }px`,
+            height : `${ Math.random ( ) * 8 + 2 }px`,
+
+          } } 
+        >
+        </div>
+      ) ) }
+
     </div>
+
   );
+
 };
 
 export default ParticleBackground;

@@ -55,7 +55,7 @@ function SideBar({ isExpanded: propIsExpanded, toggleSidebar: propToggleSidebar,
   const isActive = (path) => location.pathname === path;
 
   return (
-    <div className={`bg-gradient-to-b from-violet-950 to-purple-800 h-full flex flex-col ${isExpanded ? 'w-56' : 'w-20'} transition-all duration-300 md:relative`}>
+    <div className={`bg-gradient-to-b from-violet-950 to-purple-800 h-[calc(100vh-3.5rem)] flex flex-col ${isExpanded ? 'w-56' : 'w-20'} transition-all duration-300 md:relative absolute z-990`}>
       {/*extra top padding between topbar and store section */}
       <div className="pt-4"></div>
       

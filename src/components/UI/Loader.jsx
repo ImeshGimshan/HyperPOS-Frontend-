@@ -1,166 +1,255 @@
 
 import styled from 'styled-components';
 
-const Loader = ( ) => 
-    {
+function Loader ( ) {
 
-    return (
-        <StyledWrapper>
-            <div className="loader">
-                <div className="box">
-                <div className="logo">
-                    <img src="/HyperPOS - Logo.svg" alt="HyperPOS Logo" className="logo-image" />
-                </div>
-                </div>
-                <div className="box" />
-                <div className="box" />
-                <div className="box" />
-                <div className="box" />
-            </div>
-        </StyledWrapper>
+  return (
 
-    );
+    <StyledWrapper>
+      <div className = "loader-container">
+        
+        <div className = "rings-container">
+          <div className = "ring outer-ring"></div>
+          <div className = "ring middle-ring"></div>
+          <div className = "ring inner-ring"></div>
+        </div>
+        
+        <div className = "logo-container">
+          <img 
+            src = "/HyperPOS.svg" 
+            alt = "HyperPOS Logo" 
+            className = "logo-image" 
+          />
+        </div>
+        
+        <div className = "scanlines"></div>
+        
+      </div>
+    </StyledWrapper>
+
+  );
 
 }
 
 const StyledWrapper = styled.div`
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-display: flex;
-justify-content: center;
-align-items: center;
-background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-z-index: 9999;
 
-.loader {
---size: 320px;
---duration: 2.5s;
---logo-color: #a855f7;
---background: linear-gradient(
-    0deg,
-    rgba(168, 85, 247, 0.1) 0%,
-    rgba(192, 132, 252, 0.15) 100%
-);
---border-color: rgba(168, 85, 247, 0.5);
-height: var(--size);
-aspect-ratio: 1;
-position: relative;
-}
+  position : fixed;
+  top : 0;
+  left : 0;
+  width : 100%;
+  height : 100%;
+  display : flex;
+  justify-content : center;
+  align-items : center;
+  background : linear-gradient( 135deg , #0f0326 0% , #1a0a40 50% , #3b0764 100% );
+  z-index : 9999;
+  overflow : hidden;
 
-.loader .box {
-position: absolute;
-background: var(--background);
-border-radius: 50%;
-border-top: 2px solid var(--border-color);
-box-shadow: rgba(168, 85, 247, 0.3) 0px 10px 30px -5px;
-backdrop-filter: blur(8px);
-animation: ripple var(--duration) infinite ease-in-out;
-}
+  .loader-container {
 
-.loader .box:nth-child(1) {
-inset: 30%;
-z-index: 99;
-background: rgba(168, 85, 247, 0.15);
-border-width: 2px;
-}
+    position : relative;
+    /* Responsive sizing for the loader container */
+    width : min( 85vw , 320px );
+    height : min( 85vw , 320px );
+    display : flex;
+    flex-direction : column;
+    align-items : center;
+    justify-content : center;
 
-.loader .box:nth-child(2) {
-inset: 22%;
-z-index: 98;
-border-color: rgba(168, 85, 247, 0.45);
-border-width: 2px;
-animation-delay: 0.24s;
-}
+  }
 
-.loader .box:nth-child(3) {
-inset: 14%;
-z-index: 97;
-border-color: rgba(168, 85, 247, 0.4);
-border-width: 2px;
-animation-delay: 0.48s;
-}
+  .rings-container {
 
-.loader .box:nth-child(4) {
-inset: 6%;
-z-index: 96;
-border-color: rgba(168, 85, 247, 0.35);
-border-width: 2px;
-animation-delay: 0.72s;
-}
+    position : absolute;
+    width : 100%;
+    height : 100%;
 
-.loader .box:nth-child(5) {
-inset: 0%;
-z-index: 95;
-border-color: rgba(168, 85, 247, 0.3);
-border-width: 2px;
-animation-delay: 0.96s;
-}
+  }
 
-.loader .logo {
-position: absolute;
-inset: 0;
-display: grid;
-place-content: center;
-padding: 15%;
-}
+  .ring {
 
-.logo-image {
-width: 100%;
-height: auto;
-filter: drop-shadow(0 0 15px rgba(168, 85, 247, 0.8));
-animation: pulse var(--duration) infinite ease-in-out;
-}
+    position : absolute;
+    border-radius : 50%;
+    border : 2px solid transparent;
+    border-top-color : rgba( 244 , 114 , 182 , 0.8 );
+    border-right-color : rgba( 192 , 38 , 211 , 0.8 );
+    box-shadow : 0 0 20px rgba( 244 , 114 , 182 , 0.4 );
+    animation : spin-and-pulse 3s ease-in-out infinite;
 
-@keyframes ripple {
-0% {
-    transform: scale(1);
-    box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
-}
-50% {
-    transform: scale(1.35);
-    box-shadow: 0 0 40px rgba(168, 85, 247, 0.6);
-}
-100% {
-    transform: scale(1);
-    box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
-}
-}
+  }
 
-@keyframes color-change {
-0% {
-    fill: var(--logo-color);
-    filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.5));
-}
-50% {
-    fill: #d8b4fe; /* Purple-300 for a lighter color at the midpoint */
-    filter: drop-shadow(0 0 15px rgba(168, 85, 247, 0.8));
-}
-100% {
-    fill: var(--logo-color);
-    filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.5));
-}
-}
+  .outer-ring {
 
-@keyframes pulse {
+    width : 100%;
+    height : 100%;
+    inset : 0;
+    animation-duration : 3s;
+
+  }
+
+  .middle-ring {
+
+    width : 80%;
+    height : 80%;
+    inset : 10%;
+    animation-duration : 2.5s;
+    animation-direction : reverse;
+    border-top-color : rgba( 192 , 38 , 211 , 0.8 );
+    border-right-color : rgba( 244 , 114 , 182 , 0.8 );
+
+  }
+
+  .inner-ring {
+
+    width : 60%;
+    height : 60%;
+    inset : 20%;
+    animation-duration : 2s;
+
+  }
+
+  /* Logo styling. */
+  .logo-container {
+
+    position : relative;
+    /* Responsive sizing for the logo container */
+    width : min( 40% , 120px );
+    height : min( 40% , 120px );
+    display : flex;
+    align-items : center;
+    justify-content : center;
+    z-index : 2;
+    animation : logo-pulse 2s infinite ease-in-out;
+
+  }
+
+  .logo-image {
+
+    width : 100%;
+    height : auto;
+    filter : drop-shadow( 0 0 15px rgba( 244 , 114 , 182 , 0.8 ) );
+
+  }
+
+  /* Scanlines effect. */
+  .scanlines {
+
+    position : absolute;
+    top : 0;
+    left : 0;
+    width : 100%;
+    height : 100%;
+    background : linear-gradient(
+      transparent 50%,
+      rgba( 15 , 3 , 38 , 0.5 ) 50%
+    );
+    background-size : 100% 4px;
+    opacity : 0.3;
+    pointer-events : none;
+    z-index : 3;
+
+  }
+
+  /* Animations. */
+
+  @keyframes spin-and-pulse {
+
     0% {
-        opacity: 0.9;
-        filter: drop-shadow(0 0 15px rgba(168, 85, 247, 0.6));
-        transform: scale(1);
+      transform : rotate( 0deg ) scale( 0.8 );
+      opacity : 0.3;
     }
     50% {
-        opacity: 1;
-        filter: drop-shadow(0 0 30px rgba(168, 85, 247, 1));
-        transform: scale(1.15); /* Slightly increased scale effect */
+      transform : rotate( 180deg ) scale( 1.2 );
+      opacity : 1;
     }
     100% {
-        opacity: 0.9;
-        filter: drop-shadow(0 0 15px rgba(168, 85, 247, 0.6));
-        transform: scale(1);
+      transform : rotate( 360deg ) scale( 0.8 );
+      opacity : 0.3;
     }
+
+  }
+
+  @keyframes logo-pulse {
+
+    0%, 100% {
+      opacity : 0.9;
+      filter : drop-shadow( 0 0 15px rgba( 244 , 114 , 182 , 0.6 ) );
+      transform : scale( 1 );
     }
-}`;
+    50% {
+      opacity : 1;
+      filter : drop-shadow( 0 0 30px rgba( 244 , 114 , 182 , 1 ) );
+      transform : scale( 1.15 );
+    }
+
+  }
+
+  /* Hexagon background behind logo. */
+  .logo-container::before {
+
+    content : '';
+    position : absolute;
+    width : 100%;
+    height : 100%;
+    background : rgba( 15 , 3 , 38 , 0.7 );
+    transform : rotate( 45deg );
+    border : 1px solid rgba( 244 , 114 , 182 , 0.3 );
+    box-shadow : 0 0 20px rgba( 192 , 38 , 211 , 0.3 );
+    z-index : -1;
+
+  }
+
+  /* Glowing corners. */
+  .logo-container::after {
+
+    content : '';
+    position : absolute;
+    width : 120%;
+    height : 120%;
+    background : radial-gradient(
+      ellipse at center,
+      rgba( 244 , 114 , 182 , 0.2 ) 0%,
+      transparent 70%
+    );
+    z-index : -2;
+
+  }
+
+  @media (max-width: 640px) {
+
+    .ring {
+      border-width : 1.5px;
+      box-shadow : 0 0 10px rgba( 244 , 114 , 182 , 0.4 );
+
+    }
+    
+    .logo-container::before {
+
+      border-width : 0.5px;
+    }
+
+  }
+
+  @media (max-width: 480px) {
+
+    .outer-ring {
+      animation-duration : 4s;
+
+    }
+    
+    .middle-ring {
+
+      animation-duration : 3.5s;
+
+    }
+    
+    .inner-ring {
+
+      animation-duration : 3s;
+
+    }
+
+  }
+`;
 
 export default Loader;
