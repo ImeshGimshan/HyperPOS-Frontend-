@@ -1,5 +1,5 @@
-// const BaseUrl = "http://152.67.176.77:8080/api";
-const BaseUrl = "http://localhost:8080/api";
+const BaseUrl = "http://152.67.176.77:8080/api";
+// const BaseUrl = "http://localhost:8080/api";
 const billUrl = "http://152.67.176.77:8080";
 
 const APILinks = {
