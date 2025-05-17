@@ -1,5 +1,6 @@
 
 import React from 'react';
+
 import ReactDOM from 'react-dom/client';
 
 import { RouterProvider , createBrowserRouter } from "react-router-dom";
@@ -21,9 +22,9 @@ import CustomerPage from "./components/Dashboard/pages/CustomerPage.jsx";
 import ProductPage from "./components/Dashboard/pages/ProductPage.jsx";
 import SalePage from "./components/Dashboard/pages/SalePage.jsx";
 import Test from './components/Test/Test';
-import BaseScreen from './components/BaseScreen/BaseScreen';
-import PurchasePage from "./components/Dashboard/pages/PurchasePage";
+import PurchasePage from "./components/Dashboard/pages/PurchasePage.jsx";
 import Organization from "./components/Organization/Organization.jsx";
+import OrganizationPage from "./components/Dashboard/pages/OrganizationPage.jsx";
 
 import Customerregister from './components/customer/registercustomer.jsx';
 import SupplierRegistration from './components/register/register.jsx';
@@ -32,12 +33,14 @@ import Category from './components/Category/Categoty.jsx';
 import Purchase from './components/Purchase/Purchase.jsx';
 import GrnReturn from './components/ReturnPurchase/GrnReturn.jsx';
 
+import BaseScreenLayout from './components/BaseScreen/layout/BaseScreenLayout.jsx';
+import BaseScreenHome from './components/BaseScreen/pages/BaseScreenHome.jsx';
+
 import './index.css'
 import './styles/hyperpos-theme.css';
 
 // Creating the router object.
 const router = createBrowserRouter ( [
-
   {
     path : "/",
     element : <App />,
@@ -52,16 +55,16 @@ const router = createBrowserRouter ( [
 
       { 
         path : "basescreen", 
-        element : <BaseScreen />,
+        element : <BaseScreenLayout />,
         children : [
+          { index : true , element : <BaseScreenHome /> },
           { path : "cashier" , element : <CashierScreen /> },
           { path : "invoice-return" , element : <InvoiceReturn /> },
-          { path : "customer-registration" , element : <Customerregister /> },
-          { index : true , element : <CashierScreen /> }
+          { path : "customer-registration" , element : <Customerregister /> }
         ]
       },
 
-      { path : "test" , element : <Test /> },
+      { path : "test" , element: <Test /> },
       { path : "customerregister" , element : <Customerregister /> },
       { path : "supplierregister" , element : <SupplierRegistration /> },
       { path : "invoicereturn" , element : <InvoiceReturn /> },
@@ -82,7 +85,8 @@ const router = createBrowserRouter ( [
           { path : "products" , element : <ProductPage /> },
           { path : "sales" , element : <SalePage /> },
           { path : "purchases" , element : <PurchasePage /> },
-          { path : "organization" , element : <Organization /> },
+          { path : "organizations" , element : <OrganizationPage /> },
+          { path : "add-organization" , element : <Organization /> },
           { path : "purchase" , element : <Purchase /> },
           { path : "customerregister" , element : <Customerregister /> },
           { path : "addproduct" , element : <AddProduct /> },
@@ -93,9 +97,9 @@ const router = createBrowserRouter ( [
       },
     ],
   },
-] );
+]);
 
-ReactDOM.createRoot ( document.getElementById ( 'root' ) ).render (
+ReactDOM.createRoot ( document.getElementById ( 'root' ) ).render(
   <React.StrictMode>
     <RouterProvider router = { router } />
   </React.StrictMode>

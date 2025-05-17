@@ -1,4 +1,3 @@
-
 import { useState , useEffect , useCallback } from "react";
 
 import { Link , useLocation , useNavigate } from "react-router-dom";
@@ -13,7 +12,8 @@ import {
   Building,
   UserPlus,
   Truck,
-  ChevronRight
+  ChevronRight,
+  PlusCircle
 } from "lucide-react";
 
 import ParticleBackground from "../../UI/ParticleBackground";
@@ -88,9 +88,9 @@ function Sidebar ( { onCloseMobile , isMobileOpen } ) {
         path : "/dashboard/sales"
       },
       {
-        title : "Purchase",
+        title : "Purchases",
         icon : <ShoppingCart size = { 20 } />,
-        path : "/dashboard/purchase"
+        path : "/dashboard/purchases"
       },
       {
         title : "Invoice Return",
@@ -107,7 +107,12 @@ function Sidebar ( { onCloseMobile , isMobileOpen } ) {
       {
         title : "Organizations",
         icon : <Building size = { 20 } />,
-        path : "/dashboard/organization"
+        path : "/dashboard/organizations"
+      },
+      {
+        title : "Add Organization",
+        icon : <PlusCircle size = { 20 } />,
+        path : "/dashboard/add-organization"
       }
     ]
   } ) , [] );

@@ -11,7 +11,7 @@ const getOrgData = async ( ) => {
     } 
     catch ( error ) {
 
-      console.error("Error fetching invoice data:", error);
+      console.error("Error fetching organization data:", error);
       return [];
 
     }
@@ -28,13 +28,11 @@ const updateOrgData = async ( orgData ) => {
   }
   catch ( error ) {
 
-    console.error("Error updating invoice data:", error);
-    return [];
+    console.error("Error updating organization data:", error);
+    throw error;
 
   }
 
 }
-
-
 
 export { getOrgData , updateOrgData };
