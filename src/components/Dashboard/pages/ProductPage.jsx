@@ -42,29 +42,29 @@ function ViewModal ( { product, onClose } ) {
                 <div className = "grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                   <div className = "flex flex-col">
                     <span className = "font-medium text-gray-600">Product ID</span>
-                    <span className = "p-2 bg-white rounded-md shadow-sm">{ product.id }</span>
+                    <span className = "p-2 bg-white text-black rounded-md shadow-sm">{ product.id }</span>
                   </div>
                   <div className = "flex flex-col">
                     <span className = "font-medium text-gray-600">Status</span>
-                    <span className = {`p-2 bg-white rounded-md shadow-sm ${product.isActive ? "text-green-600" : "text-red-600"}`}>
+                    <span className = {`p-2 bg-white text-black rounded-md shadow-sm ${product.isActive ? "text-green-600" : "text-red-600"}`}>
                       { product.isActive ? "Active" : "Inactive" }
                     </span>
                   </div>
                   <div className = "flex flex-col col-span-1 sm:col-span-2">
                     <span className = "font-medium text-gray-600">Name</span>
-                    <span className = "p-2 bg-white rounded-md shadow-sm">{ product.name }</span>
+                    <span className = "p-2 bg-white text-black rounded-md shadow-sm">{ product.name }</span>
                   </div>
                   <div className = "flex flex-col col-span-1 sm:col-span-2">
                     <span className = "font-medium text-gray-600">Barcode</span>
-                    <span className = "p-2 bg-white rounded-md shadow-sm">{ product.barcode || "Not provided" }</span>
+                    <span className = "p-2 bg-white text-black rounded-md shadow-sm">{ product.barcode || "Not provided" }</span>
                   </div>
                   <div className = "flex flex-col">
                     <span className = "font-medium text-gray-600">Category ID</span>
-                    <span className = "p-2 bg-white rounded-md shadow-sm">{ product.categoryId }</span>
+                    <span className = "p-2 bg-white text-black rounded-md shadow-sm">{ product.categoryId }</span>
                   </div>
                   <div className = "flex flex-col">
                     <span className = "font-medium text-gray-600">Unit</span>
-                    <span className = "p-2 bg-white rounded-md shadow-sm">{ product.unit }</span>
+                    <span className = "p-2 bg-white text-black rounded-md shadow-sm">{ product.unit }</span>
                   </div>
                 </div>
               </div>
@@ -75,11 +75,11 @@ function ViewModal ( { product, onClose } ) {
                 <div className = "grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                   <div className = "flex flex-col">
                     <span className = "font-medium text-gray-600">Price</span>
-                    <span className = "p-2 bg-white rounded-md shadow-sm">Rs { product.price.toLocaleString() }</span>
+                    <span className = "p-2 bg-white text-black rounded-md shadow-sm">Rs { product.price.toLocaleString() }</span>
                   </div>
                   <div className = "flex flex-col">
                     <span className = "font-medium text-gray-600">Discount</span>
-                    <span className = "p-2 bg-white rounded-md shadow-sm">{ product.discount }%</span>
+                    <span className = "p-2 bg-white text-black rounded-md shadow-sm">{ product.discount }%</span>
                   </div>
                   <div className = "flex flex-col col-span-1 sm:col-span-2">
                     <span className = "font-medium text-gray-600">Final Price</span>
@@ -96,7 +96,7 @@ function ViewModal ( { product, onClose } ) {
                   <h3 className = "text-md font-semibold text-amber-800 mb-2 sm:mb-3 text-center">Description</h3>
                   <div className = "grid grid-cols-1 gap-3 text-sm">
                     <div className = "flex flex-col">
-                      <span className = "p-2 bg-white rounded-md shadow-sm whitespace-pre-wrap">{ product.description }</span>
+                      <span className = "p-2 bg-white text-black rounded-md shadow-sm whitespace-pre-wrap">{ product.description }</span>
                     </div>
                   </div>
                 </div>

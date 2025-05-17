@@ -22,7 +22,7 @@ function ViewModal ( { sale , onClose } ) {
 
   return (
 
-    <div className = "fixed inset-0 bg-black/50 flex justify-center items-center z-50 p-4 sm:p-8">
+    <div className = "fixed inset-0 bg-black/50 text-black flex justify-center items-center z-50 p-4 sm:p-8">
 
       <div className = "bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden relative">
         {/* Header */}
@@ -195,7 +195,7 @@ function FilterModal ( { onClose, onApply, customerList, paymentMethods, current
               <select
                 value = { customerId }
                 onChange = { ( e ) => setCustomerId ( e.target.value ) }
-                className = "p-2 rounded-lg border border-gray-300 focus:outline-none"
+                className = "p-2 rounded-lg border text-black border-gray-300 focus:outline-none"
               >
                 <option value = "">All</option>
                 { customerList.map ( ( id ) => (
@@ -215,7 +215,7 @@ function FilterModal ( { onClose, onApply, customerList, paymentMethods, current
               <select
                 value = { paymentMethod }
                 onChange = { ( e ) => setPaymentMethod ( e.target.value ) }
-                className = "p-2 rounded-lg border border-gray-300 focus:outline-none"
+                className = "p-2 rounded-lg border text-black border-gray-300 focus:outline-none"
               >
                 <option value = "">All</option>
                 { paymentMethods.map ( ( method ) => (
@@ -234,7 +234,7 @@ function FilterModal ( { onClose, onApply, customerList, paymentMethods, current
               <label className = "text-gray-600 mb-1">Min Total (Rs)</label>
               <input 
                 type = "number" 
-                className = "p-2 rounded-lg border border-gray-300" 
+                className = "p-2 rounded-lg border text-black border-gray-300" 
                 value = { minTotal } 
                 onChange = { ( e ) => setMinTotal ( e.target.value ) } 
               />
@@ -243,7 +243,7 @@ function FilterModal ( { onClose, onApply, customerList, paymentMethods, current
               <label className = "text-gray-600 mb-1">Max Total (Rs)</label>
               <input 
                 type = "number" 
-                className = "p-2 rounded-lg border border-gray-300" 
+                className = "p-2 rounded-lg border text-black border-gray-300" 
                 value = { maxTotal }
                 onChange = { ( e ) => setMaxTotal ( e.target.value ) } 
               />
@@ -259,7 +259,7 @@ function FilterModal ( { onClose, onApply, customerList, paymentMethods, current
               <label className = "text-gray-600 mb-1">Start Date</label>
               <input 
                 type = "date" 
-                className = "p-2 rounded-lg border border-gray-300" 
+                className = "p-2 rounded-lg border text-black border-gray-300" 
                 value = { startDate } 
                 onChange = { ( e ) => setStartDate ( e.target.value ) } 
               />
@@ -268,7 +268,7 @@ function FilterModal ( { onClose, onApply, customerList, paymentMethods, current
               <label className = "text-gray-600 mb-1">End Date</label>
               <input 
                 type = "date" 
-                className = "p-2 rounded-lg border border-gray-300" 
+                className = "p-2 rounded-lg border text-black border-gray-300" 
                 value = { endDate }
                 onChange = { ( e ) => setEndDate ( e.target.value ) } 
               />

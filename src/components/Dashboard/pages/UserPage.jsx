@@ -80,7 +80,7 @@ function ViewModal({ user, onClose, refreshData }) {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                   <div className="flex flex-col">
                     <span className="font-medium text-gray-600">User ID</span>
-                    <span className="p-2 bg-white rounded-md shadow-sm">
+                    <span className="p-2 bg-white text-black rounded-md shadow-sm">
                       {user.id}
                     </span>
                   </div>
@@ -109,13 +109,13 @@ function ViewModal({ user, onClose, refreshData }) {
                   </div>
                   <div className="flex flex-col">
                     <span className="font-medium text-gray-600">Username</span>
-                    <span className="p-2 bg-white rounded-md shadow-sm">
+                    <span className="p-2 bg-white text-black rounded-md shadow-sm">
                       {user.username}
                     </span>
                   </div>
                   <div className="flex flex-col">
                     <span className="font-medium text-gray-600">Role</span>
-                    <span className="p-2 bg-white rounded-md shadow-sm">
+                    <span className="p-2 bg-white text-black rounded-md shadow-sm">
                       <select
                         name=""
                         id=""
@@ -138,13 +138,13 @@ function ViewModal({ user, onClose, refreshData }) {
                 <div className="grid grid-cols-1 gap-3 text-sm">
                   <div className="flex flex-col">
                     <span className="font-medium text-gray-600">Email</span>
-                    <span className="p-2 bg-white rounded-md shadow-sm">
+                    <span className="p-2 bg-white text-black rounded-md shadow-sm">
                       {user.email || "Not provided"}
                     </span>
                   </div>
                   <div className="flex flex-col">
                     <span className="font-medium text-gray-600">Phone</span>
-                    <span className="p-2 bg-white rounded-md shadow-sm">
+                    <span className="p-2 bg-white text-black rounded-md shadow-sm">
                       {user.phone || "Not provided"}
                     </span>
                   </div>
@@ -161,7 +161,7 @@ function ViewModal({ user, onClose, refreshData }) {
                     <span className="font-medium text-gray-600">
                       Created At
                     </span>
-                    <span className="p-2 bg-white rounded-md shadow-sm">
+                    <span className="p-2 bg-white text-black rounded-md shadow-sm">
                       {formatDate(user.createdAt)}
                     </span>
                   </div>
@@ -169,7 +169,7 @@ function ViewModal({ user, onClose, refreshData }) {
                     <span className="font-medium text-gray-600">
                       Last Updated
                     </span>
-                    <span className="p-2 bg-white rounded-md shadow-sm">
+                    <span className="p-2 bg-white text-black rounded-md shadow-sm">
                       {formatDate(user.updatedAt)}
                     </span>
                   </div>
@@ -243,23 +243,23 @@ function FilterModal({ onClose, onApply, currentFilters, roles }) {
             Basic Information
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-            <div className="flex flex-col">
+            {/* <div className="flex flex-col">
               <label className="text-gray-600 mb-1">Name</label>
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="p-2 rounded-lg border border-gray-300 focus:outline-none"
+                className="p-2 rounded-lg border text-black border-gray-300 focus:outline-none"
                 placeholder="Filter by name"
               />
-            </div>
+            </div> */}
             <div className="flex flex-col">
               <label className="text-gray-600 mb-1">Username</label>
               <input
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="p-2 rounded-lg border border-gray-300 focus:outline-none"
+                className="p-2 rounded-lg border text-black border-gray-300 focus:outline-none"
                 placeholder="Filter by username"
               />
             </div>
@@ -269,7 +269,7 @@ function FilterModal({ onClose, onApply, currentFilters, roles }) {
                 type="text"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="p-2 rounded-lg border border-gray-300 focus:outline-none"
+                className="p-2 rounded-lg border text-black border-gray-300 focus:outline-none"
                 placeholder="Filter by email"
               />
             </div>
@@ -278,7 +278,7 @@ function FilterModal({ onClose, onApply, currentFilters, roles }) {
               <select
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
-                className="p-2 rounded-lg border border-gray-300 focus:outline-none"
+                className="p-2 rounded-lg border text-black border-gray-300 focus:outline-none"
               >
                 <option value="">All</option>
                 {roles.map((roleOption) => (
@@ -293,7 +293,7 @@ function FilterModal({ onClose, onApply, currentFilters, roles }) {
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
-                className="p-2 rounded-lg border border-gray-300 focus:outline-none"
+                className="p-2 rounded-lg border text-black border-gray-300 focus:outline-none"
               >
                 <option value="">All</option>
                 <option value="active">Active</option>
@@ -467,7 +467,7 @@ const fetchData = async () => {
                 <thead className="sticky top-0 z-10">
                   <tr className="bg-purple-800 text-white shadow-sm">
                     <th className="p-3 whitespace-nowrap rounded-tl-lg">ID</th>
-                    <th className="p-3 whitespace-nowrap">Name</th>
+                    {/* <th className="p-3 whitespace-nowrap">Name</th> */}
                     <th className="p-3 whitespace-nowrap hidden sm:table-cell">
                       Username
                     </th>
@@ -492,9 +492,9 @@ const fetchData = async () => {
                         className="border-t text-black hover:bg-gray-50 transition duration-200 ease-in-out"
                       >
                         <td className="p-3 font-medium">{user.id}</td>
-                        <td className="p-3 font-semibold text-purple-900">
+                        {/* <td className="p-3 font-semibold text-purple-900">
                           {user.name}
-                        </td>
+                        </td> */}
                         <td className="p-3 text-gray-700 hidden sm:table-cell">
                           {user.username}
                         </td>

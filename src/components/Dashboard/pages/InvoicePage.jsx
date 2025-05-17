@@ -45,12 +45,12 @@ function ViewModal ( { invoice, onClose } ) {
             <h3 className = "text-md font-semibold text-purple-800 mb-2 text-center">Basic Information</h3>
             <div className = "grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
               <div className = "flex flex-col">
-                <span className = "font-medium text-gray-600">Invoice ID</span>
-                <span className = "p-2 bg-white rounded-md">{ invoice.id }</span>
+                <span className = "font-medium  text-gray-600">Invoice ID</span>
+                <span className = "p-2 bg-white text-black rounded-md">{ invoice.id }</span>
               </div>
               <div className = "flex flex-col">
                 <span className = "font-medium text-gray-600">Customer ID</span>
-                <span className = "p-2 bg-white rounded-md">{ invoice.customerId }</span>
+                <span className = "p-2 bg-white text-black rounded-md">{ invoice.customerId }</span>
               </div>
             </div>
           </div>
@@ -67,7 +67,7 @@ function ViewModal ( { invoice, onClose } ) {
               </div>
               <div className = "flex flex-col">
                 <span className = "font-medium text-gray-600">Payment Method</span>
-                <span className = "p-2 bg-white rounded-md">{ invoice.paymentMethod }</span>
+                <span className = "p-2 bg-white text-black rounded-md">{ invoice.paymentMethod }</span>
               </div>
             </div>
           </div>
@@ -78,13 +78,13 @@ function ViewModal ( { invoice, onClose } ) {
             <div className = "grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
               <div className = "flex flex-col">
                 <span className = "font-medium text-gray-600">Created At</span>
-                <span className = "p-2 bg-white rounded-md">
+                <span className = "p-2 bg-white text-black rounded-md">
                   { formatDate(invoice.createdAt) }
                 </span>
               </div>
               <div className = "flex flex-col">
                 <span className = "font-medium text-gray-600">Updated At</span>
-                <span className = "p-2 bg-white rounded-md">
+                <span className = "p-2 bg-white text-black rounded-md">
                   { formatDate(invoice.updatedAt) }
                 </span>
               </div>
@@ -167,7 +167,7 @@ function FilterModal ( { onClose, onApply, currentFilters, customerList, payment
               <select
                 value = { customerId }
                 onChange = { ( e ) => setCustomerId ( e.target.value ) }
-                className = "p-2 rounded-lg border border-gray-300 focus:outline-none"
+                className = "p-2 rounded-lg border text-black border-gray-300 focus:outline-none"
               >
                 <option value = "">All</option>
                 { customerList.map ( ( id ) => (
@@ -180,7 +180,7 @@ function FilterModal ( { onClose, onApply, currentFilters, customerList, payment
               <select
                 value = { paymentMethod }
                 onChange = { ( e ) => setPaymentMethod ( e.target.value ) }
-                className = "p-2 rounded-lg border border-gray-300 focus:outline-none"
+                className = "p-2 rounded-lg border text-black border-gray-300 focus:outline-none"
               >
                 <option value = "">All</option>
                 { paymentMethods.map ( ( method ) => (
@@ -201,7 +201,7 @@ function FilterModal ( { onClose, onApply, currentFilters, customerList, payment
                 type = "number"
                 value = { minTotal }
                 onChange = { ( e ) => setMinTotal ( e.target.value ) }
-                className = "p-2 rounded-lg border border-gray-300 focus:outline-none"
+                className = "p-2 rounded-lg border text-black border-gray-300 focus:outline-none"
                 placeholder = "Minimum amount"
               />
             </div>
@@ -211,7 +211,7 @@ function FilterModal ( { onClose, onApply, currentFilters, customerList, payment
                 type = "number"
                 value = { maxTotal }
                 onChange = { ( e ) => setMaxTotal ( e.target.value ) }
-                className = "p-2 rounded-lg border border-gray-300 focus:outline-none"
+                className = "p-2 rounded-lg border text-black border-gray-300 focus:outline-none"
                 placeholder = "Maximum amount"
               />
             </div>
@@ -228,7 +228,7 @@ function FilterModal ( { onClose, onApply, currentFilters, customerList, payment
                 type = "date"
                 value = { startDate }
                 onChange = { ( e ) => setStartDate ( e.target.value ) }
-                className = "p-2 rounded-lg border border-gray-300 focus:outline-none"
+                className = "p-2 rounded-lg border text-black border-gray-300 focus:outline-none"
               />
             </div>
             <div className = "flex flex-col">
@@ -237,7 +237,7 @@ function FilterModal ( { onClose, onApply, currentFilters, customerList, payment
                 type = "date"
                 value = { endDate }
                 onChange = { ( e ) => setEndDate ( e.target.value ) }
-                className = "p-2 rounded-lg border border-gray-300 focus:outline-none"
+                className = "p-2 rounded-lg border text-black border-gray-300 focus:outline-none"
               />
             </div>
           </div>
@@ -421,7 +421,7 @@ function InvoicePage ( ) {
                 <tbody>
                   { filteredData.length > 0 ? (
                     filteredData.map ( ( invoice ) => (
-                      <tr key = { invoice.id } className = "border-t hover:bg-gray-50 transition duration-200 ease-in-out">
+                      <tr key = { invoice.id } className = "border-t text-black hover:bg-gray-50 transition duration-200 ease-in-out">
                         <td className = "p-3 font-medium">{ invoice.id }</td>
                         <td className = "p-3 text-gray-700">{ invoice.customerId }</td>
                         <td className = "p-3 font-semibold text-green-700">Rs { invoice.total.toLocaleString() }</td>

@@ -50,17 +50,17 @@ function ViewModal ( { customer , onClose } ) {
                 <div className = "grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                   <div className = "flex flex-col">
                     <span className = "font-medium text-gray-600">Customer ID</span>
-                    <span className = "p-2 bg-white rounded-md shadow-sm">{ customer.id }</span>
+                    <span className = "p-2 bg-white text-black rounded-md shadow-sm">{ customer.id }</span>
                   </div>
                   <div className = "flex flex-col">
                     <span className = "font-medium text-gray-600">Status</span>
-                    <span className = {`p-2 bg-white rounded-md shadow-sm ${customer.isActive ? "text-green-600" : "text-red-600"}`}>
+                    <span className = {`p-2 bg-white text-black rounded-md shadow-sm ${customer.isActive ? "text-green-600" : "text-red-600"}`}>
                       { customer.isActive ? "Active" : "Inactive" }
                     </span>
                   </div>
                   <div className = "flex flex-col col-span-1 sm:col-span-2">
                     <span className = "font-medium text-gray-600">Name</span>
-                    <span className = "p-2 bg-white rounded-md shadow-sm">{ customer.name }</span>
+                    <span className = "p-2 bg-white text-black rounded-md shadow-sm">{ customer.name }</span>
                   </div>
                 </div>
               </div>
@@ -71,15 +71,15 @@ function ViewModal ( { customer , onClose } ) {
                 <div className = "grid grid-cols-1 gap-3 text-sm">
                   <div className = "flex flex-col">
                     <span className = "font-medium text-gray-600">Email</span>
-                    <span className = "p-2 bg-white rounded-md shadow-sm">{ customer.email || "Not provided" }</span>
+                    <span className = "p-2 bg-white text-black rounded-md shadow-sm">{ customer.email || "Not provided" }</span>
                   </div>
                   <div className = "flex flex-col">
                     <span className = "font-medium text-gray-600">Phone</span>
-                    <span className = "p-2 bg-white rounded-md shadow-sm">{ customer.phone || "Not provided" }</span>
+                    <span className = "p-2 bg-white text-black rounded-md shadow-sm">{ customer.phone || "Not provided" }</span>
                   </div>
                   <div className = "flex flex-col">
                     <span className = "font-medium text-gray-600">Address</span>
-                    <span className = "p-2 bg-white rounded-md shadow-sm whitespace-pre-wrap">{ customer.address || "Not provided" }</span>
+                    <span className = "p-2 bg-white text-black rounded-md shadow-sm whitespace-pre-wrap">{ customer.address || "Not provided" }</span>
                   </div>
                 </div>
               </div>
@@ -90,11 +90,11 @@ function ViewModal ( { customer , onClose } ) {
                 <div className = "grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                   <div className = "flex flex-col">
                     <span className = "font-medium text-gray-600">Created At</span>
-                    <span className = "p-2 bg-white rounded-md shadow-sm">{ formatDate(customer.createdAt) }</span>
+                    <span className = "p-2 bg-white text-black rounded-md shadow-sm">{ formatDate(customer.createdAt) }</span>
                   </div>
                   <div className = "flex flex-col">
                     <span className = "font-medium text-gray-600">Last Updated</span>
-                    <span className = "p-2 bg-white rounded-md shadow-sm">{ formatDate(customer.updatedAt) }</span>
+                    <span className = "p-2 bg-white text-black rounded-md shadow-sm">{ formatDate(customer.updatedAt) }</span>
                   </div>
                 </div>
               </div>
