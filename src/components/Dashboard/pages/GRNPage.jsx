@@ -1,4 +1,3 @@
-
 // Imports : ( useEffect , useState ) , ( Eye , SlidersHorizontal ) , ( grnData )
 import { useState, useEffect } from "react";
 
@@ -6,10 +5,7 @@ import { Eye, SlidersHorizontal } from "lucide-react";
 
 import { getGRNData } from "../data/grnData";
 
-
 import FetchLoader from './FetchLoader';
-
-
 
 // Function : ( ViewModal )
 // Passing : ( grn - The data props. , onClose - To close the filter modal. )
@@ -24,19 +20,19 @@ function ViewModal ( { grn, onClose } ) {
 
   return (
 
-    <div className = "fixed inset-0 bg-black/50 flex justify-center items-center z-50 p-4">
+    <div className = "fixed inset-0 top-14 sm:top-16 bg-black/70 backdrop-blur-sm flex justify-center items-center z-40 p-4">
 
-      <div className = "bg-white rounded-2xl p-4 sm:p-6 w-full max-w-md shadow-2xl max-h-[90vh] overflow-y-auto">
+      <div className = "bg-hyper-dark/90 rounded-xl p-4 sm:p-6 w-full max-w-md shadow-2xl max-h-[90vh] overflow-y-auto border border-purple-500/30">
 
-        <div className = "flex justify-between items-center mb-4">
+        <div className = "flex justify-between items-center mb-4 border-b border-purple-500/30 pb-3">
 
           <div className = "w-full text-center">
-            <h2 className = "text-xl sm:text-2xl font-bold text-purple-900">GRN Details</h2>
+            <h2 className = "text-xl sm:text-2xl font-bold text-white hyper-text-glow">GRN Details</h2>
           </div>
 
           <button
             onClick = { onClose }
-            className = "absolute top-3 right-3 sm:top-4 sm:right-4 text-gray-600 hover:text-gray-900 text-xl cursor-pointer"
+            className = "absolute top-3 right-3 sm:top-4 sm:right-4 text-gray-400 hover:text-white text-xl cursor-pointer"
           >
             &times;
           </button>
@@ -46,20 +42,20 @@ function ViewModal ( { grn, onClose } ) {
         <div className = "space-y-4">
 
           {/* Basic Information */}
-          <div className = "bg-purple-50 p-3 rounded-lg">
+          <div className = "bg-purple-900/30 p-3 rounded-lg border border-purple-500/30">
 
-            <h3 className = "text-md font-semibold text-purple-800 mb-2 text-center">Basic Information</h3>
+            <h3 className = "text-md font-semibold text-purple-300 mb-2 text-center">Basic Information</h3>
 
-            <div className = "grid grid-cols-1 sm:grid-cols-2 gap-3 text-black text-sm">
+            <div className = "grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
 
               <div className = "flex flex-col">
-                <span className = "font-medium text-gray-600">GRN ID</span>
-                <span className = "p-2  bg-white rounded-md">{ grn.id }</span>
+                <span className = "font-medium text-gray-400">GRN ID</span>
+                <span className = "p-2 bg-hyper-dark/50 rounded-md text-white">{ grn.id }</span>
               </div>
 
               <div className = "flex flex-col">
-                <span className = "font-medium text-gray-600">Supplier ID</span>
-                <span className = "p-2 bg-white rounded-md">{ grn.supplierId }</span>
+                <span className = "font-medium text-gray-400">Supplier ID</span>
+                <span className = "p-2 bg-hyper-dark/50 rounded-md text-white">{ grn.supplierId }</span>
               </div>
 
             </div>
@@ -67,15 +63,15 @@ function ViewModal ( { grn, onClose } ) {
           </div>
 
           {/* Financial Details */}
-          <div className = "bg-green-50 p-3 rounded-lg">
+          <div className = "bg-green-900/30 p-3 rounded-lg border border-green-500/30">
 
-            <h3 className = "text-md font-semibold text-green-800 mb-2 text-center">Financial Details</h3>
+            <h3 className = "text-md font-semibold text-green-300 mb-2 text-center">Financial Details</h3>
 
             <div className = "grid grid-cols-1 gap-3 text-sm">
 
               <div className = "flex flex-col">
-                <span className = "font-medium text-gray-600">Total Amount</span>
-                <span className = "p-2 bg-white rounded-md font-semibold text-green-700">
+                <span className = "font-medium text-gray-400">Total Amount</span>
+                <span className = "p-2 bg-hyper-dark/50 rounded-md font-semibold text-green-300">
                   Rs { grn.total.toLocaleString ( ) }
                 </span>
               </div>
@@ -85,22 +81,22 @@ function ViewModal ( { grn, onClose } ) {
           </div>
 
           {/* Date Information */}
-          <div className = "bg-amber-50 p-3 rounded-lg text-black">
+          <div className = "bg-amber-900/30 p-3 rounded-lg border border-amber-500/30 text-black">
 
-            <h3 className = "text-md font-semibold text-amber-800 mb-2 text-center">Date Information</h3>
+            <h3 className = "text-md font-semibold text-amber-300 mb-2 text-center">Date Information</h3>
 
             <div className = "grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
 
               <div className = "flex flex-col">
-                <span className = "font-medium text-gray-600">Created At</span>
-                <span className = "p-2 bg-white rounded-md">
+                <span className = "font-medium text-gray-400">Created At</span>
+                <span className = "p-2 bg-hyper-dark/50 rounded-md text-white">
                   { formatDate ( grn.createdAt ) }
                 </span>
               </div>
 
               <div className = "flex flex-col">
-                <span className = "font-medium text-gray-600">Updated At</span>
-                <span className = "p-2 bg-white rounded-md">
+                <span className = "font-medium text-gray-400">Updated At</span>
+                <span className = "p-2 bg-hyper-dark/50 rounded-md text-white">
                   { formatDate ( grn.updatedAt ) }
                 </span>
               </div>
@@ -111,11 +107,11 @@ function ViewModal ( { grn, onClose } ) {
 
         </div>
 
-        <div className = "mt-6 flex justify-center">
+        <div className = "mt-6 flex justify-center border-t border-purple-500/30 pt-4">
 
           <button
             onClick = { onClose }
-            className = "px-6 py-2 bg-purple-700 text-white rounded-lg hover:bg-purple-800 transition duration-200 cursor-pointer"
+            className = "px-6 py-2 bg-purple-700 text-white rounded-lg hover:bg-purple-600 transition duration-200 cursor-pointer"
           >
             Close
           </button>
@@ -170,33 +166,33 @@ function FilterModal ( { onClose, onApply, supplierList, currentFilters } ) {
 
   return (
 
-    <div className = "fixed inset-0 bg-black/50 flex justify-center items-center z-50">
+    <div className = "fixed inset-0 top-14 sm:top-16 bg-black/70 backdrop-blur-sm flex justify-center items-center z-40">
 
-      <div className = "bg-white rounded-2xl p-4 sm:p-6 w-full max-w-lg shadow-2xl relative max-h-[90vh] overflow-y-auto m-4">
+      <div className = "bg-hyper-dark/90 rounded-xl p-4 sm:p-6 w-full max-w-lg shadow-2xl relative max-h-[90vh] overflow-y-auto m-4 border border-purple-500/30">
 
         <button
           onClick = { onClose }
-          className = "absolute top-3 right-3 sm:top-4 sm:right-4 text-gray-600 hover:text-gray-900 text-xl cursor-pointer"
+          className = "absolute top-3 right-3 sm:top-4 sm:right-4 text-gray-400 hover:text-white text-xl cursor-pointer"
         >
           &times;
         </button>
 
-        <h2 className = "text-xl font-semibold text-purple-900 mb-4 text-center">Advanced Filters</h2>
+        <h2 className = "text-xl font-semibold text-white hyper-text-glow mb-4 text-center">Advanced Filters</h2>
 
         {/* Basic Information Section */}
         <div className = "mb-4">
 
-          <h3 className = "text-md font-medium text-purple-700 mb-2">Basic Information</h3>
+          <h3 className = "text-md font-medium text-purple-300 mb-2 text-center">Basic Information</h3>
 
           <div className = "grid grid-cols-1 gap-4 text-sm">
 
             <div className = "flex flex-col">
 
-              <label className = "text-gray-600 mb-1">Supplier ID</label>
+              <label className = "text-gray-400 mb-1">Supplier ID</label>
               <select
                 value = { supplierId }
                 onChange = { ( e ) => setSupplierId ( e.target.value ) }
-                className = "p-2 rounded-lg border text-black border-gray-300 focus:outline-none"
+                className = "p-2 rounded-lg border bg-hyper-dark/50 text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50"
               >
                 <option value = "">All</option>
                 { supplierList.map ( ( id ) => (
@@ -213,16 +209,16 @@ function FilterModal ( { onClose, onApply, supplierList, currentFilters } ) {
         {/* Amount Section */}
         <div className = "mb-4">
 
-          <h3 className = "text-md font-medium text-purple-700 mb-2">Total Amount</h3>
+          <h3 className = "text-md font-medium text-purple-300 mb-2 text-center">Total Amount</h3>
 
           <div className = "grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
 
             <div className = "flex flex-col">
 
-              <label className = "text-gray-600 mb-1">Min Total</label>
+              <label className = "text-gray-400 mb-1">Min Total</label>
               <input 
                 type = "number" 
-                className = "p-2 rounded-lg border text-black border-gray-300" 
+                className = "p-2 rounded-lg border bg-hyper-dark/50 text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50" 
                 value = { minTotal } 
                 onChange = { ( e ) => setMinTotal ( e.target.value ) } 
               />
@@ -231,10 +227,10 @@ function FilterModal ( { onClose, onApply, supplierList, currentFilters } ) {
 
             <div className = "flex flex-col">
 
-              <label className = "text-gray-600 mb-1">Max Total</label>
+              <label className = "text-gray-400 mb-1">Max Total</label>
               <input 
                 type = "number" 
-                className = "p-2 rounded-lg border text-black border-gray-300" 
+                className = "p-2 rounded-lg border bg-hyper-dark/50 text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50" 
                 value = { maxTotal } 
                 onChange = { ( e ) => setMaxTotal ( e.target.value ) } 
               />
@@ -248,25 +244,25 @@ function FilterModal ( { onClose, onApply, supplierList, currentFilters } ) {
         {/* Date Section */}
         <div className = "mb-4">
 
-          <h3 className = "text-md font-medium text-purple-700 mb-2">Date Range</h3>
+          <h3 className = "text-md font-medium text-purple-300 mb-2 text-center">Date Range</h3>
 
           <div className = "grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
 
             <div className = "flex flex-col">
-              <label className = "text-gray-600 mb-1">Start Date</label>
+              <label className = "text-gray-400 mb-1">Start Date</label>
               <input 
                 type = "date" 
-                className = "p-2 rounded-lg border text-black border-gray-300" 
+                className = "p-2 rounded-lg border bg-hyper-dark/50 text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50" 
                 value = { startDate } 
                 onChange = { ( e ) => setStartDate ( e.target.value ) } 
               />
             </div>
 
             <div className = "flex flex-col">
-              <label className = "text-gray-600 mb-1">End Date</label>
+              <label className = "text-gray-400 mb-1">End Date</label>
               <input 
                 type = "date" 
-                className = "p-2 rounded-lg border text-black border-gray-300" 
+                className = "p-2 rounded-lg border bg-hyper-dark/50 text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50" 
                 value = { endDate } 
                 onChange = { ( e ) => setEndDate ( e.target.value ) } 
               />
@@ -276,9 +272,19 @@ function FilterModal ( { onClose, onApply, supplierList, currentFilters } ) {
 
         </div>
 
-        <div className = "flex justify-center gap-4 mt-6">
-          <button onClick = { handleReset } className = "px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 cursor-pointer">Reset</button>
-          <button onClick = { handleApply } className = "px-6 py-2 bg-purple-700 text-white rounded-lg hover:bg-purple-800 cursor-pointer">Apply</button>
+        <div className = "flex justify-center gap-4 mt-6 border-t border-purple-500/30 pt-4">
+          <button 
+            onClick = { handleReset } 
+            className = "px-4 py-2 bg-gray-700 text-gray-200 rounded-lg hover:bg-gray-600 cursor-pointer transition-colors"
+          >
+            Reset
+          </button>
+          <button 
+            onClick = { handleApply } 
+            className = "px-6 py-2 bg-purple-700 text-white rounded-lg hover:bg-purple-600 cursor-pointer transition-colors"
+          >
+            Apply
+          </button>
         </div>
 
       </div>
@@ -334,7 +340,7 @@ function GRNPage ( ) {
         setLoading ( false );
         setTimeout(() => {
           setIsFetching ( false );
-        }, 3000);
+        }, 1500);
 
       }
 
@@ -405,72 +411,68 @@ function GRNPage ( ) {
 
     <div className = "p-4 sm:p-6">
 
-      <h1 className = "text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-purple-900 text-center">Goods Received Notes</h1>
+      <h1 className = "text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-white hyper-text-glow text-center">Goods Received Notes</h1>
 
       {/* Responsive search and filter controls */}
-      <div className = "flex flex-col sm:flex-row justify-center items-stretch sm:items-center gap-3 sm:gap-4 mb-6">
-
+      <div className="flex flex-col sm:flex-row justify-center items-stretch sm:items-center gap-3 sm:gap-4 mb-6">
         <input
-          type = "text"
-          placeholder = "Search..."
-          value = { searchTerm }
-          onChange = { ( e ) => setSearchTerm ( e.target.value ) }
-          className = "px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-400 w-full sm:w-auto"
+          type="text"
+          placeholder="Search GRNs..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-400 w-full sm:w-auto bg-hyper-dark/50 text-white border-purple-500/30"
         />
         <button
-          onClick = { ( ) => setShowFilterModal ( true ) }
-          className = "px-4 py-2 bg-purple-700 text-white rounded-lg hover:bg-purple-800 transition flex items-center justify-center gap-2 cursor-pointer"
+          onClick={() => setShowFilterModal(true)}
+          className="px-4 py-2 bg-purple-700 text-white rounded-lg hover:bg-purple-600 transition flex items-center justify-center gap-2 cursor-pointer"
         >
-          <SlidersHorizontal size = { 16 } /> Options
+          <SlidersHorizontal size={16} /> Options
         </button>
-
       </div>
 
       {/* Responsive table container */}
-      <div className = "overflow-x-auto bg-white rounded-xl shadow-md">
+      <div className="bg-hyper-dark/30 backdrop-blur-sm rounded-xl shadow-md overflow-hidden border border-purple-500/20">
         {isFetching ? (
           <FetchLoader />
         ) : loading ? (
-          <div className = "p-6 text-center">Loading GRN data...</div>
+          <div className="p-6 text-center text-white">Loading GRN data...</div>
         ) : error ? (
-          <div className = "p-6 text-center text-red-500">{error}</div>
+          <div className="p-6 text-center text-red-400">{error}</div>
         ) : (
-          <div className = "relative">
-            <div className = "max-h-[70vh] overflow-y-auto overflow-x-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-purple-300/50 hover:[&::-webkit-scrollbar-thumb]:bg-purple-400/70">
-              <table className = "w-full text-sm text-left">
-                <thead className = "sticky top-0 z-10">
-                  <tr className = "bg-purple-800 text-white shadow-sm">
-                    <th className = "p-3 whitespace-nowrap rounded-tl-lg">GRN ID</th>
-                    <th className = "p-3 whitespace-nowrap">Supplier ID</th>
-                    <th className = "p-3 whitespace-nowrap">Total Amount</th>
-                    <th className = "p-3 whitespace-nowrap hidden md:table-cell">Created At</th>
-                    <th className = "p-3 whitespace-nowrap hidden lg:table-cell">Updated At</th>
-                    <th className = "p-3 text-center whitespace-nowrap rounded-tr-lg">View</th>
+          <div className="relative">
+            <div className="max-h-[70vh] overflow-y-auto overflow-x-auto [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-purple-500/50 hover:[&::-webkit-scrollbar-thumb]:bg-purple-400/70">
+              <table className="w-full text-sm text-left">
+                <thead className="sticky top-0 z-10">
+                  <tr className="bg-purple-900/70 text-white shadow-sm">
+                    <th className="p-3 whitespace-nowrap rounded-tl-lg">GRN ID</th>
+                    <th className="p-3 whitespace-nowrap">Supplier ID</th>
+                    <th className="p-3 whitespace-nowrap">Total</th>
+                    <th className="p-3 whitespace-nowrap hidden md:table-cell">Date</th>
+                    <th className="p-3 text-center whitespace-nowrap rounded-tr-lg">View</th>
                   </tr>
-                </thead> {/*Apply*/}
+                </thead>
                 <tbody>
                   {filteredData.length > 0 ? (
-                    filteredData.map ( ( grn ) => (
-                      <tr key = { grn.id } className = "border-t text-black hover:bg-gray-50 transition duration-200 ease-in-out">
-                        <td className = "p-3 font-medium">{ grn.id }</td>
-                        <td className = "p-3">{ grn.supplierId || "—" }</td>
-                        <td className = "p-3 font-semibold text-green-700">Rs { grn.total?.toLocaleString() || "—" }</td>
-                        <td className = "p-3 hidden md:table-cell">{ formatDate(grn.createdAt) }</td>
-                        <td className = "p-3 hidden lg:table-cell">{ formatDate(grn.updatedAt) }</td>
-                        <td className = "p-3 text-center">
+                    filteredData.map((grn) => (
+                      <tr key={grn.id} className="border-t border-purple-500/20 text-white hover:bg-white/5 transition duration-200 ease-in-out">
+                        <td className="p-3 font-medium">{grn.id}</td>
+                        <td className="p-3">{grn.supplierId}</td>
+                        <td className="p-3 font-semibold text-green-300">Rs {grn.total.toLocaleString()}</td>
+                        <td className="p-3 hidden md:table-cell">{formatDate(grn.updatedAt)}</td>
+                        <td className="p-3 text-center">
                           <button
-                            onClick = { ( ) => setSelectedGRN ( grn ) }
-                            className = "text-purple-700 hover:text-purple-900 cursor-pointer transition"
-                            aria-label = "View GRN details"
+                            onClick={() => setSelectedGRN(grn)}
+                            className="text-purple-400 hover:text-purple-300 cursor-pointer transition"
+                            aria-label="View GRN details"
                           >
-                            <Eye size = { 18 } />
+                            <Eye size={18} />
                           </button>
                         </td>
                       </tr>
                     ))
                   ) : (
                     <tr>
-                      <td colSpan="6" className="p-3 text-center font-medium text-gray-500">No GRN records found</td>
+                      <td colSpan="5" className="p-3 text-center font-medium text-gray-400">No GRNs found</td>
                     </tr>
                   )}
                 </tbody>
@@ -480,22 +482,17 @@ function GRNPage ( ) {
         )}
       </div>
 
-      { selectedGRN && <ViewModal grn = { selectedGRN } onClose = { ( ) => setSelectedGRN ( null ) } />}
-      { showFilterModal && (
-
+      {selectedGRN && <ViewModal grn={selectedGRN} onClose={() => setSelectedGRN(null)} />}
+      {showFilterModal && (
         <FilterModal
-          supplierList = { supplierList }
-          currentFilters = { filters }
-          onClose = { ( ) => setShowFilterModal ( false ) }
-          onApply = { setFilters }
+          supplierList={supplierList}
+          currentFilters={filters}
+          onClose={() => setShowFilterModal(false)}
+          onApply={setFilters}
         />
-
-      ) }
-
+      )}
     </div>
-
   );
-
 }
 
 // Exporting the component
