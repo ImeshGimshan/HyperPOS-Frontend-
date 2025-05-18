@@ -24,7 +24,7 @@ import SalePage from "./components/Dashboard/pages/SalePage.jsx";
 import Test from './components/Test/Test';
 import PurchasePage from "./components/Dashboard/pages/PurchasePage.jsx";
 import Organization from "./components/Organization/Organization.jsx";
-import OrganizationPage from "./components/Dashboard/pages/OrganizationPage.jsx";
+//import OrganizationPage from "./components/Dashboard/pages/OrganizationPage.jsx";
 
 import Customerregister from './components/customer/registercustomer.jsx';
 import SupplierRegistration from './components/register/register.jsx';
@@ -85,8 +85,8 @@ const router = createBrowserRouter ( [
           { path : "products" , element : <ProductPage /> },
           { path : "sales" , element : <SalePage /> },
           { path : "purchases" , element : <PurchasePage /> },
-          { path : "organizations" , element : <OrganizationPage /> },
-          { path : "add-organization" , element : <Organization /> },
+          //{ path : "organizations" , element : <OrganizationPage /> },
+          { path : "organization" , element : <Organization /> },
           { path : "purchase" , element : <Purchase /> },
           { path : "customerregister" , element : <Customerregister /> },
           { path : "addproduct" , element : <AddProduct /> },
