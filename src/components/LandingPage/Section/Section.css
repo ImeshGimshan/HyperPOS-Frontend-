@@ -391,3 +391,13 @@ transform : translate3d( 0 , 0 , 120px );
 }
 
 }
+.hyper-scanlines {
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 2px,
+    rgba(255, 255, 255, 0.05) 2px,
+    rgba(255, 255, 255, 0.05) 4px
+  );
+  pointer-events: none;
+}
