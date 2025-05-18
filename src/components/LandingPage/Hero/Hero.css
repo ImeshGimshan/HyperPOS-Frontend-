@@ -1,0 +1,105 @@
+
+/* Import Poppins font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+/* Masked text styling */
+.masked-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 5rem;
+  font-weight: bold;
+  text-align: center;
+  color: transparent;
+  background-image: linear-gradient(45deg, #9854F8, #FF44CC, #FFE942, #9854F8);
+  background-size: 300%;
+  background-position: 0 50%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: animate-background 8s infinite alternate linear;
+  margin: 0;
+}
+
+@keyframes animate-background {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Boom animation for the initial text */
+@keyframes boom {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  20% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  40% {
+    transform: scale(0.9);
+    opacity: 1;
+  }
+  60% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  80% {
+    transform: scale(0.95);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.boom-animation {
+  animation: boom 1s ease-out forwards;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .masked-text {
+    font-size: 3rem;
+  }
+}
+
+/* Additional styling for the hyper elements */
+.hyper-scanlines {
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 2px,
+    rgba(255, 255, 255, 0.05) 2px,
+    rgba(255, 255, 255, 0.05) 4px
+  );
+  pointer-events: none;
+}
+
+.hyper-line-accent {
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, #f472b6, transparent);
+}
+
+.hyper-line-bottom {
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, #f472b6, transparent);
+}
+
+.hyper-modal-corner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+}
+
+.hyper-modal-corner-tl {
+  top: 0;
+  left: 0;
+  border-top: 2px solid #f472b6;
+  border-left: 2px solid #f472b6;
+}
