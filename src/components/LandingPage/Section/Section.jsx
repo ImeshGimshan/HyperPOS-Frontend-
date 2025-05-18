@@ -16,7 +16,7 @@ const Section = () => {
   const titleY = useTransform(scrollYProgress, [0, 0.15], [0, -60]);
 
   return (
-    <div ref={containerRef} className="relative min-h-[200vh]">
+    <div ref={containerRef} className="relative min-h-[200vh] ">
       {/* Main sticky container */}
       <div className="sticky top-0 min-h-screen flex flex-col items-center justify-center overflow-hidden px-4 py-6 sm:px-6 md:px-8">
         {/* Particle BG and scanlines, matching Hero */}
