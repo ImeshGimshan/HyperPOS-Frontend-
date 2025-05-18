@@ -57,6 +57,13 @@ const Hero = () => {
           <h1 className="masked-text text-6xl md:text-8xl font-bold">
             HyperPOS
           </h1>
+          <div className='flex flex-col items-center'>
+            <div className="flex flex-row  w-2/3 justify-center items-center">
+              <img src="./imac.png" alt="logo" className="w-3/7 mx-auto" />
+              <img src="./iphone.png" alt="logo" className="w-3/7 mx-auto" />
+            </div>
+          </div>
+          
         </motion.div>
 
         {/* Content */}
