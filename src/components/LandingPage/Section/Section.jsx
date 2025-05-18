@@ -94,7 +94,7 @@ const Section = () => {
                 }}
               >
                 <img
-                  src="./nap_cat.gif"
+                  src="./imac.png"
                   alt={card.title}
                   className="h-12 w-12 rounded-full"
                 />
