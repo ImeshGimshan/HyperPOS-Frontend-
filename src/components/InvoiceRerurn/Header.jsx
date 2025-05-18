@@ -46,8 +46,8 @@ const Header = ({ invoice, selectInvoice }) => {
       </div>
 
       {/* Invoice info */}
-      <div className="flex flex-row gap-6 w-full md:w-auto items-stretch justify-center">
-        <div className="flex flex-col w-44">
+      <div className="flex flex-col md:flex-row gap-6 w-full md:w-auto items-stretch justify-center">
+        <div className="flex flex-col w-full md:w-44 min-w-[140px]">
           <label className="text-purple-200 text-xs mb-1">Invoice ID:</label>
           <input
             type="text"
@@ -56,7 +56,7 @@ const Header = ({ invoice, selectInvoice }) => {
             className="bg-[#0f0326]/70 border border-[#f472b6]/30 text-white rounded-xl px-3 py-2 text-center focus:outline-none focus:border-[#f472b6] transition-all shadow-inner"
           />
         </div>
-        <div className="flex flex-col w-44">
+        <div className="flex flex-col w-full md:w-44 min-w-[140px]">
           <label className="text-purple-200 text-xs mb-1">Customer:</label>
           <input
             type="text"

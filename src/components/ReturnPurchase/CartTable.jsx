@@ -6,7 +6,7 @@ const CartTable = ({ cartItems, onQuantityChange, productList }) => {
 
     return (
         <div className="w-full overflow-x-auto rounded-2xl border border-[#f472b6]/30 shadow-lg max-h-[50vh] bg-black/40 backdrop-blur-md">
-            <table className="min-w-full text-sm text-center text-gray-200">
+            <table className="min-w-full text-sm text-center">
                 <thead className="bg-purple-700/80 text-white">
                     <tr>
                         <th className="px-4 py-2 text-center">#</th>
@@ -18,7 +18,7 @@ const CartTable = ({ cartItems, onQuantityChange, productList }) => {
                         <th className="px-4 py-2 text-center">Total</th>
                     </tr>
                 </thead>
-                <tbody className="divide-y divide-purple-100 bg-white/80">
+                <tbody className="divide-y  divide-purple-100 bg-white/80 text-black font-semibold">
                     {cartItems?.length > 0 ?
                         cartItems.map((item, index) => {
                             const itemTotall = calculateTotal(
@@ -41,7 +41,6 @@ const CartTable = ({ cartItems, onQuantityChange, productList }) => {
                                             type="number"
                                             value={item.quantity}
                                             min="0"
-                                            max={maxQuantity}
                                             onChange={(e) =>
                                                 onQuantityChange(
                                                     item?.id,

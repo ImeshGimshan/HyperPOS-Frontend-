@@ -5,7 +5,6 @@ import CartTable from "./CartTable";
 import SummaryFooter from "./SummaryFooter";
 import Controls from "./Controls";
 import "./styles.css";
-import { q } from "framer-motion/client";
 import { saveInvoice } from "../../API/APIInvoice";
 import { submitSale } from "../../API/APISale";
 import { getCustomers } from "../../API/APICustomer";
@@ -34,15 +33,16 @@ const CashierScreen = () => {
   useEffect(() => {
     console.log("Cart Items:", cartItems);
   }, [cartItems]);
+
   const getNewInvoice = async () => {
     try {
       const response = await saveInvoice({ customerId: 1, total: 0 });
-      console.log("Invoice saved:", response);
       setInvoice(response);
     } catch (error) {
       console.error("Error saving invoice:", error);
     }
   };
+
   const getCustomersList = async () => {
     try {
       const response = await getCustomers();
@@ -51,30 +51,35 @@ const CashierScreen = () => {
       console.error("Error fetching customers:", error);
     }
   };
+
+  // Ensure every cart item has a unique `id`
   const handleAddToCart = (product) => {
     if (invoice == null) {
       alert("Please create an invoice first!");
       return;
     }
     const discountedPrice = product?.unitPrice * (1 - product?.discount / 100);
-    console.log("discounted price: " + discountedPrice);
+
     setCartItems((prev) => [
       ...prev,
       {
         ...product,
+        id: product.id || product.productId, // always use id
         amount: discountedPrice * product?.quantity,
       },
     ]);
   };
 
+  // Remove by `id` (not productId)
   const handleRemoveFromCart = (id) => {
-    setCartItems((prev) => prev.filter((item) => item?.productId !== id));
+    setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
 
+  // Update quantity by `id`
   const handleQuantityChange = (id, quantity) => {
     setCartItems((prev) =>
       prev.map((item) =>
-        item?.id === id ? { ...item, quantity: parseInt(quantity) } : item
+        item.id === id ? { ...item, quantity: parseInt(quantity) } : item
       )
     );
   };
@@ -132,7 +137,6 @@ const CashierScreen = () => {
       try {
         const response = await submitSale(salesData);
         handlePrintInvoice(response);
-        console.log("Sale submitted:", response);
         return response;
       } catch (error) {
         const errorMessage = error.response?.data?.message || error?.message;
@@ -140,8 +144,9 @@ const CashierScreen = () => {
         console.error("Error:", errorMessage);
       }
     };
-    const response = submitSaleData();
+    submitSaleData();
   };
+
   const handlePrintInvoice = (salesData) => {
     setPrintInvoice(salesData);
   };
@@ -156,7 +161,7 @@ const CashierScreen = () => {
         />
 
         {printInvoice && (
-          <div className="w-full flex justify-center ">
+          <div className="absolute w-full flex justify-center z-900">
             <InvoicePreview
               invoice={printInvoice}
               productList={ProductList}

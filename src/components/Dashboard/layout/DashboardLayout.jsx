@@ -1,7 +1,7 @@
 
 import { useState , useEffect } from "react";
-
-import { Outlet } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { Outlet, redirect } from "react-router-dom";
 
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
@@ -11,12 +11,23 @@ function DashboardLayout ( ) {
 
   const [ loading , setLoading ] = useState ( true );
   const [ sidebarOpen , setSidebarOpen ] = useState ( false );
+  const navigate = useNavigate ( );
 
   useEffect ( ( ) => {
-    
+
+    // Check if user is logged in and has the role of admin.
+    const role = JSON.parse (localStorage.getItem ( "user" ))?.roles;
+    if ( role === "ROLE_ADMIN" ) {
+      setLoading ( false );
+    } else{
+      setLoading ( true );
+      navigate ( "/" );
+    }
+
     const timer = setTimeout ( () => {
       setLoading ( false );
-    } , 2950 ); // Change loading time here.
+    } , 2950 );
+     // Change loading time here.
 
     return () => clearTimeout ( timer );
     
