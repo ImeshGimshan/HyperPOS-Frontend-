@@ -41,45 +41,48 @@ const InvoicePreview = ({ invoice, productList, close }) => {
     win.print();
   };
 
-  return (
-    <div className="cashier-invoice-panel">
-      <div ref={printRef}>
-        <button
-          onClick={() => close()}
-          className=" right-5 top-5 absolute cursor-pointer"
-        >
-          <FaWindowClose className="text-red-500 scale-200" />
-        </button>
-        <h2 className="cashier-invoice-title w-full">INVOICE</h2>
+ return (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+    <div className="relative bg-white rounded-lg shadow-lg w-full max-w-lg p-4 print:w-full print:max-w-full print:p-0">
+      {/* Close Button (hidden when printing) */}
+      <button
+        onClick={close}
+        className="absolute right-4 top-4 text-gray-600 hover:text-red-500 text-xl print:hidden"
+        aria-label="Close"
+      >
+        <FaWindowClose />
+      </button>
 
-        <div className="cashier-invoice-meta">
-          <div className="flex flex-row justify-between">
-            <p>
+      <div ref={printRef} className="text-black">
+        <h2 className="text-2xl font-bold text-center mb-2">INVOICE</h2>
+
+        {/* Meta Info */}
+        <div className="mb-2 text-xs">
+          <div className="flex justify-between">
+            <span>
               <strong>Date:</strong>{" "}
-              {new Date(
-                invoice.invoice.createdAt || invoice?.invoice?.updatedAt
-              ).toLocaleDateString()} {new Date(
-                invoice.invoice.createdAt || invoice?.invoice?.updatedAt
-              ).toLocaleTimeString()}
-            </p>
-            <p>
-              <strong>Payment Method</strong>{" "}
-              {invoice?.invoice?.paymentMethod}
-            </p>
+              {new Date(invoice.invoice.createdAt || invoice?.invoice?.updatedAt).toLocaleDateString()}{" "}
+              {new Date(invoice.invoice.createdAt || invoice?.invoice?.updatedAt).toLocaleTimeString()}
+            </span>
+            <span>
+              <strong>Payment:</strong> {invoice?.invoice?.paymentMethod}
+            </span>
           </div>
-          <div className="flex flex-row justify-between">
-            <p>
+          <div className="flex justify-between">
+            <span>
               <strong>Invoice No:</strong> {invoice?.invoice?.id}
-            </p>
-            <p>
+            </span>
+            <span>
               <strong>Customer:</strong> {invoice?.invoice?.customerId}
-            </p>
+            </span>
           </div>
         </div>
-        <div className="h-[40vh] overflow-scroll">
-          <table className="cashier-invoice-table">
+
+        {/* Table */}
+        <div style={{maxHeight: '40vh', overflow: 'auto'}}>
+          <table className="w-full text-xs border-t border-b border-gray-300 my-2">
             <thead>
-              <tr>
+              <tr className="bg-gray-100">
                 <th>Item</th>
                 <th>Qty</th>
                 <th>Unit</th>
@@ -89,54 +92,58 @@ const InvoicePreview = ({ invoice, productList, close }) => {
               </tr>
             </thead>
             <tbody>
-              {invoice?.items.map((item, idx) => (
-                <tr key={idx}>
-                  {productList
-                    .filter((product) => product?.id === item?.productId)
-                    .map((product) => (
-                      <td key={product?.id}>{product?.name}</td>
-                    ))}
-                  <td>{item.quantity}</td>
-                  {productList
-                    .filter((product) => product?.id === item?.productId)
-                    .map((product) => (
-                      <td key={product.id}>{product.unit}</td>
-                    ))}
-                  <td>Rs.{item?.unitPrice.toFixed(2)}</td>
-                  <td>{item?.discount}%</td>
-                  <td>Rs.{item?.amount.toFixed(2)}</td>
-                </tr>
-              ))}
+              {invoice?.items.map((item, idx) => {
+                const product = productList.find((p) => p?.id === item?.productId);
+                return (
+                  <tr key={idx}>
+                    <td>{product?.name}</td>
+                    <td>{item.quantity}</td>
+                    <td>{product?.unit}</td>
+                    <td>Rs.{item?.unitPrice?.toFixed(2)}</td>
+                    <td>{item?.discount}%</td>
+                    <td>Rs.{item?.amount?.toFixed(2)}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
 
-        <div className="cashier-invoice-total">
-          <p>
-            <strong>Subtotal:</strong> Rs.{subtotal}
-          </p>
-          <p>
-            <strong>Discount:</strong> Rs.{subtotal - total}
-          </p>
-          <p>
-            <strong>Grand Total:</strong> Rs.{total}
-          </p>
+        {/* Totals */}
+        <div className="text-right my-2 text-sm">
+          <div>
+            <strong>Subtotal:</strong> Rs.{subtotal.toFixed(2)}
+          </div>
+          <div>
+            <strong>Discount:</strong> Rs.{(subtotal - total).toFixed(2)}
+          </div>
+          <div>
+            <strong>Grand Total:</strong> Rs.{total.toFixed(2)}
+          </div>
         </div>
 
-        <div className="">
+        {/* QR Code (centered, black on white) */}
+        <div className="flex justify-center my-2">
           <QRCodeSVG
             value={`${billUrl}/bill.html?invoice=${invoice?.invoice?.id}&customer=${invoice?.invoice?.customerId}`}
+            size={80}
+            bgColor="#fff"
+            fgColor="#000"
           />
         </div>
       </div>
 
-      <div style={{ textAlign: "center", marginTop: "16px" }}>
-        <button className="cashier-print-btn" onClick={handlePrint}>
+      <div className="flex justify-center mt-2 print:hidden">
+        <button
+          className="bg-black text-white px-6 py-2 rounded shadow-md"
+          onClick={handlePrint}
+        >
           Print Invoice
         </button>
       </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default InvoicePreview;

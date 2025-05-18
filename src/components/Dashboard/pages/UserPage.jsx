@@ -122,7 +122,7 @@ function ViewModal({ user, onClose, refreshData }) {
                         id=""
                         onChange={(e) => handleSetRole(e.target.value)}
                         value={role}
-                        className="w-full bg-hyper-dark/70 border border-purple-500/30 text-white rounded p-1 focus:outline-none focus:border-pink-500/50"
+                        className="w-full bg-black border border-purple-500/30 text-white rounded p-1 focus:outline-none focus:border-pink-500/50"
                       >
                         <option value="ADMIN">ADMIN</option>
                         <option value="USER">USER</option>
@@ -281,9 +281,9 @@ function FilterModal({ onClose, onApply, currentFilters, roles }) {
                 <select
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
-                  className="p-2 rounded-lg bg-hyper-dark/70 border border-purple-500/30 text-white focus:outline-none focus:border-pink-500/50"
+                  className="p-2 rounded-lg bg-black border border-purple-500/30 text-white focus:outline-none focus:border-pink-500/50"
                 >
-                  <option value="">All</option>
+                  <option value="" >All</option>
                   {roles.map((roleOption) => (
                     <option key={roleOption} value={roleOption}>
                       {roleOption}
@@ -296,7 +296,7 @@ function FilterModal({ onClose, onApply, currentFilters, roles }) {
                 <select
                   value={status}
                   onChange={(e) => setStatus(e.target.value)}
-                  className="p-2 rounded-lg bg-hyper-dark/70 border border-purple-500/30 text-white focus:outline-none focus:border-pink-500/50"
+                  className="p-2 rounded-lg bg-black border border-purple-500/30 text-white focus:outline-none focus:border-pink-500/50"
                 >
                   <option value="">All</option>
                   <option value="active">Active</option>

@@ -172,7 +172,7 @@ function FilterModal({ onClose, onApply, supplierList, currentFilters }) {
               <select
                 value={supplierId}
                 onChange={(e) => setSupplierId(e.target.value)}
-                className="p-2 rounded-lg border bg-hyper-dark/50 text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50"
+                className="p-2 rounded-lg border bg-black text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50"
               >
                 <option value="">All</option>
                 {supplierList.map((id) => (

@@ -111,15 +111,16 @@ function GrnReturn() {
                 />
 
                 <div className="w-full my-4">
-                    <lable className="block m-2">Remarks:</lable>
+                    <label className="block m-2 text-purple-200 font-semibold">Remarks:</label>
                     <textarea
                         value={remarks}
                         onChange={(e) => setRemarks(e.target.value)}
-                        className="w-full p-2 bg-gray-800 rounded"
+                        className="w-full p-2 bg-[#0f0326]/70 border border-[#f472b6]/30 rounded-xl text-white focus:outline-none focus:border-[#f472b6] placeholder-purple-300/70"
                         rows="3"
                         placeholder="Enter any notes or remarks here"
                     />
                 </div>
+
                 <SummeryFooter
                     cartItems={cartItems}
                     totalAmount={totalAmount}

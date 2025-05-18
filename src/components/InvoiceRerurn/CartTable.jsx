@@ -1,5 +1,3 @@
-import React from "react";
-
 const CartTable = ({ cartItems, onQuantityChange, productList }) => {
   const calculateTotal = (price, quantity, discount) => {
     const total = price * quantity * (1 - discount / 100);
@@ -7,9 +5,9 @@ const CartTable = ({ cartItems, onQuantityChange, productList }) => {
   };
 
   return (
-    <div className="w-full my-6 overflow-x-auto rounded-lg border border-purple-300 shadow-md max-h-[50vh]">
-      <table className="min-w-full text-sm text-left text-gray-800">
-        <thead className="bg-purple-700 text-white">
+    <div className="w-full my-6 overflow-x-auto rounded-xl border border-[#f472b6]/40 bg-black/30 shadow-2xl backdrop-blur-md">
+      <table className="min-w-full text-sm text-left text-purple-100">
+        <thead className="bg-[#f472b6]/80 text-white uppercase">
           <tr>
             <th className="px-4 py-2 text-center">#</th>
             <th className="px-4 py-2">Product</th>
@@ -20,7 +18,7 @@ const CartTable = ({ cartItems, onQuantityChange, productList }) => {
             <th className="px-4 py-2">Total</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-purple-100 bg-white">
+        <tbody className="divide-y divide-purple-200/30 bg-white/10">
           {cartItems?.length > 0 ? (
             cartItems.map((item, index) => {
               const itemTotal = calculateTotal(
@@ -28,9 +26,8 @@ const CartTable = ({ cartItems, onQuantityChange, productList }) => {
                 item?.quantity,
                 item?.discount
               );
-
               return (
-                <tr key={index} className="hover:bg-purple-50">
+                <tr key={index} className="hover:bg-[#f472b6]/10 transition">
                   <td className="px-4 py-2 text-center">{index + 1}</td>
                   <td className="px-4 py-2">
                     {
@@ -53,14 +50,16 @@ const CartTable = ({ cartItems, onQuantityChange, productList }) => {
                           parseInt(e.target.value, 10) || 0
                         )
                       }
-                      className="w-16 p-1 border border-purple-300 rounded bg-gray-100 text-center"
+                      className="w-16 p-1 border border-[#f472b6]/40 rounded bg-gray-100 text-center text-black"
                     />
                   </td>
-                  <td className="px-4 py-2">{
+                  <td className="px-4 py-2">
+                    {
                       productList?.find(
                         (product) => product?.id === item?.productId
                       )?.unit
-                    }</td>
+                    }
+                  </td>
                   <td className="px-4 py-2">{item?.discount}%</td>
                   <td className="px-4 py-2">
                     Rs. {Number(itemTotal).toFixed(2)}

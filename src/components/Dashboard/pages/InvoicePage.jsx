@@ -166,7 +166,7 @@ function FilterModal ( { onClose, onApply, currentFilters, customerList, payment
               <select
                 value = { customerId }
                 onChange = { ( e ) => setCustomerId ( e.target.value ) }
-                className = "p-2 rounded-lg border bg-hyper-dark/50 text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50"
+                className = "p-2 rounded-lg border bg-black text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50"
               >
                 <option value = "">All</option>
                 { customerList.map ( ( id ) => (
@@ -179,7 +179,7 @@ function FilterModal ( { onClose, onApply, currentFilters, customerList, payment
               <select
                 value = { paymentMethod }
                 onChange = { ( e ) => setPaymentMethod ( e.target.value ) }
-                className = "p-2 rounded-lg border bg-hyper-dark/50 text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50"
+                className = "p-2 rounded-lg border bg-black text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50"
               >
                 <option value = "">All</option>
                 { paymentMethods.map ( ( method ) => (
@@ -200,7 +200,7 @@ function FilterModal ( { onClose, onApply, currentFilters, customerList, payment
                 type = "number"
                 value = { minTotal }
                 onChange = { ( e ) => setMinTotal ( e.target.value ) }
-                className = "p-2 rounded-lg border bg-hyper-dark/50 text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50"
+                className = "p-2 rounded-lg border bg-trasparent text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50"
                 placeholder = "Minimum amount"
               />
             </div>
@@ -210,7 +210,7 @@ function FilterModal ( { onClose, onApply, currentFilters, customerList, payment
                 type = "number"
                 value = { maxTotal }
                 onChange = { ( e ) => setMaxTotal ( e.target.value ) }
-                className = "p-2 rounded-lg border bg-hyper-dark/50 text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50"
+                className = "p-2 rounded-lg border bg-trasparent text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50"
                 placeholder = "Maximum amount"
               />
             </div>
@@ -227,7 +227,7 @@ function FilterModal ( { onClose, onApply, currentFilters, customerList, payment
                 type = "date"
                 value = { startDate }
                 onChange = { ( e ) => setStartDate ( e.target.value ) }
-                className = "p-2 rounded-lg border bg-hyper-dark/50 text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50"
+                className = "p-2 rounded-lg border bg-trasparent text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50"
               />
             </div>
             <div className = "flex flex-col">
@@ -236,7 +236,7 @@ function FilterModal ( { onClose, onApply, currentFilters, customerList, payment
                 type = "date"
                 value = { endDate }
                 onChange = { ( e ) => setEndDate ( e.target.value ) }
-                className = "p-2 rounded-lg border bg-hyper-dark/50 text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50"
+                className = "p-2 rounded-lg border bg-trasparent text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50"
               />
             </div>
           </div>

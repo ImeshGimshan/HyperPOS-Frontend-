@@ -160,7 +160,7 @@ function FilterModal({ onClose, onApply, currentFilters }) {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="p-2 rounded-lg border bg-hyper-dark/50 text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50"
+                className="p-2 rounded-lg border bg-transparent text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50"
                 placeholder="Filter by name"
               />
             </div>
@@ -169,7 +169,7 @@ function FilterModal({ onClose, onApply, currentFilters }) {
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
-                className="p-2 rounded-lg border bg-hyper-dark/50 text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50"
+                className="p-2 rounded-lg border bg-black text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50"
               >
                 <option value="">All</option>
                 <option value="active">Active</option>

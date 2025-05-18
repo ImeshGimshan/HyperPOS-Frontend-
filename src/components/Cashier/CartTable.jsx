@@ -7,9 +7,9 @@ const CartTable = ({ cartItems, onRemove, onQuantityChange }) => {
   };
 
   return (
-    <div className="w-full my-6 overflow-x-auto rounded-lg border border-purple-300 bg-gray-50 shadow-md max-h-50 min-h-40 overflow-scroll">
-      <table className="min-w-full text-sm text-left text-gray-800">
-        <thead className="bg-purple-700 text-white">
+    <div className="rounded-2xl bg-black/30 border border-[#f472b6]/30 shadow-lg my-6 overflow-x-auto">
+      <table className="min-w-full text-sm text-left text-gray-200">
+        <thead className="bg-purple-700/90 text-white sticky top-0 z-10">
           <tr>
             <th className="px-4 py-2 text-center">#</th>
             <th className="px-4 py-2">Product</th>
@@ -21,7 +21,7 @@ const CartTable = ({ cartItems, onRemove, onQuantityChange }) => {
             <th className="px-4 py-2">Action</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-purple-100 bg-white">
+        <tbody className="divide-y divide-purple-100 bg-white/80">
           {cartItems.length > 0 ? (
             cartItems.map((item, index) => {
               const itemTotal = calculateTotal(
@@ -31,10 +31,10 @@ const CartTable = ({ cartItems, onRemove, onQuantityChange }) => {
               );
 
               return (
-                <tr key={index} className="hover:bg-purple-50">
-                  <td className="px-4 py-2 text-center">{index + 1}</td>
-                  <td className="px-4 py-2">{item.name}</td>
-                  <td className="px-4 py-2">
+                <tr key={index} className="hover:bg-[#f472b6]/10 transition">
+                  <td className="px-4 py-2 text-center text-purple-900 font-bold">{index + 1}</td>
+                  <td className="px-4 py-2 text-purple-900">{item.name}</td>
+                  <td className="px-4 py-2 text-purple-900">
                     Rs. {Number(item.unitPrice).toFixed(2)}
                   </td>
                   <td className="px-4 py-2">
@@ -48,18 +48,18 @@ const CartTable = ({ cartItems, onRemove, onQuantityChange }) => {
                           parseInt(e.target.value, 10) || 1
                         )
                       }
-                      className="w-16 p-1 border border-purple-300 rounded bg-gray-100 text-center"
+                      className="w-16 p-1 border border-[#f472b6]/30 text-black rounded-xl bg-gray-100 text-center focus:border-[#f472b6] shadow transition"
                     />
                   </td>
-                  <td className="px-4 py-2">{item.unit}</td>
-                  <td className="px-4 py-2">{item.discount}%</td>
-                  <td className="px-4 py-2">
+                  <td className="px-4 py-2 text-purple-900">{item.unit}</td>
+                  <td className="px-4 py-2 text-purple-900">{item.discount}%</td>
+                  <td className="px-4 py-2 text-purple-900">
                     Rs. {Number(itemTotal).toFixed(2)}
                   </td>
                   <td className="px-4 py-2">
                     <button
                       onClick={() => onRemove(item.id)}
-                      className="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700"
+                      className="bg-[#f472b6] text-white px-2 py-1 rounded-xl hover:bg-pink-700 font-semibold shadow transition"
                     >
                       Remove
                     </button>
@@ -69,7 +69,7 @@ const CartTable = ({ cartItems, onRemove, onQuantityChange }) => {
             })
           ) : (
             <tr>
-              <td className="px-4 py-2 text-center" colSpan="8">
+              <td className="px-4 py-2 text-center text-gray-400" colSpan="8">
                 No items in cart.
               </td>
             </tr>

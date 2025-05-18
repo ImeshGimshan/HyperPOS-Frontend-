@@ -228,7 +228,7 @@ function FilterModal({ onClose, onApply, currentFilters, categories, units }) {
               <select
                 value={categoryId}
                 onChange={(e) => setCategoryId(e.target.value)}
-                className="p-2 rounded-lg border bg-hyper-dark/50 text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50"
+                className="p-2 rounded-lg border bg-black text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50"
               >
                 <option value="">All</option>
                 {categories.map((category) => (
@@ -241,7 +241,7 @@ function FilterModal({ onClose, onApply, currentFilters, categories, units }) {
               <select
                 value={unit}
                 onChange={(e) => setUnit(e.target.value)}
-                className="p-2 rounded-lg border bg-hyper-dark/50 text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50"
+                className="p-2 rounded-lg border bg-black text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50"
               >
                 <option value="">All</option>
                 {units.map((unitOption) => (
@@ -254,7 +254,7 @@ function FilterModal({ onClose, onApply, currentFilters, categories, units }) {
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value)}
-                className="p-2 rounded-lg border bg-hyper-dark/50 text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50"
+                className="p-2 rounded-lg border bg-black text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50"
               >
                 <option value="">All</option>
                 <option value="active">Active</option>

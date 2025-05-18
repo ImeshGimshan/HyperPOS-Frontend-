@@ -367,7 +367,7 @@ function FilterModal({ onClose, onApply, currentFilters }) {
                 <select
                   value={isActive}
                   onChange={(e) => setIsActive(e.target.value)}
-                  className="p-2 rounded-lg bg-hyper-dark/70 border border-purple-500/30 text-white focus:outline-none focus:border-pink-500/50"
+                  className="p-2 rounded-lg bg-black border border-purple-500/30 text-white focus:outline-none focus:border-pink-500/50"
                 >
                   <option value="">All</option>
                   <option value="true">Active</option>

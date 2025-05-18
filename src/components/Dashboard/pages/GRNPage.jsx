@@ -192,7 +192,7 @@ function FilterModal ( { onClose, onApply, supplierList, currentFilters } ) {
               <select
                 value = { supplierId }
                 onChange = { ( e ) => setSupplierId ( e.target.value ) }
-                className = "p-2 rounded-lg border bg-hyper-dark/50 text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50"
+                className = "p-2 rounded-lg border bg-black text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50"
               >
                 <option value = "">All</option>
                 { supplierList.map ( ( id ) => (
@@ -218,7 +218,7 @@ function FilterModal ( { onClose, onApply, supplierList, currentFilters } ) {
               <label className = "text-gray-400 mb-1">Min Total</label>
               <input 
                 type = "number" 
-                className = "p-2 rounded-lg border bg-hyper-dark/50 text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50" 
+                className = "p-2 rounded-lg border bg-trasparent text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50" 
                 value = { minTotal } 
                 onChange = { ( e ) => setMinTotal ( e.target.value ) } 
               />
@@ -230,7 +230,7 @@ function FilterModal ( { onClose, onApply, supplierList, currentFilters } ) {
               <label className = "text-gray-400 mb-1">Max Total</label>
               <input 
                 type = "number" 
-                className = "p-2 rounded-lg border bg-hyper-dark/50 text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50" 
+                className = "p-2 rounded-lg border bg-trasparent text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50" 
                 value = { maxTotal } 
                 onChange = { ( e ) => setMaxTotal ( e.target.value ) } 
               />
@@ -252,7 +252,7 @@ function FilterModal ( { onClose, onApply, supplierList, currentFilters } ) {
               <label className = "text-gray-400 mb-1">Start Date</label>
               <input 
                 type = "date" 
-                className = "p-2 rounded-lg border bg-hyper-dark/50 text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50" 
+                className = "p-2 rounded-lg border bg-trasparent text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50" 
                 value = { startDate } 
                 onChange = { ( e ) => setStartDate ( e.target.value ) } 
               />
@@ -262,7 +262,7 @@ function FilterModal ( { onClose, onApply, supplierList, currentFilters } ) {
               <label className = "text-gray-400 mb-1">End Date</label>
               <input 
                 type = "date" 
-                className = "p-2 rounded-lg border bg-hyper-dark/50 text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50" 
+                className = "p-2 rounded-lg border bg-trasparent text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50" 
                 value = { endDate } 
                 onChange = { ( e ) => setEndDate ( e.target.value ) } 
               />

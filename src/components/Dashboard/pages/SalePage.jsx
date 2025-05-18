@@ -194,7 +194,7 @@ function FilterModal ( { onClose, onApply, customerList, paymentMethods, current
               <select
                 value = { customerId }
                 onChange = { ( e ) => setCustomerId ( e.target.value ) }
-                className = "p-2 rounded-lg border bg-hyper-dark/50 text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50"
+                className = "p-2 rounded-lg border bg-black text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50"
               >
                 <option value = "">All</option>
                 { customerList.map ( ( id ) => (
@@ -214,7 +214,7 @@ function FilterModal ( { onClose, onApply, customerList, paymentMethods, current
               <select
                 value = { paymentMethod }
                 onChange = { ( e ) => setPaymentMethod ( e.target.value ) }
-                className = "p-2 rounded-lg border bg-hyper-dark/50 text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50"
+                className = "p-2 rounded-lg border bg-black text-white border-purple-500/30 focus:outline-none focus:border-pink-500/50"
               >
                 <option value = "">All</option>
                 { paymentMethods.map ( ( method ) => (

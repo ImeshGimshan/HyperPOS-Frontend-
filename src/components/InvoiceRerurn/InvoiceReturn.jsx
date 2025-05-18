@@ -128,11 +128,16 @@ function InvoiceReturn() {
   };
 
   return (
-    <div className="h-[calc(100vh-3.5rem)] bg-gray-900 text-white p-4 w-full cashier-app">
+    <div className="h-[calc(100vh-3.5rem)] bg-gradient-to-br from-[#2d0147] via-[#10022d] to-black text-white p-4 w-full cashier-app">
       <div className="max-w-screen-xl mx-auto cashier-container">
-        
         <Header invoice={invoiceData?.invoice} selectInvoice={selectInvoice} />
-        {printInvoice && <InvoicePreview invoice={printInvoice} productList={productList} close={() => setPrintInvoice(null)} />}
+        {printInvoice && (
+          <InvoicePreview
+            invoice={printInvoice}
+            productList={productList}
+            close={() => setPrintInvoice(null)}
+          />
+        )}
         <CartTable
           cartItems={cartItems}
           productList={productList}

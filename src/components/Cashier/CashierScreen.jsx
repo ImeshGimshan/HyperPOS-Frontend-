@@ -24,7 +24,7 @@ const CashierScreen = () => {
 
   useEffect(() => {
     if (!invoice?.id) {
-      alert("create new invoice");
+      alert("Please create a new invoice first !");
     }
     if (!customerList?.length) {
       getCustomersList();
@@ -147,8 +147,8 @@ const CashierScreen = () => {
   };
 
   return (
-    <div className="h-[calc(100vh-3.5rem)] bg-gray-900 text-white w-full cashier-app">
-      <div className="max-w-screen-xl mx-auto cashier-container">
+    <div className="min-h-screen bg-gradient-to-br from-[#201234] to-[#0e061c] text-white px-2 md:px-8 py-10 flex justify-center items-start">
+      <div className="w-full max-w-4xl mx-auto cashier-container space-y-8">
         <Header
           customers={customerList}
           invoice={invoice}

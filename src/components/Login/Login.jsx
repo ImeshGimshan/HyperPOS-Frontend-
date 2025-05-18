@@ -202,7 +202,7 @@ const Login = ( ) => {
                     </div>
                   </span>
                 ) : (
-                  "Authenticate"
+                  "SIGN IN"
                 ) }
               </span>
             </button>
