@@ -45,11 +45,6 @@ function Sidebar ( { onCloseMobile , isMobileOpen } ) {
         title : "Invoices",
         icon : <FileText size = { 20 } />,
         path : "/dashboard/invoices"
-      },
-      {
-        title : "GRN Return",
-        icon : <FileText size = { 20 } />,
-        path : "/dashboard/grnreturn"
       }
     ],
     "People" : [
@@ -79,6 +74,16 @@ function Sidebar ( { onCloseMobile , isMobileOpen } ) {
         title : "Add Product",
         icon : <Package size = { 20 } />,
         path : "/dashboard/addproduct"
+      },
+      {
+        title : "Purchase",
+        icon : <Package size = { 20 } />,
+        path : "/dashboard/purchase"
+      },
+      {
+        title : "GRN Return",
+        icon : <FileText size = { 20 } />,
+        path : "/dashboard/grnreturn"
       }
     ],
     "Transactions" : [
@@ -86,11 +91,6 @@ function Sidebar ( { onCloseMobile , isMobileOpen } ) {
         title : "Sales",
         icon : <BarChart2 size = { 20 } />,
         path : "/dashboard/sales"
-      },
-      {
-        title : "Purchases",
-        icon : <ShoppingCart size = { 20 } />,
-        path : "/dashboard/purchases"
       },
       {
         title : "Invoice Return",
