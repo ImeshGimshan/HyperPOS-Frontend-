@@ -34,10 +34,10 @@ const Faq = ( ) => {
             <div className="hyper-modal-corner hyper-modal-corner-br"></div>
             
             <p className="hyper-text text-[#f472b6] text-lg font-medium mb-2 text-center">
-              Question
+              What is HyperPOS?
             </p>
             <p className="text-purple-300 text-sm">
-              Description
+              HyperPOS is a fast, modern point-of-sale system designed to help businesses manage sales, inventory, and customers with ease — all from one sleek dashboard.
             </p>
             
             <div className="hyper-line-bottom absolute bottom-0 left-0"></div>
@@ -53,10 +53,10 @@ const Faq = ( ) => {
             <div className="hyper-modal-corner hyper-modal-corner-br"></div>
             
             <p className="hyper-text text-[#f472b6] text-lg font-medium mb-2 text-center">
-              Question
+              Is HyperPOS easy to use?
             </p>
             <p className="text-purple-300 text-sm">
-              Description
+              Absolutely. HyperPOS is built for simplicity. Whether you’re a first-time user or a seasoned store owner, you can start selling in minutes without any training.
             </p>
             
             <div className="hyper-line-bottom absolute bottom-0 left-0"></div>
@@ -72,10 +72,10 @@ const Faq = ( ) => {
             <div className="hyper-modal-corner hyper-modal-corner-br"></div>
             
             <p className="hyper-text text-[#f472b6] text-lg font-medium mb-2 text-center">
-              Question
+              Can I track inventory with HyperPOS?
             </p>
             <p className="text-purple-300 text-sm">
-              Description
+              Yes. HyperPOS automatically updates your inventory with every sale and alerts you when stock is running low — so you're always in control.
             </p>
             
             {/* Bottom neon line */}
@@ -92,10 +92,10 @@ const Faq = ( ) => {
             <div className="hyper-modal-corner hyper-modal-corner-br"></div>
             
             <p className="hyper-text text-[#f472b6] text-lg font-medium mb-2 text-center">
-              Question
+              Does HyperPOS work on any device?
             </p>
             <p className="text-purple-300 text-sm">
-              Description
+              Yes, HyperPOS works seamlessly on desktops, tablets, and smartphones. All you need is a browser — no downloads, no hassle.
             </p>
             
             <div className="hyper-line-bottom absolute bottom-0 left-0"></div>
@@ -111,10 +111,10 @@ const Faq = ( ) => {
             <div className="hyper-modal-corner hyper-modal-corner-br"></div>
             
             <p className="hyper-text text-[#f472b6] text-lg font-medium mb-2 text-center">
-              Question
+              How do I get started with HyperPOS?
             </p>
             <p className="text-purple-300 text-sm">
-              Description
+              Just sign up, add your products, and start selling. We offer a free setup guide and friendly support to help you every step of the way.
             </p>
             
             <div className="hyper-line-bottom absolute bottom-0 left-0"></div>
