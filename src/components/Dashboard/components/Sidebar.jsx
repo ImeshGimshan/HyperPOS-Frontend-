@@ -104,15 +104,15 @@ function Sidebar ( { onCloseMobile , isMobileOpen } ) {
         icon : <Truck size = { 20 } />,
         path : "/dashboard/supplierregister"
       },
+      // {
+      //   title : "Organizations",
+      //   icon : <Building size = { 20 } />,
+      //   path : "/dashboard/organizations"
+      // },
       {
-        title : "Organizations",
-        icon : <Building size = { 20 } />,
-        path : "/dashboard/organizations"
-      },
-      {
-        title : "Add Organization",
+        title : "Organization",
         icon : <PlusCircle size = { 20 } />,
-        path : "/dashboard/add-organization"
+        path : "/dashboard/organization"
       }
     ]
   } ) , [] );

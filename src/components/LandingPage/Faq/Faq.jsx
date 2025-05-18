@@ -1,40 +1,123 @@
 
 import React from 'react'
+import ParticleBackground from '../../UI/ParticleBackground'
 
 const Faq = ( ) => {
 
   return (
 
-    <section className="w-full h-screen flex items-center">
+    <section className="w-full min-h-screen relative overflow-hidden">
+      
+      {/* Background */}
+      <div className="absolute inset-0 hyper-bg -z-10"></div>
+      
+      {/* Particles using ParticleBackground component */}
+      <ParticleBackground count={15} className="absolute inset-0 -z-5" />
+      
+      {/* Scanlines */}
+      <div className="hyper-scanlines absolute inset-0 -z-5 pointer-events-none"></div>
+      <div className="hyper-scanline absolute inset-0 -z-5 pointer-events-none"></div>
 
-      <div className="bg-[#0f001f] text-white p-8 w-full h-full flex flex-col justify-center">
+      <div className="relative z-10 p-8 w-full h-full flex flex-col justify-center py-16">
+        <h2 className="text-3xl sm:text-4xl font-bold hyper-text-glow text-white mb-8 text-center">
+          <span className="text-[#f472b6]"> Frequently </span> Asked <span className="text-[#f472b6]">Questions</span>
+        </h2>
 
-        <h2 className="text-2xl text-center mb-8">FAQ</h2>
+        <div className="max-w-[800px] mx-auto space-y-4 sm:space-y-5">
+          <div className="relative bg-black/40 backdrop-blur-md p-4 sm:p-6 rounded-lg border border-[#f472b6]/30 shadow-lg overflow-hidden">
 
-        <div className="max-w-[700px] mx-auto">
-          <div className="bg-[#1f0c3b] m-2 p-4 rounded-lg border border-white">
-            <p className="font-bold mb-1 text-center">What software do I need to use your products?</p>
+            <div className="hyper-line-accent absolute top-0 left-0"></div>
+            
+            <div className="hyper-modal-corner hyper-modal-corner-tl"></div>
+            <div className="hyper-modal-corner hyper-modal-corner-tr"></div>
+            <div className="hyper-modal-corner hyper-modal-corner-bl"></div>
+            <div className="hyper-modal-corner hyper-modal-corner-br"></div>
+            
+            <p className="hyper-text text-[#f472b6] text-lg font-medium mb-2 text-center">
+              What is HyperPOS?
+            </p>
+            <p className="text-purple-300 text-sm">
+              HyperPOS is a fast, modern point-of-sale system designed to help businesses manage sales, inventory, and customers with ease — all from one sleek dashboard.
+            </p>
+            
+            <div className="hyper-line-bottom absolute bottom-0 left-0"></div>
           </div>
 
-          <div className="bg-[#1f0c3b] m-2 p-4 rounded-lg border border-white">
-            <p className="font-bold mb-1 text-center">What can I learn?</p>
-            <p className="text-[0.95rem] text-justify text-[#ddd]">If you're new to Figma, you'll master advanced software techniques, stay up to date with the latest features, and 
-            learn how to create your design system, UI kit or icon set.<br></br>If you're an advanced user, you will benefit by using a well-maintained and solid foundation with many different components to fit a variety of different projects.</p>
+          <div className="relative bg-black/40 backdrop-blur-md p-4 sm:p-6 rounded-lg border border-[#f472b6]/30 shadow-lg overflow-hidden">
+
+            <div className="hyper-line-accent absolute top-0 left-0"></div>
+            
+            <div className="hyper-modal-corner hyper-modal-corner-tl"></div>
+            <div className="hyper-modal-corner hyper-modal-corner-tr"></div>
+            <div className="hyper-modal-corner hyper-modal-corner-bl"></div>
+            <div className="hyper-modal-corner hyper-modal-corner-br"></div>
+            
+            <p className="hyper-text text-[#f472b6] text-lg font-medium mb-2 text-center">
+              Is HyperPOS easy to use?
+            </p>
+            <p className="text-purple-300 text-sm">
+              Absolutely. HyperPOS is built for simplicity. Whether you’re a first-time user or a seasoned store owner, you can start selling in minutes without any training.
+            </p>
+            
+            <div className="hyper-line-bottom absolute bottom-0 left-0"></div>
           </div>
 
-          <div className="bg-[#1f0c3b] m-2 p-4 rounded-lg border border-white">
-            <p className="font-bold mb-1 text-center">How can I download products again?</p>
-            <p className="text-[0.95rem] text-justify text-[#ddd]">Log into your Gumroad to access your library. Click on any Buninux product to get its latest version.</p>
+          <div className="relative bg-black/40 backdrop-blur-md p-4 sm:p-6 rounded-lg border border-[#f472b6]/30 shadow-lg overflow-hidden">
+
+            <div className="hyper-line-accent absolute top-0 left-0"></div>
+            
+            <div className="hyper-modal-corner hyper-modal-corner-tl"></div>
+            <div className="hyper-modal-corner hyper-modal-corner-tr"></div>
+            <div className="hyper-modal-corner hyper-modal-corner-bl"></div>
+            <div className="hyper-modal-corner hyper-modal-corner-br"></div>
+            
+            <p className="hyper-text text-[#f472b6] text-lg font-medium mb-2 text-center">
+              Can I track inventory with HyperPOS?
+            </p>
+            <p className="text-purple-300 text-sm">
+              Yes. HyperPOS automatically updates your inventory with every sale and alerts you when stock is running low — so you're always in control.
+            </p>
+            
+            {/* Bottom neon line */}
+            <div className="hyper-line-bottom absolute bottom-0 left-0"></div>
           </div>
 
-          <div className="bg-[#1f0c3b] m-2 p-4 rounded-lg border border-white">
-            <p className="font-bold mb-1 text-center">What license should I choose?</p>
-            <p className="text-[0.95rem] text-justify text-[#ddd]">Choose a Team license if you work with a team, plan to use the products under your company, or if you plan to share or distribute an end-product. Choose a Personal license if you're a solo user and plan to use the products by yourself.</p>
+          <div className="relative bg-black/40 backdrop-blur-md p-4 sm:p-6 rounded-lg border border-[#f472b6]/30 shadow-lg overflow-hidden">
+            {/* Top neon line */}
+            <div className="hyper-line-accent absolute top-0 left-0"></div>
+            
+            <div className="hyper-modal-corner hyper-modal-corner-tl"></div>
+            <div className="hyper-modal-corner hyper-modal-corner-tr"></div>
+            <div className="hyper-modal-corner hyper-modal-corner-bl"></div>
+            <div className="hyper-modal-corner hyper-modal-corner-br"></div>
+            
+            <p className="hyper-text text-[#f472b6] text-lg font-medium mb-2 text-center">
+              Does HyperPOS work on any device?
+            </p>
+            <p className="text-purple-300 text-sm">
+              Yes, HyperPOS works seamlessly on desktops, tablets, and smartphones. All you need is a browser — no downloads, no hassle.
+            </p>
+            
+            <div className="hyper-line-bottom absolute bottom-0 left-0"></div>
           </div>
 
-          <div className="bg-[#1f0c3b] m-2 p-4 rounded-lg border border-white">
-            <p className="font-bold mb-1 text-center">Do you provide refunds?</p>
-            <p className="text-[0.95rem] text-justify text-[#ddd]">We issue refunds only if you can show that the file is corrupt on your end and cannot be used. Due to the nature of digital downloads, there are no refunds and credits once an order is placed and the product is sen.</p>
+          <div className="relative bg-black/40 backdrop-blur-md p-4 sm:p-6 rounded-lg border border-[#f472b6]/30 shadow-lg overflow-hidden">
+
+            <div className="hyper-line-accent absolute top-0 left-0"></div>
+            
+            <div className="hyper-modal-corner hyper-modal-corner-tl"></div>
+            <div className="hyper-modal-corner hyper-modal-corner-tr"></div>
+            <div className="hyper-modal-corner hyper-modal-corner-bl"></div>
+            <div className="hyper-modal-corner hyper-modal-corner-br"></div>
+            
+            <p className="hyper-text text-[#f472b6] text-lg font-medium mb-2 text-center">
+              How do I get started with HyperPOS?
+            </p>
+            <p className="text-purple-300 text-sm">
+              Just sign up, add your products, and start selling. We offer a free setup guide and friendly support to help you every step of the way.
+            </p>
+            
+            <div className="hyper-line-bottom absolute bottom-0 left-0"></div>
           </div>
         </div>
 
