@@ -1,10 +1,6 @@
 import axios from "axios";
 import APILinks from "./APILinks";
-import bcrypt from "bcryptjs";
-
 const APILogin = async (username, password) => {
-const hashedPassword = await bcrypt.hash(password, 10);
-  console.log(hashedPassword);
   const response = await axios.post(APILinks.login, {
     username,
     password,
@@ -49,8 +45,6 @@ const APIGetUserById = async (id) => {
 };
 const registerUser = async (user) => {
   const token = localStorage.getItem("token");
-  const hashedPassword = await bcrypt.hash(user.password, 10);
-  const userWithHashedPassword = { ...user, password: hashedPassword };
   const response = await axios.post(APILinks.register, user, {
     headers: {
       "Content-Type": "application/json",

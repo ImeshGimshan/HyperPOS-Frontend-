@@ -59,7 +59,7 @@ const Hero = () => {
           </h1>
           <div className='flex flex-col items-center'>
             <div className="flex flex-row  w-2/3 justify-center items-center">
-              <img src="./mock.png" alt="logo" className="w-/6 mx-auto" />
+              <img src="./mock.png" alt="logo" className="w-/6 mx-auto mt-5" />
             </div>
           </div>
           
